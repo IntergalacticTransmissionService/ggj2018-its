@@ -7,8 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame-Desktop", "MonoGam
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoGame-Shared", "MonoGame-Shared\MonoGame-Shared.shproj", "{BCC71F9C-2612-4E50-A427-649B5C718AB1}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoGame-Content", "MonoGame-Content\MonoGame-Content.shproj", "{16C362A2-624A-4F55-B9B3-42222EAEB97E}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		MonoGame-Content\MonoGame-Content.projitems*{16c362a2-624a-4f55-b9b3-42222eaeb97e}*SharedItemsImports = 13
+		MonoGame-Content\MonoGame-Content.projitems*{4824a5f1-22e4-45ae-aa6e-22b24cbc400d}*SharedItemsImports = 4
 		MonoGame-Shared\MonoGame-Shared.projitems*{4824a5f1-22e4-45ae-aa6e-22b24cbc400d}*SharedItemsImports = 4
 		MonoGame-Shared\MonoGame-Shared.projitems*{bcc71f9c-2612-4e50-a427-649b5c718ab1}*SharedItemsImports = 13
 	EndGlobalSection
