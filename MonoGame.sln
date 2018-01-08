@@ -5,7 +5,13 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame-Desktop", "MonoGame-Desktop\MonoGame-Desktop.csproj", "{4824A5F1-22E4-45AE-AA6E-22B24CBC400D}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoGame-Shared", "MonoGame-Shared\MonoGame-Shared.shproj", "{BCC71F9C-2612-4E50-A427-649B5C718AB1}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		MonoGame-Shared\MonoGame-Shared.projitems*{4824a5f1-22e4-45ae-aa6e-22b24cbc400d}*SharedItemsImports = 4
+		MonoGame-Shared\MonoGame-Shared.projitems*{bcc71f9c-2612-4e50-a427-649b5c718ab1}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
