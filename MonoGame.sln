@@ -9,11 +9,14 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoGame-Shared", "MonoGame
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoGame-Content", "MonoGame-Content\MonoGame-Content.shproj", "{16C362A2-624A-4F55-B9B3-42222EAEB97E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame-Android", "MonoGame-Android\MonoGame-Android.csproj", "{A7412DAE-D1EA-4C4C-945E-284E87E922A0}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		MonoGame-Content\MonoGame-Content.projitems*{16c362a2-624a-4f55-b9b3-42222eaeb97e}*SharedItemsImports = 13
 		MonoGame-Content\MonoGame-Content.projitems*{4824a5f1-22e4-45ae-aa6e-22b24cbc400d}*SharedItemsImports = 4
 		MonoGame-Shared\MonoGame-Shared.projitems*{4824a5f1-22e4-45ae-aa6e-22b24cbc400d}*SharedItemsImports = 4
+		MonoGame-Shared\MonoGame-Shared.projitems*{a7412dae-d1ea-4c4c-945e-284e87e922a0}*SharedItemsImports = 4
 		MonoGame-Shared\MonoGame-Shared.projitems*{bcc71f9c-2612-4e50-a427-649b5c718ab1}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +46,30 @@ Global
 		{4824A5F1-22E4-45AE-AA6E-22B24CBC400D}.Release|x64.Build.0 = Release|Any CPU
 		{4824A5F1-22E4-45AE-AA6E-22B24CBC400D}.Release|x86.ActiveCfg = Release|Any CPU
 		{4824A5F1-22E4-45AE-AA6E-22B24CBC400D}.Release|x86.Build.0 = Release|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Debug|ARM.Build.0 = Debug|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Debug|ARM.Deploy.0 = Debug|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Debug|x64.Build.0 = Debug|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Debug|x64.Deploy.0 = Debug|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Debug|x86.Build.0 = Debug|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Release|ARM.Build.0 = Release|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Release|ARM.Deploy.0 = Release|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Release|x64.ActiveCfg = Release|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Release|x64.Build.0 = Release|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Release|x64.Deploy.0 = Release|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Release|x86.ActiveCfg = Release|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Release|x86.Build.0 = Release|Any CPU
+		{A7412DAE-D1EA-4C4C-945E-284E87E922A0}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
