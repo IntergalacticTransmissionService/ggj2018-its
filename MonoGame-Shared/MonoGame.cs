@@ -2,21 +2,23 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace MonoGame_Desktop
+namespace MonoGame_Shared
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
     public class MonoGame : Game
     {
+        PlatformDefs platformDefs;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
         Texture2D image;
         Rectangle screen;
         
-        public MonoGame()
+        public MonoGame(PlatformDefs platformDefs)
         {
+            this.platformDefs = platformDefs;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
@@ -30,6 +32,10 @@ namespace MonoGame_Desktop
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
+            GraphicsDevice.PresentationParameters.BackBufferWidth = platformDefs.Width;
+            GraphicsDevice.PresentationParameters.BackBufferHeight = platformDefs.Height;
+            GraphicsDevice.PresentationParameters.IsFullScreen = platformDefs.FullScreen;
 
             base.Initialize();
         }

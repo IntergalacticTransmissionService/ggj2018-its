@@ -13,7 +13,7 @@ namespace MonoGame_Desktop
         [STAThread]
         static void Main()
         {
-            using (var game = new MonoGame())
+            using (var game = new MonoGame_Shared.MonoGame(new DesktopPlatformDefs()))
                 game.Run();
         }
     }
