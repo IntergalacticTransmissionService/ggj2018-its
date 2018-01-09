@@ -9,7 +9,6 @@ namespace MonoGame_Shared
     /// </summary>
     public class MonoGame : Game
     {
-        PlatformDefs platformDefs;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -18,8 +17,13 @@ namespace MonoGame_Shared
         
         public MonoGame(PlatformDefs platformDefs)
         {
-            this.platformDefs = platformDefs;
             graphics = new GraphicsDeviceManager(this);
+
+            graphics.PreferredBackBufferWidth = platformDefs.Width;
+            graphics.PreferredBackBufferHeight = platformDefs.Height;
+            graphics.IsFullScreen = platformDefs.FullScreen;
+            graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
+
             Content.RootDirectory = "Content";
         }
 
@@ -32,10 +36,6 @@ namespace MonoGame_Shared
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
-            GraphicsDevice.PresentationParameters.BackBufferWidth = platformDefs.Width;
-            GraphicsDevice.PresentationParameters.BackBufferHeight = platformDefs.Height;
-            GraphicsDevice.PresentationParameters.IsFullScreen = platformDefs.FullScreen;
 
             base.Initialize();
         }
