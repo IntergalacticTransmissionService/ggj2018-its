@@ -108,6 +108,7 @@
   </ItemGroup>
   <Import Project="..\MonoGame-Shared\MonoGame-Shared.projitems" Label="Shared" />
   <Import Project="..\MonoGame-Content\MonoGame-Content.projitems" Label="Shared" />
+  <Import Project="..\..\MonoGame-RoToPaEngine\MonoGame-RoToPaEngine.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
