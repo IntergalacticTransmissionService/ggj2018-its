@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace MonoGame_Engine.Engine.Input
@@ -35,7 +36,7 @@ namespace MonoGame_Engine.Engine.Input
                 if (!playerMap.ContainsValue(i) && inputState.AnyButtonDown)
                 {
                     playerMap[playerNo] = i;
-                    //Console.WriteLine(string.Format("Assigned Controller {0} to Player {1}", i, playerNo));
+                    Console.WriteLine(string.Format("Assigned Controller {0} to Player {1}", i, playerNo));
                     return true;
                 }
             }

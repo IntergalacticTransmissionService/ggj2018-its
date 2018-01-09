@@ -9,6 +9,11 @@
     <Import_RootNamespace>MonoGame_Content</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\halo.png" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\image1920x1080.jpg" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\particle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Content\Fonts\DebugFont.spritefont" />
   </ItemGroup>
 </Project>

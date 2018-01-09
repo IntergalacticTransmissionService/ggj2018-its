@@ -12,7 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)BaseGame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\Circle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\IHasPhysics.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\IMage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Components\Image.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Components\Physics.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\ParticleEmitter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\ParticleSystem.cs" />

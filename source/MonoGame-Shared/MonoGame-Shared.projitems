@@ -9,7 +9,10 @@
     <Import_RootNamespace>MonoGame_Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Input\AccelController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\DirectController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MainScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MonoGame.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PlatformDefs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Player.cs" />
   </ItemGroup>
 </Project>

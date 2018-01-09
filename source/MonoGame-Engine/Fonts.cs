@@ -38,14 +38,7 @@ namespace MonoGame_Engine.Engine
 
     public enum Font
     {
-        DebugFont,
-        PressStart2P20,
-        PressStart2P18,
-        PressStart2P16,
-        PressStart2P12,
-        PressStart2P10,
-        PressStart2P09,
-        PressStart2P07,
+        DebugFont
     }
 }
 

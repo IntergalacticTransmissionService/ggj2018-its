@@ -43,7 +43,7 @@ namespace MonoGame_Engine.Engine.Components
             Pos.Y = Pos.Y + Spd.Y * delta;
             Rot = Rot + RotSpd * delta;
 
-            Rot = (float)System.Math.Atan2(Spd.Y, Spd.X);
+            Rot = (float)Atan2(Spd.Y, Spd.X);
 
             Spd.X *= Dmp;
             Spd.Y *= Dmp;
@@ -57,26 +57,6 @@ namespace MonoGame_Engine.Engine.Components
                 HitBox.Center.X = Pos.X;
                 HitBox.Center.Y = Pos.Y;
             }
-
-            //if (game != null)
-            //{
-            //    foreach (var other in game.Scenes.Current.Children.OfType<IHasPhysics>())
-            //    {
-            //        if (ReferenceEquals(other.Phy, this) || (other as TheNewWaveRider) == null || !(other as TheNewWaveRider).Active)
-            //            continue;
-
-            //        if (CollidesWith(other.Phy))
-            //        {
-            //            var accelerationVector = Pos - other.Phy.Pos;
-
-            //            var forceVector = Spd - other.Phy.Spd;
-            //            var totalSpeed = forceVector.Length();
-
-            //            accelerationVector.Normalize();
-            //            this.Accel += accelerationVector * totalSpeed * 100;
-            //        }
-            //    }
-            //}
         }
 
         public bool CollidesWith(Physics other)
