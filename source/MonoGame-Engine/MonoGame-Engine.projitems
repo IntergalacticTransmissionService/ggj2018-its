@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>13696394-9fe2-4e36-9983-a3b8c8d547c7</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>MonoGame_Engine</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BaseGame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Components\Circle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Components\IHasPhysics.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Components\IMage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Components\Physics.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\ParticleEmitter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\ParticleSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Sprite.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fonts.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Group.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\Buttons.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\InputProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\Inputs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\InputState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\KeyboardController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\Sliders.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\XBoxController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Math\Funcs\BaseFuncs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Math\Funcs\RandomFuncs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Screen.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Sound\Synth.cs" />
+  </ItemGroup>
+</Project>

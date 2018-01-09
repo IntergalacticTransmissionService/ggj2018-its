@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MonoGame_Shared
+﻿namespace MonoGame_Shared
 {
     public interface PlatformDefs
     {

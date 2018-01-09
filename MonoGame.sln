@@ -9,10 +9,14 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoGame-Shared", "source\M
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoGame-Content", "source\MonoGame-Content\MonoGame-Content.shproj", "{16C362A2-624A-4F55-B9B3-42222EAEB97E}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoGame-Engine", "source\MonoGame-Engine\MonoGame-Engine.shproj", "{13696394-9FE2-4E36-9983-A3B8C8D547C7}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		source\MonoGame-Engine\MonoGame-Engine.projitems*{13696394-9fe2-4e36-9983-a3b8c8d547c7}*SharedItemsImports = 13
 		source\MonoGame-Content\MonoGame-Content.projitems*{16c362a2-624a-4f55-b9b3-42222eaeb97e}*SharedItemsImports = 13
 		source\MonoGame-Content\MonoGame-Content.projitems*{4824a5f1-22e4-45ae-aa6e-22b24cbc400d}*SharedItemsImports = 4
+		source\MonoGame-Engine\MonoGame-Engine.projitems*{4824a5f1-22e4-45ae-aa6e-22b24cbc400d}*SharedItemsImports = 4
 		source\MonoGame-Shared\MonoGame-Shared.projitems*{4824a5f1-22e4-45ae-aa6e-22b24cbc400d}*SharedItemsImports = 4
 		source\MonoGame-Shared\MonoGame-Shared.projitems*{bcc71f9c-2612-4e50-a427-649b5c718ab1}*SharedItemsImports = 13
 	EndGlobalSection
