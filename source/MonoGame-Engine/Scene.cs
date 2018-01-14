@@ -9,7 +9,6 @@ namespace MonoGame_Engine.Engine
 
         protected Color BgColor { get; set; }
         protected SpriteBatch spriteBatch;
-        protected Matrix? screenMatrix;
 
         public Scene(BaseGame game)
         {
@@ -25,8 +24,6 @@ namespace MonoGame_Engine.Engine
         {
             spriteBatch = new SpriteBatch(game.GraphicsDevice);
         }
-
-
 
         internal virtual void UnloadContent()
         {
@@ -50,11 +47,11 @@ namespace MonoGame_Engine.Engine
             base.Draw(batch, gameTime);
         }
 
-        internal virtual void Draw(GameTime gameTime)
+        internal virtual void Draw(GameTime gameTime, Camera cam)
         {
             game.GraphicsDevice.Clear(BgColor);
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, null, screenMatrix);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, null, cam.Matrix);
             Draw(spriteBatch, gameTime);
             spriteBatch.End();
         }

@@ -1,5 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using MonoGame_Engine;
+using MonoGame_Engine.Components;
 using MonoGame_Engine.Engine;
+using MonoGame_Engine.Engine.Entities;
 using MonoGame_Shared.Input;
 using System;
 using System.Collections.Generic;
@@ -9,10 +13,15 @@ namespace MonoGame_Shared
 {
     public class MainScene : Scene
     {
+        internal readonly TilingImage BackgroundImg;
+        internal readonly Sprite Background;
+
         internal readonly List<Player> Players;
 
         public MainScene(MonoGame game) : base(game)
         {
+            BackgroundImg = new TilingImage("Images/grass", game);
+            Background = new Sprite(BackgroundImg);
             Players = new List<Player>();
         }
 
@@ -22,11 +31,29 @@ namespace MonoGame_Shared
             this.BgColor = Color.Black;
         }
 
+        internal override void LoadContent()
+        {
+            base.LoadContent();
+            Background.LoadContent(game.Content);
+            Background.Gfx.origin = Vector2.Zero;
+            Children.Add(Background);
+        }
+
         internal override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
             CheckForNewPlayers();
+
+            if (Players.Count > 0)
+            {
+                // cam follow player
+                Vector2 delta = Players[0].Phy.Pos - game.Camera.Phy.Pos;
+                game.Camera.Phy.Spd = delta * 5;
+
+                // write player pos to screen
+                game.DebugOverlay.Text = $"{Players[0].Phy.Pos.X}, {Players[0].Phy.Pos.Y}";
+            }
         }
 
         internal override int HandleInput(GameTime gameTime)
@@ -36,7 +63,6 @@ namespace MonoGame_Shared
             // register Players
             if (numPlayers < 5)
             {
-                //dbgOverlay.Text = string.Format("Player {0}, please press a button", numPlayers);
                 game.Inputs.AssignToPlayer(numPlayers);
             }
 
@@ -52,9 +78,16 @@ namespace MonoGame_Shared
                 player.LoadContent(game.Content);
                 Children.Add(player);
 
-                AccelController controller = new AccelController(game, Players.Count, player);
+                var controller = new AccelController(game, Players.Count, player);
                 controller.LoadContent(game.Content);
                 Children.Add(controller);
+
+                if (Players.Count == 0)
+                {
+                    var camController = new CamController(game, player.PlayerNum);
+                    controller.LoadContent(game.Content);
+                    Children.Add(camController);
+                }
 
                 Players.Add(player);
             }

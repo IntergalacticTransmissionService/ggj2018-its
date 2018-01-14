@@ -38,10 +38,8 @@ namespace MonoGame_Engine.Engine.Input
                 case Buttons.DPad_Up: return st.IsKeyDown(XnaInput.Keys.Up);
                 case Buttons.DPad_Down: return st.IsKeyDown(XnaInput.Keys.Down);
 
-                case Buttons.Select: return st.IsKeyDown(XnaInput.Keys.LeftControl) || st.IsKeyDown(XnaInput.Keys.RightControl);
+                case Buttons.Select: return st.IsKeyDown(XnaInput.Keys.F1);
                 case Buttons.Start: return st.IsKeyDown(XnaInput.Keys.Space);
-
-                case Buttons.ToggleFullscreen: return st.IsKeyDown(XnaInput.Keys.F1);
             }
             return false;
         }
@@ -74,7 +72,6 @@ namespace MonoGame_Engine.Engine.Input
             return 0.0f;
         }
 
-        private bool triggered = false;
         private bool vibrating = false;
         private double cooldown = 0;
         private SharpDX.XInput.Vibration vibration;
@@ -83,7 +80,6 @@ namespace MonoGame_Engine.Engine.Input
         {
             if (!vibrating)
             {
-                triggered = true;
                 cooldown = ms;
                 vibration.LeftMotorSpeed = (ushort)(ushort.MaxValue * low);
                 vibration.RightMotorSpeed = (ushort)(ushort.MaxValue * high);

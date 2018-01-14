@@ -9,9 +9,11 @@ namespace MonoGame_Engine.Engine
         protected readonly GraphicsDeviceManager graphics;
 
         public readonly Screen Screen;
+        public readonly Camera Camera;
         public readonly Scenes Scenes;
         public readonly Fonts Fonts;
         public readonly Inputs Inputs;
+        public readonly DebugOverlay DebugOverlay;
 
         public BaseGame()
         {
@@ -19,9 +21,11 @@ namespace MonoGame_Engine.Engine
             graphics = new GraphicsDeviceManager(this);
 
             Screen = new Screen(graphics);
+            Camera = new Camera(this);
             Scenes = new Scenes(this);
             Fonts = new Fonts(this);
             Inputs = new Inputs();
+            DebugOverlay = new DebugOverlay(this);
         }
 
         protected override void Initialize()
@@ -37,6 +41,7 @@ namespace MonoGame_Engine.Engine
         protected override void LoadContent()
         {
             Fonts.LoadFonts();
+            DebugOverlay.LoadContent();
         }
 
         protected override void UnloadContent()
@@ -55,7 +60,7 @@ namespace MonoGame_Engine.Engine
 
             for (int i = 0; i < Inputs.NumPlayers; i++)
             {
-                if (Inputs.Player(i).WasPressed(Buttons.ToggleFullscreen))
+                if (Inputs.Player(i).WasPressed(Buttons.Select))
                 {
                     Screen.ToggleFullscreen();
                     break;
@@ -67,8 +72,8 @@ namespace MonoGame_Engine.Engine
 
         protected override void Update(GameTime gameTime)
         {
-            if (Scenes.Current != null)
-                Scenes.Current.Update(gameTime);
+            Camera.Update(gameTime);
+            Scenes.Current?.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -76,13 +81,10 @@ namespace MonoGame_Engine.Engine
         protected override void Draw(GameTime gameTime)
         {
             Screen.PreDraw();
-
-            if (Scenes.Current != null)
-                Scenes.Current.Draw(gameTime);
-
+            Scenes.Current?.Draw(gameTime, Camera);
             base.Draw(gameTime);
-
             Screen.PostDraw();
+            DebugOverlay.Draw(gameTime);
         }
 
     }

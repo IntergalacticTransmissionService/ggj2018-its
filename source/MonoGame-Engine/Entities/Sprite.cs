@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Engine.Engine.Components;
 using Microsoft.Xna.Framework.Content;
+using MonoGame_Engine.Components;
 
 namespace MonoGame_Engine.Engine.Entities
 {
@@ -9,6 +10,11 @@ namespace MonoGame_Engine.Engine.Entities
     {
         public Physics Phy { get; private set; }
         public Image Gfx { get; private set; }
+
+        public Sprite(Image img)
+        {
+            Gfx = img;
+        }
 
         public Sprite(string assetPath)
         {
@@ -18,7 +24,7 @@ namespace MonoGame_Engine.Engine.Entities
         public void LoadContent(ContentManager content)
         {
             Gfx.LoadContent(content);
-            Phy = new Physics(Gfx.origin.X, null);
+            Phy = new Physics(Gfx.origin.X);
         }
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)

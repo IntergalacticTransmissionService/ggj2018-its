@@ -44,8 +44,14 @@ namespace MonoGame_Shared.Input
             if (Player != null && Player.Phy != null && game.Inputs.NumPlayers > playerIdx)
             {
                 var cntrl = game.Inputs.Player(playerIdx);
-                Player.Phy.Accel.X += cntrl.Value(Sliders.LeftStickX) * 4000;
-                Player.Phy.Accel.Y += cntrl.Value(Sliders.LeftStickY) * 4000;
+
+                var mat = Matrix.CreateRotationZ(game.Camera.Phy.Rot);
+                var movement = Vector3.Transform(
+                    new Vector3(cntrl.Value(Sliders.LeftStickX), cntrl.Value(Sliders.LeftStickY), 0) * 4000,
+                    mat);
+
+                Player.Phy.Accel.X += movement.X;
+                Player.Phy.Accel.Y += movement.Y;
             }
         }
 
