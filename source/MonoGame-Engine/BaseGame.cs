@@ -19,8 +19,7 @@ namespace MonoGame_Engine
 
         public BaseGame()
         {
-            base.Content = new LiveContentManager(this, "../../../../../MonoGame-Content/Content");
-            Content.RootDirectory = "Content";
+            base.Content = new LiveContentManager(this);
 
             graphics = new GraphicsDeviceManager(this);
 
@@ -79,6 +78,7 @@ namespace MonoGame_Engine
 
         protected override void Update(GameTime gameTime)
         {
+            Content.Update(gameTime);
             Camera.Update(gameTime);
             Scenes.Current?.Update(gameTime);
 
