@@ -19,7 +19,7 @@ namespace MonoGame_Shared
 
         public MainScene(MonoGame game) : base(game)
         {
-            BackgroundImg = new TilingImage("Images/grass", game);
+            BackgroundImg = new TilingImage("Images/grass.jpg", game);
             Background = new Sprite(BackgroundImg);
             Players = new List<Player>();
         }

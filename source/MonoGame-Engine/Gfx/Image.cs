@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame_Engine.Entities;
 
 namespace MonoGame_Engine.Gfx
 {
-    public class Image
+    public class Image : Reloadable
     {
         private readonly string assetPath;
         protected Texture2D tex;
@@ -16,10 +17,13 @@ namespace MonoGame_Engine.Gfx
             this.assetPath = assetPath;
         }
 
-        public void LoadContent(ContentManager content)
+        internal override void LoadContent(ContentManager content, bool wasReloaded)
         {
             this.tex = content.Load<Texture2D>(assetPath);
-            this.origin = new Vector2(tex.Width * 0.5f, tex.Height * 0.5f);
+            if (!wasReloaded)
+            {
+                this.origin = new Vector2(tex.Width * 0.5f, tex.Height * 0.5f);
+            }
         }
 
         public virtual void Draw(SpriteBatch spriteBatch, Vector2 pos, float rot)

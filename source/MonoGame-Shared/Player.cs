@@ -45,10 +45,13 @@ namespace MonoGame_Shared
             Phy = new OrientedPhysics(radius);
         }
 
-        internal void LoadContent(ContentManager content)
+        internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
-            halo = content.Load<Texture2D>("Images/halo");
-            haloOrigin = new Vector2(halo.Width * 0.5f, halo.Height * 0.5f);
+            halo = content.Load<Texture2D>("Images/halo.png");
+            if (!wasReloaded)
+            {
+                haloOrigin = new Vector2(halo.Width * 0.5f, halo.Height * 0.5f);
+            }
         }
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)

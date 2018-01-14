@@ -11,6 +11,8 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BaseGame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Camera.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Reloadable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LiveContentManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Math\Circle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Phy\IHasPhysics.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gfx\Image.cs" />
@@ -40,7 +42,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Sound\Synth.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Gfx\" />
     <Folder Include="$(MSBuildThisFileDirectory)Phy\" />
   </ItemGroup>
 </Project>

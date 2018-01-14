@@ -32,12 +32,15 @@ namespace MonoGame_Shared.Input
             Player.Phy.Dmp = 0.95f;
         }
 
-        public void LoadContent(ContentManager content)
+        internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
-            tex = content.Load<Texture2D>("Images/particle");
-            origin = new Vector2(tex.Width * 0.5f, tex.Height * 0.5f);
-            scale = new Vector2(0.7f, 0.7f);
-            color = new Color(0.2f, 0.2f, 1.0f, 1.0f);
+            tex = content.Load<Texture2D>("Images/particle.png");
+            if (!wasReloaded)
+            {
+                origin = new Vector2(tex.Width * 0.5f, tex.Height * 0.5f);
+                scale = new Vector2(0.7f, 0.7f);
+                color = new Color(0.2f, 0.2f, 1.0f, 1.0f);
+            }
         }
 
         internal override void Update(GameTime gameTime)

@@ -21,10 +21,13 @@ namespace MonoGame_Engine.Entities
             Gfx = new Image(assetPath);
         }
 
-        public void LoadContent(ContentManager content)
+        internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
-            Gfx.LoadContent(content);
-            Phy = new Physics(Gfx.origin.X);
+            Gfx.LoadContent(content, wasReloaded);
+            if (!wasReloaded)
+            {
+                Phy = new Physics(Gfx.origin.X);
+            }
         }
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
