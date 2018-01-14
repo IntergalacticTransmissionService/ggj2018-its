@@ -11,6 +11,11 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoGame-Content", "source\
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoGame-Engine", "source\MonoGame-Engine\MonoGame-Engine.shproj", "{13696394-9FE2-4E36-9983-A3B8C8D547C7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{00E4335A-860A-4B7E-93C5-F31C7A1707A9}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		source\MonoGame-Engine\MonoGame-Engine.projitems*{13696394-9fe2-4e36-9983-a3b8c8d547c7}*SharedItemsImports = 13
