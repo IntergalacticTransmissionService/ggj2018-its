@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGame_Engine.Entities
@@ -23,6 +24,12 @@ namespace MonoGame_Engine.Entities
         {
             foreach (var c in Children)
                 c.Update(gameTime);
+        }
+
+        internal override void LoadContent(ContentManager content, bool wasReloaded)
+        {
+            foreach (var c in Children)
+                c.LoadContent(content, wasReloaded);
         }
     }
 }

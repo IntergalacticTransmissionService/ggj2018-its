@@ -36,6 +36,17 @@ This is a platform dependent project, which contains the startup-code for Mono-D
 
 **TODO**
 
+### Live reloading assets
+
+Live-Reloading assets currently only works in Debug-Builds.
+
+In the content-project there is a file called `assetmap.ini`, which contains a mapping of asset files.
+For files to be reloadable, you need to pass the filename inculding extension to the contentmanager.
+
+By pressing `F5` or saving changes to the `assetmap.ini` file, you trigger a hot-reload.
+
+Have Fun !
+
 ### Add another platform project
 
 **TODO**

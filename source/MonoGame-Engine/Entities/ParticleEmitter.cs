@@ -61,12 +61,15 @@ namespace MonoGame_Engine.Entities
             Dmp = 0.92f;
         }
 
-        public void LoadContent(ContentManager content)
+        internal override void LoadContent(ContentManager content, bool wasReloaded)
         {
             tex = content.Load<Texture2D>(asset);
-            origin = new Vector2(tex.Width * 0.5f, tex.Height * 0.5f);
-            SpawnPos = new Vector2(game.Screen.Width * 0.5f, game.Screen.Height * 0.5f);
-            maxAgeInSecs = 1;
+            if (!wasReloaded)
+            {
+                origin = new Vector2(tex.Width * 0.5f, tex.Height * 0.5f);
+                SpawnPos = new Vector2(game.Screen.Width * 0.5f, game.Screen.Height * 0.5f);
+                maxAgeInSecs = 1;
+            }
         }
 
         public void Spawn()

@@ -31,12 +31,10 @@ namespace MonoGame_Engine.Entities
             }
         }
 
-        public void LoadContent(ContentManager content)
+        internal override void LoadContent(ContentManager content, bool wasReloaded)
         {
             foreach(var e in emitters)
-            {
-                e.LoadContent(content);
-            }
+                e.LoadContent(content, wasReloaded);
         }
 
         internal override void Update(GameTime gameTime)

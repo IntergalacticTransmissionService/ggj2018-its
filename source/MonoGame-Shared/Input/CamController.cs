@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Engine;
 using MonoGame_Engine.Entities;
@@ -18,6 +19,11 @@ namespace MonoGame_Shared.Input
         {
             this.game = game;
             this.playerIdx = playerIdx;
+        }
+
+        internal override void LoadContent(ContentManager content, bool wasReloaded)
+        {
+
         }
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)

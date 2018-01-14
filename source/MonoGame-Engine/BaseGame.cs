@@ -15,9 +15,12 @@ namespace MonoGame_Engine
         public readonly Inputs Inputs;
         public readonly DebugOverlay DebugOverlay;
 
+        public new LiveContentManager Content { get { return base.Content as LiveContentManager; } }
+
         public BaseGame()
         {
-            Content.RootDirectory = "Content";
+            base.Content = new LiveContentManager(this);
+
             graphics = new GraphicsDeviceManager(this);
 
             Screen = new Screen(graphics);
@@ -55,6 +58,9 @@ namespace MonoGame_Engine
             if (XnaInput.Keyboard.GetState().IsKeyDown(XnaInput.Keys.Escape))
                 Exit();
 
+            if (XnaInput.Keyboard.GetState().IsKeyDown(XnaInput.Keys.F5))
+                Content.ReloadAll();
+
             Inputs.Update(gameTime);
 
 
@@ -72,6 +78,7 @@ namespace MonoGame_Engine
 
         protected override void Update(GameTime gameTime)
         {
+            Content.Update(gameTime);
             Camera.Update(gameTime);
             Scenes.Current?.Update(gameTime);
 
