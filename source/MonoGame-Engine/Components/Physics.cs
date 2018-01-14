@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using static System.Math;
 
 namespace MonoGame_Engine.Engine.Components
 {
@@ -16,9 +15,7 @@ namespace MonoGame_Engine.Engine.Components
 
         public Circle HitBox;
 
-        private BaseGame game;
-
-        public Physics(float? radius, BaseGame game)
+        public Physics(float? radius)
         {
             Pos = new Vector2();
             Rot = 0;
@@ -27,11 +24,9 @@ namespace MonoGame_Engine.Engine.Components
             RotSpd = 0;
 
             HitBox = radius.HasValue ? new Circle(Vector2.Zero, radius.Value) : null;
-
-            this.game = game;
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             // timestep
             var delta = gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
@@ -43,11 +38,8 @@ namespace MonoGame_Engine.Engine.Components
             Pos.Y = Pos.Y + Spd.Y * delta;
             Rot = Rot + RotSpd * delta;
 
-            Rot = (float)Atan2(Spd.Y, Spd.X);
-
             Spd.X *= Dmp;
             Spd.Y *= Dmp;
-
 
             Accel = Vector2.Zero;
 

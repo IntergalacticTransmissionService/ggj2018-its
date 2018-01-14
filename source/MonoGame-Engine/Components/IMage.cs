@@ -7,7 +7,7 @@ namespace MonoGame_Engine.Engine.Components
     public class Image
     {
         private readonly string assetPath;
-        private Texture2D tex;
+        protected Texture2D tex;
 
         public Vector2 origin;
 
@@ -22,7 +22,7 @@ namespace MonoGame_Engine.Engine.Components
             this.origin = new Vector2(tex.Width * 0.5f, tex.Height * 0.5f);
         }
 
-        public void Draw(SpriteBatch spriteBatch, Vector2 pos, float rot)
+        public virtual void Draw(SpriteBatch spriteBatch, Vector2 pos, float rot)
         {
             spriteBatch.Draw(tex, pos, null, null, origin, rot);
         }

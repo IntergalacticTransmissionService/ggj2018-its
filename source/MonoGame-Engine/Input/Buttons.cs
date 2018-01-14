@@ -14,7 +14,5 @@
         Start, Select,
 
         LeftStick, RightStick,
-
-        ToggleFullscreen
     }
 }

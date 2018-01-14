@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame_Engine.Components;
 using MonoGame_Engine.Engine;
 using MonoGame_Engine.Engine.Components;
 using System;
@@ -15,9 +16,6 @@ namespace MonoGame_Shared
 
         private Texture2D halo;
         private Vector2 haloOrigin;
-
-        private Texture2D part;
-        private Vector2 partOrigin;
 
         public Color BaseColor { get; private set; }
 
@@ -44,7 +42,7 @@ namespace MonoGame_Shared
             this.game = game;
             this.PlayerNum = playerNum;
             this.BaseColor = colors[playerNum % colors.Length];
-            Phy = new Physics(radius, game);
+            Phy = new OrientedPhysics(radius);
         }
 
         internal void LoadContent(ContentManager content)
@@ -74,15 +72,20 @@ namespace MonoGame_Shared
             Phy.Update(gameTime);
 
             // Ensure Physics Bounds
-            if (Phy.Pos.X < Radius) Phy.Pos.X = Radius;
-            if (Phy.Pos.X > game.Screen.Width - Radius) Phy.Pos.X = game.Screen.Width - Radius;
-            if (Phy.Pos.Y < Radius) Phy.Pos.Y = Radius;
-            if (Phy.Pos.Y > game.Screen.Height - Radius) Phy.Pos.Y = game.Screen.Height - Radius;
+            //if (Phy.Pos.X < Radius) Phy.Pos.X = Radius;
+            //if (Phy.Pos.X > game.Screen.CanvasWidth - Radius) Phy.Pos.X = game.Screen.CanvasWidth - Radius;
+            //if (Phy.Pos.Y < Radius) Phy.Pos.Y = Radius;
+            //if (Phy.Pos.Y > game.Screen.CanvasHeight - Radius) Phy.Pos.Y = game.Screen.CanvasHeight - Radius;
 
-            if (Phy.Spd.X > 1200) Phy.Spd.X = 1200;
-            if (Phy.Spd.X < -1200) Phy.Spd.X = -1200;
-            if (Phy.Spd.Y > 1200) Phy.Spd.Y = 1200;
-            if (Phy.Spd.Y < -1200) Phy.Spd.Y = -1200;
+            // Ensure MaxSpd
+            var spd = Phy.Spd.Length();
+            if (spd > 1200)
+                Phy.Spd = Vector2.Normalize(Phy.Spd) * 1200.0f;
+
+            //if (Phy.Spd.X > 1200) Phy.Spd.X = 1200;
+            //if (Phy.Spd.X < -1200) Phy.Spd.X = -1200;
+            //if (Phy.Spd.Y > 1200) Phy.Spd.Y = 1200;
+            //if (Phy.Spd.Y < -1200) Phy.Spd.Y = -1200;
         }
     }
 }
