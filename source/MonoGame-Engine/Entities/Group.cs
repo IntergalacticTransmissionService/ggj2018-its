@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoGame_Engine.Engine
+namespace MonoGame_Engine.Entities
 {
     public class Group : Entity
     {

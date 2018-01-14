@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using XnaInput = Microsoft.Xna.Framework.Input;
 
-namespace MonoGame_Engine.Engine.Input
+namespace MonoGame_Engine.Input
 {
     public class KeyboardController : InputProvider
     {

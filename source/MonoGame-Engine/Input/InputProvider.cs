@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace MonoGame_Engine.Engine.Input
+namespace MonoGame_Engine.Input
 {
     public abstract class InputProvider
     {

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame_Engine.Engine;
-using MonoGame_Engine.Engine.Components;
+using MonoGame_Engine.Phy;
 using System;
 using System.Collections.Generic;
 using System.Text;

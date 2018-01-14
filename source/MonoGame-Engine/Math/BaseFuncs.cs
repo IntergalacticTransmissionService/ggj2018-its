@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace MonoGame_Engine.Math.Funcs
+namespace MonoGame_Engine.Math
 {
     /// <summary>
     /// Base Functions that should loop somehow around 2*PI and provide values between -1..1

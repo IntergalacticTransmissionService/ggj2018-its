@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections.Generic;
 
-namespace MonoGame_Engine.Engine.Sound
+namespace MonoGame_Engine.Sound
 {
     public class Synth
     {

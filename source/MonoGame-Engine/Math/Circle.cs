@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using static System.Math;
 
-namespace MonoGame_Engine.Engine.Components
+namespace MonoGame_Engine.Math
 {
     public class Circle
     {

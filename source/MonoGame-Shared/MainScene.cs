@@ -1,9 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Engine;
-using MonoGame_Engine.Components;
-using MonoGame_Engine.Engine;
-using MonoGame_Engine.Engine.Entities;
+using MonoGame_Engine.Entities;
+using MonoGame_Engine.Gfx;
 using MonoGame_Shared.Input;
 using System;
 using System.Collections.Generic;

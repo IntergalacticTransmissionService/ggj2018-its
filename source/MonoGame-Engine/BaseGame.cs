@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using MonoGame_Engine.Engine.Input;
+using MonoGame_Engine.Input;
 using XnaInput = Microsoft.Xna.Framework.Input;
 
-namespace MonoGame_Engine.Engine
+namespace MonoGame_Engine
 {
     public class BaseGame : Game
     {

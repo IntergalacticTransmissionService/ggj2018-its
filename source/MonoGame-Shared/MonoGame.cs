@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGame_Engine.Engine;
-using MonoGame_Engine.Engine.Input;
+using MonoGame_Engine;
+using MonoGame_Engine.Input;
 
 namespace MonoGame_Shared
 {

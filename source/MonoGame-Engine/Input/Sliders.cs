@@ -1,4 +1,4 @@
-﻿namespace MonoGame_Engine.Engine.Input
+﻿namespace MonoGame_Engine.Input
 {
     public enum Sliders : int
     {

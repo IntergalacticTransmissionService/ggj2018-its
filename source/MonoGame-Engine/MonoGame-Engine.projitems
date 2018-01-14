@@ -11,19 +11,19 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BaseGame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Camera.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\Circle.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\IHasPhysics.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\Image.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\OrientedPhysics.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\Physics.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Components\TilingImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Math\Circle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Phy\IHasPhysics.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Gfx\Image.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Phy\OrientedPhysics.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Phy\Physics.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Gfx\TilingImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DebugOverlay.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\ParticleEmitter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\ParticleSystem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Sprite.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Entity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Entity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Fonts.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Group.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\Buttons.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\InputProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\Inputs.cs" />
@@ -31,12 +31,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Input\KeyboardController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\Sliders.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\XBoxController.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Math\Funcs\BaseFuncs.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Math\Funcs\RandomFuncs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Math\BaseFuncs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Math\RandomFuncs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Math\MathExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Scene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Screen.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Sound\Synth.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Gfx\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Phy\" />
   </ItemGroup>
 </Project>

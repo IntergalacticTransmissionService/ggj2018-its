@@ -1,11 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using MonoGame_Engine.Engine.Components;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using static System.Math;
 
-namespace MonoGame_Engine.Components
+namespace MonoGame_Engine.Phy
 {
     public class OrientedPhysics : Physics
     {

@@ -1,13 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame_Engine.Engine;
-using MonoGame_Engine.Engine.Components;
 using MonoGame_Engine.Math;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MonoGame_Engine.Components
+namespace MonoGame_Engine.Gfx
 {
     public class TilingImage : Image
     {

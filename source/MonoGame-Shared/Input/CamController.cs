@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame_Engine.Engine;
-using MonoGame_Engine.Engine.Input;
-using MonoGame_Engine.Math.Funcs;
+using MonoGame_Engine;
+using MonoGame_Engine.Entities;
+using MonoGame_Engine.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;

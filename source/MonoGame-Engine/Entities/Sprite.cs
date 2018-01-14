@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame_Engine.Engine.Components;
 using Microsoft.Xna.Framework.Content;
-using MonoGame_Engine.Components;
+using MonoGame_Engine.Phy;
+using MonoGame_Engine.Gfx;
 
-namespace MonoGame_Engine.Engine.Entities
+namespace MonoGame_Engine.Entities
 {
     public class Sprite : Entity, IHasPhysics
     {

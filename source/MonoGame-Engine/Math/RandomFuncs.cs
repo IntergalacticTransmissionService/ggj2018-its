@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MonoGame_Engine.Math.Funcs
+namespace MonoGame_Engine.Math
 {
     public static class RandomFuncs
     {

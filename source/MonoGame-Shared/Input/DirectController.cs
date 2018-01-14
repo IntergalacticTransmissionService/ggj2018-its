@@ -6,9 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
-using MonoGame_Engine.Engine;
-using MonoGame_Engine.Engine.Components;
-using MonoGame_Engine.Engine.Input;
+using MonoGame_Engine.Entities;
+using MonoGame_Engine;
+using MonoGame_Engine.Phy;
+using MonoGame_Engine.Input;
 
 namespace MonoGame_Shared.Input
 {

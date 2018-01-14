@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MonoGame_Engine.Engine.Input
+namespace MonoGame_Engine.Input
 {
     public class Inputs : List<InputState>
     {

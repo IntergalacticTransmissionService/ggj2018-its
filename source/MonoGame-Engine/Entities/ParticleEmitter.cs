@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
-using MonoGame_Engine.Math.Funcs;
+using MonoGame_Engine.Math;
 
-namespace MonoGame_Engine.Engine.Entities
+namespace MonoGame_Engine.Entities
 {
 
     public class ParticleEmitter : Entity

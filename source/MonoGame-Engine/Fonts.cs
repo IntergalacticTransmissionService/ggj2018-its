@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MonoGame_Engine.Engine
+namespace MonoGame_Engine
 {
     public class Fonts
     {

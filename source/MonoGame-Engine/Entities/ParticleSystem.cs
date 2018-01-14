@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using System;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoGame_Engine.Engine.Entities
+namespace MonoGame_Engine.Entities
 {
     public class ParticleSystem : Entity
     {

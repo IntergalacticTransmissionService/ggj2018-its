@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoGame_Engine.Engine.Components
+namespace MonoGame_Engine.Gfx
 {
     public class Image
     {

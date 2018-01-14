@@ -1,4 +1,4 @@
-﻿namespace MonoGame_Engine.Engine.Components
+﻿namespace MonoGame_Engine.Phy
 {
     public interface IHasPhysics
     {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using MonoGame_Engine.Math;
 
-namespace MonoGame_Engine.Engine.Components
+namespace MonoGame_Engine.Phy
 {
     public class Physics
     {
