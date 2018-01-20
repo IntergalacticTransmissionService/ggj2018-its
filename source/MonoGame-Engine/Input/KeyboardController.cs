@@ -58,14 +58,28 @@ namespace MonoGame_Engine.Input
             return up + down;
         }
 
+        public float XAxis2()
+        {
+            var left = st.IsKeyDown(XnaInput.Keys.A) ? -1 : 0;
+            var right = st.IsKeyDown(XnaInput.Keys.D) ? 1 : 0;
+            return left + right;
+        }
+
+        public float YAxis2()
+        {
+            var up = st.IsKeyDown(XnaInput.Keys.W) ? -1 : 0;
+            var down = st.IsKeyDown(XnaInput.Keys.S) ? 1 : 0;
+            return up + down;
+        }
+
         public override float Get(Sliders sldr)
         {
             switch (sldr)
             {
                 case Sliders.LeftStickX: return XAxis();
                 case Sliders.LeftStickY: return YAxis();
-                //case Sliders.RightStickX: return st.ThumbSticks.Right.X;
-                //case Sliders.RightStickY: return -st.ThumbSticks.Right.Y;
+                case Sliders.RightStickX: return XAxis2();
+                case Sliders.RightStickY: return YAxis2();
                 case Sliders.LeftTrigger: return st.IsKeyDown(XnaInput.Keys.LeftShift) ? 1.0f : 0.0f;
                 case Sliders.RightTrigger: return st.IsKeyDown(XnaInput.Keys.RightShift) ? 1.0f : 0.0f;
             }
