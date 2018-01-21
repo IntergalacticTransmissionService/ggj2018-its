@@ -82,7 +82,7 @@ namespace MonoGame_Engine.Input
         {
             if (index == 0)
             {
-                manager.Update();
+                manager.Update(gameTime.ElapsedGameTime);
                 manager.RefreshJoyConList();
             }
         }
