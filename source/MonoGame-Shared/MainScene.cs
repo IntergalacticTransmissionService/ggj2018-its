@@ -60,10 +60,8 @@ namespace MonoGame_Shared
             var numPlayers = base.HandleInput(gameTime);
 
             // register Players
-            if (numPlayers < 5)
-            {
+            if (numPlayers < game.Inputs.NumPlayersAvailable)
                 game.Inputs.AssignToPlayer(numPlayers);
-            }
 
             return numPlayers;
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 using MonoGame_Engine;
 using MonoGame_Engine.Input;
 
@@ -16,18 +17,13 @@ namespace MonoGame_Shared
         {
             base.Initialize();
 
-            // important to register xbox controllers first, as
-            // i is used as controller number !
             for (int i = 0; i < 4; ++i)
-                Inputs[i].Provider = new XBoxController(i);
+                Inputs.Add(new XBoxController(i));
 
-            for (int i=4; i<8;++i)
-            {
-                Inputs[i].Provider = new JoyConController(i - 4);
-            }
+            for (int i = 0; i < 4; ++i)
+                Inputs.Add(new JoyConController(i));
 
-            for (int i = 8; i < 9; ++i)
-                Inputs[i].Provider = new KeyboardController(i);
+            Inputs.Add(new KeyboardController());
 
             MainScene scene = new MainScene(this);
             Scenes.Add("Main", scene);

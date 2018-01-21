@@ -34,11 +34,7 @@ namespace MonoGame_Engine
         protected override void Initialize()
         {
             base.Initialize();
-
             Screen.Initialize();
-
-            for (int i = 0; i < 9; ++i)
-                Inputs.Add(new InputState());
         }
 
         protected override void LoadContent()
