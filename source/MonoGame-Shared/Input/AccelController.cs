@@ -49,6 +49,7 @@ namespace MonoGame_Shared.Input
             {
                 var cntrl = game.Inputs.Player(playerIdx);
 
+                // apply movement
                 var mat = Matrix.CreateRotationZ(game.Camera.Phy.Rot);
                 var movement = Vector3.Transform(
                     new Vector3(cntrl.Value(Sliders.LeftStickX), cntrl.Value(Sliders.LeftStickY), 0) * 4000,
@@ -56,6 +57,10 @@ namespace MonoGame_Shared.Input
 
                 Player.Phy.Accel.X += movement.X;
                 Player.Phy.Accel.Y += movement.Y;
+
+                // rumble
+                if (cntrl.WasPressed(Buttons.B))
+                    Player.WasHit();
             }
         }
 

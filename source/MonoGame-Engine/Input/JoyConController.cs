@@ -69,7 +69,11 @@ namespace MonoGame_Engine.Input
 
         public override void Rumble(float low, float high, int ms)
         {
-
+            var joycon = JoyCon;
+            if (joycon != null)
+            {
+                joycon.SetRumble(low, high, 0.5f, ms);
+            }
         }
 
         private Joycon JoyCon { get { return manager.JoyCons.Count >= index + 1 ? manager.JoyCons[index] : null; } }
@@ -78,7 +82,7 @@ namespace MonoGame_Engine.Input
         {
             if (index == 0)
             {
-                manager.Update();
+                manager.Update(gameTime.ElapsedGameTime);
                 manager.RefreshJoyConList();
             }
         }

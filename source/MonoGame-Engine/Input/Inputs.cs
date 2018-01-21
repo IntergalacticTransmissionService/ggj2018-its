@@ -4,21 +4,31 @@ using System.Collections.Generic;
 
 namespace MonoGame_Engine.Input
 {
-    public class Inputs : List<InputState>
+    public class Inputs
     {
+        private readonly List<InputState> states;
         private readonly Dictionary<int, int> playerMap;
 
         public int NumPlayers { get { return playerMap.Count; } }
+        public int NumPlayersAvailable {  get { return states.Count; } }
 
         public Inputs()
         {
+            states = new List<InputState>();
             playerMap = new Dictionary<int, int>();
+        }
+
+        public void Add(InputProvider provider)
+        {
+            var state = new InputState();
+            state.Provider = provider;
+            states.Add(state);
         }
 
         public InputState Player(int playerNo)
         {
             if (playerMap.ContainsKey(playerNo))
-                return this[playerMap[playerNo]];
+                return states[playerMap[playerNo]];
 
             return null;
         }
@@ -30,9 +40,9 @@ namespace MonoGame_Engine.Input
 
         public bool AssignToPlayer(int playerNo)
         {
-            for(int i=0; i<this.Count; ++i)
+            for(int i=0; i<states.Count; ++i)
             {
-                var inputState = this[i];
+                var inputState = states[i];
                 if (!playerMap.ContainsValue(i) && inputState.AnyButtonDown)
                 {
                     playerMap[playerNo] = i;
@@ -45,7 +55,7 @@ namespace MonoGame_Engine.Input
 
         public void Update(GameTime gameTime)
         {
-            foreach(var input in this)
+            foreach(var input in states)
                 input.Update(gameTime);
         }
     }

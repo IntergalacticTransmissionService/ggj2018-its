@@ -51,8 +51,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="JoyConLib, Version=0.0.1.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\JoyConLib.0.0.1.3\lib\net45\JoyConLib.dll</HintPath>
+    <Reference Include="JoyConLib, Version=0.0.1.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\JoyConLib.0.0.1.4\lib\net45\JoyConLib.dll</HintPath>
     </Reference>
     <Reference Include="MathFloat, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MathFloat.1.0.1.0\lib\net20\MathFloat.dll</HintPath>
@@ -138,21 +138,21 @@
     </MonoGameContentReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\packages\JoyConLib.0.0.1.3\build\x64\hidapi.dll">
+    <None Include="..\..\packages\JoyConLib.0.0.1.4\build\x64\hidapi.dll">
       <Link>x64\hidapi.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="..\..\packages\JoyConLib.0.0.1.3\build\x86\hidapi.dll">
+    <None Include="..\..\packages\JoyConLib.0.0.1.4\build\x86\hidapi.dll">
       <Link>x86\hidapi.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <Import Project="..\..\packages\JoyConLib.0.0.1.3\build\JoyConLib.targets" Condition="Exists('..\..\packages\JoyConLib.0.0.1.3\build\JoyConLib.targets')" />
+  <Import Project="..\..\packages\JoyConLib.0.0.1.4\build\JoyConLib.targets" Condition="Exists('..\..\packages\JoyConLib.0.0.1.4\build\JoyConLib.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>Dieses Projekt verweist auf mindestens ein NuGet-Paket, das auf diesem Computer fehlt. Verwenden Sie die Wiederherstellung von NuGet-Paketen, um die fehlenden Dateien herunterzuladen. Weitere Informationen finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=322105". Die fehlende Datei ist "{0}".</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\JoyConLib.0.0.1.3\build\JoyConLib.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\JoyConLib.0.0.1.3\build\JoyConLib.targets'))" />
+    <Error Condition="!Exists('..\..\packages\JoyConLib.0.0.1.4\build\JoyConLib.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\JoyConLib.0.0.1.4\build\JoyConLib.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

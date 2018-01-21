@@ -65,6 +65,11 @@ namespace MonoGame_Shared
             spriteBatch.Draw(halo, pos, null, null, haloOrigin, 0, scale, BaseColor);
         }
 
+        public void WasHit()
+        {
+            game.Inputs.Player(PlayerNum).Rumble(160, 320, 200);
+        }
+
         internal override void Update(GameTime gameTime)
         {
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
