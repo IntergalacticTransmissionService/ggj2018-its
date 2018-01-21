@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)BaseGame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Camera.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Reloadable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\JoyConController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LiveContentManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Math\Circle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Phy\IHasPhysics.cs" />

@@ -21,7 +21,12 @@ namespace MonoGame_Shared
             for (int i = 0; i < 4; ++i)
                 Inputs[i].Provider = new XBoxController(i);
 
-            for (int i = 4; i < 5; ++i)
+            for (int i=4; i<8;++i)
+            {
+                Inputs[i].Provider = new JoyConController(i - 4);
+            }
+
+            for (int i = 8; i < 9; ++i)
                 Inputs[i].Provider = new KeyboardController(i);
 
             MainScene scene = new MainScene(this);

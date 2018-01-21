@@ -37,7 +37,7 @@ namespace MonoGame_Engine
 
             Screen.Initialize();
 
-            for (int i = 0; i < 5; ++i)
+            for (int i = 0; i < 9; ++i)
                 Inputs.Add(new InputState());
         }
 
