@@ -32,11 +32,10 @@ namespace MonoGame_Engine
                                                      Matrix.CreateTranslation(new Vector3(game.Screen.CanvasWidth * 0.5f, game.Screen.CanvasHeight * 0.5f, 0));
         }
 
-        public Matrix Matrix { get { return matrix; } }
+        public Matrix Matrix { get { return matrix; } set { matrix = value; } }
         public Vector2 TopLeft { get { return Vector2.Transform(Vector2.Zero, Matrix.Invert(Matrix)); } }
         public Vector2 TopRight { get { return Vector2.Transform(new Vector2(game.Screen.CanvasWidth, 0), Matrix.Invert(Matrix)); } }
         public Vector2 BottomLeft { get { return Vector2.Transform(new Vector2(0, game.Screen.CanvasHeight), Matrix.Invert(Matrix)); } }
         public Vector2 BottomRight { get { return Vector2.Transform(new Vector2(game.Screen.CanvasWidth, game.Screen.CanvasHeight), Matrix.Invert(Matrix)); } }
-
     }
 }

@@ -12,10 +12,10 @@ namespace MonoGame_Shared.Input
 {
     public class CamController : Entity
     {
-        private readonly BaseGame game;
+        protected readonly MonoGame game;
         private readonly int playerIdx;
 
-        public CamController(BaseGame game, int playerIdx)
+        public CamController(MonoGame game, int playerIdx)
         {
             this.game = game;
             this.playerIdx = playerIdx;
@@ -46,6 +46,10 @@ namespace MonoGame_Shared.Input
                 amount = cntrl.Value(Sliders.RightStickX);
                 game.Camera.Phy.RotSpd = amount;
             }
+
+            // Spd
+            Vector2 delta = (game.Scenes.Current as MainScene).Players[0].Phy.Pos - game.Camera.Phy.Pos;
+            game.Camera.Phy.Spd = delta * 5;
 
             // Zoom
             amount = cntrl.Value(Sliders.RightStickY);

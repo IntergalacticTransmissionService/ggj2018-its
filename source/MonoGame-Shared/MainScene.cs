@@ -17,6 +17,8 @@ namespace MonoGame_Shared
 
         internal readonly List<Player> Players;
 
+        internal new MonoGame game {  get { return base.game as MonoGame; } }
+
         public MainScene(MonoGame game) : base(game)
         {
             BackgroundImg = new TilingImage("Images/grass.jpg", game);
@@ -41,18 +43,7 @@ namespace MonoGame_Shared
         internal override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
             CheckForNewPlayers();
-
-            if (Players.Count > 0)
-            {
-                // cam follow player
-                Vector2 delta = Players[0].Phy.Pos - game.Camera.Phy.Pos;
-                game.Camera.Phy.Spd = delta * 5;
-
-                // write player pos to screen
-                game.DebugOverlay.Text = $"{Players[0].Phy.Pos.X}, {Players[0].Phy.Pos.Y}";
-            }
         }
 
         internal override int HandleInput(GameTime gameTime)
@@ -81,7 +72,7 @@ namespace MonoGame_Shared
 
                 if (Players.Count == 0)
                 {
-                    var camController = new CamController(game, player.PlayerNum);
+                    var camController = new PlayfieldCamController(game, player.PlayerNum);
                     controller.LoadContent(game.Content);
                     Children.Add(camController);
                 }
