@@ -17,6 +17,8 @@ namespace IntergalacticTransmissionService
         private Texture2D halo;
         private Vector2 haloOrigin;
 
+        private Texture2D indicator;
+
         public Color BaseColor { get; private set; }
 
         public Physics Phy { get; private set; }
@@ -48,6 +50,7 @@ namespace IntergalacticTransmissionService
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
             halo = content.Load<Texture2D>("Images/halo.png");
+            indicator = content.Load<Texture2D>("Images/particle.png");
             if (!wasReloaded)
             {
                 haloOrigin = new Vector2(halo.Width * 0.5f, halo.Height * 0.5f);
@@ -63,6 +66,17 @@ namespace IntergalacticTransmissionService
             var scale = new Vector2(Phy.HitBox.Radius / (halo.Width * 0.5f), Phy.HitBox.Radius / (halo.Height * 0.5f));
 
             spriteBatch.Draw(halo, pos, null, null, haloOrigin, 0, scale, BaseColor);
+
+            var camTopLeft = game.Camera.TopLeft;
+            var camBottomRight = game.Camera.BottomRight;
+
+            if (pos.X < camTopLeft.X || pos.X > camBottomRight.X || pos.Y < camTopLeft.Y || pos.Y > camBottomRight.Y)
+            {
+                pos.X = MathHelper.Clamp(pos.X, camTopLeft.X + 15, camBottomRight.X - 15);
+                pos.Y = MathHelper.Clamp(pos.Y, camTopLeft.Y + 15, camBottomRight.Y - 15);
+
+                spriteBatch.Draw(indicator, pos, BaseColor);
+            }
         }
 
         public void WasHit()

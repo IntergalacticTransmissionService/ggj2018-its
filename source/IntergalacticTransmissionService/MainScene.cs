@@ -21,7 +21,7 @@ namespace IntergalacticTransmissionService
 
         public MainScene(ITSGame game) : base(game)
         {
-            BackgroundImg = new TilingImage("Images/grass.jpg", game);
+            BackgroundImg = new TilingImage("Images/starfield.png", game);
             Background = new Sprite(BackgroundImg);
             Players = new List<Player>();
         }
