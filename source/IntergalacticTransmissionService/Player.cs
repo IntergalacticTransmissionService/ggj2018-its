@@ -93,21 +93,10 @@ namespace IntergalacticTransmissionService
             // Integrate
             Phy.Update(gameTime);
 
-            // Ensure Physics Bounds
-            //if (Phy.Pos.X < Radius) Phy.Pos.X = Radius;
-            //if (Phy.Pos.X > game.Screen.CanvasWidth - Radius) Phy.Pos.X = game.Screen.CanvasWidth - Radius;
-            //if (Phy.Pos.Y < Radius) Phy.Pos.Y = Radius;
-            //if (Phy.Pos.Y > game.Screen.CanvasHeight - Radius) Phy.Pos.Y = game.Screen.CanvasHeight - Radius;
-
             // Ensure MaxSpd
             var spd = Phy.Spd.Length();
             if (spd > 1200)
                 Phy.Spd = Vector2.Normalize(Phy.Spd) * 1200.0f;
-
-            //if (Phy.Spd.X > 1200) Phy.Spd.X = 1200;
-            //if (Phy.Spd.X < -1200) Phy.Spd.X = -1200;
-            //if (Phy.Spd.Y > 1200) Phy.Spd.Y = 1200;
-            //if (Phy.Spd.Y < -1200) Phy.Spd.Y = -1200;
         }
     }
 }

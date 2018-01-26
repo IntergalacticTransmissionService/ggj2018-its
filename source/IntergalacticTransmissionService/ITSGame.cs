@@ -9,6 +9,8 @@ namespace IntergalacticTransmissionService
 {
     public class ITSGame : BaseGame
     {
+        public MainScene MainScene;
+
         public ITSGame() : base()
         {
         }
@@ -25,8 +27,8 @@ namespace IntergalacticTransmissionService
 
             Inputs.Add(new KeyboardController());
 
-            MainScene scene = new MainScene(this);
-            Scenes.Add("Main", scene);
+            MainScene = new MainScene(this);
+            Scenes.Add("Main", MainScene);
             Scenes.Show("Main");
 
 #if !DEBUG

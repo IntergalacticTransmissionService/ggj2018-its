@@ -16,6 +16,7 @@ namespace IntergalacticTransmissionService
         internal readonly Sprite Background;
 
         internal readonly List<Player> Players;
+        internal readonly CollisionHandler CollisionHandler;
 
         internal new ITSGame game {  get { return base.game as ITSGame; } }
 
@@ -24,6 +25,7 @@ namespace IntergalacticTransmissionService
             BackgroundImg = new TilingImage("Images/starfield.png", game);
             Background = new Sprite(BackgroundImg);
             Players = new List<Player>();
+            CollisionHandler = new CollisionHandler(Players);
         }
 
         internal override void Initialize()
@@ -42,6 +44,7 @@ namespace IntergalacticTransmissionService
 
         internal override void Update(GameTime gameTime)
         {
+            CollisionHandler.Update(gameTime);
             base.Update(gameTime);
             CheckForNewPlayers();
         }
@@ -62,8 +65,11 @@ namespace IntergalacticTransmissionService
         {
             while (Players.Count < game.Inputs.NumPlayers)
             {
+                var rnd = new Random();
                 var player = new Player(game, Players.Count, 32f);
                 player.LoadContent(game.Content);
+                player.Phy.Pos.X = (float)(rnd.NextDouble() - 0.5) * 100;
+                player.Phy.Pos.Y = (float)(rnd.NextDouble() - 0.5) * 100;
                 Children.Add(player);
 
                 var controller = new AccelController(game, Players.Count, player);

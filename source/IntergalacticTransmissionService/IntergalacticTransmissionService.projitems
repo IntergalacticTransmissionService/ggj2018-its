@@ -9,6 +9,7 @@
     <Import_RootNamespace>MonoGame_Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)CollisionHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\AccelController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\CamController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\DirectController.cs" />
