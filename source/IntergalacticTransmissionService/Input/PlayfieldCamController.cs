@@ -11,6 +11,9 @@ namespace IntergalacticTransmissionService.Input
 {
     public class PlayfieldCamController : CamController
     {
+        private const float MinZoom = 0.5f;
+        private const float MaxZoom = 1.5f;
+
         public PlayfieldCamController(ITSGame game, int playerIdx) : base(game, playerIdx)
         {
         }
@@ -22,8 +25,8 @@ namespace IntergalacticTransmissionService.Input
             var players = (game.Scenes.Current as MainScene).Players;
             if (players?.Count > 1)
             {
-               var centerX = players.Average(e => e.Phy.Pos.X);
-               var centerY = players.Average(e => e.Phy.Pos.Y);
+                var centerX = players.Average(e => e.Phy.Pos.X);
+                var centerY = players.Average(e => e.Phy.Pos.Y);
 
                 var left = players.Min(e => e.Phy.Pos.X);
                 var right = players.Max(e => e.Phy.Pos.X);
@@ -35,7 +38,7 @@ namespace IntergalacticTransmissionService.Input
 
                 var zoomX = game.Screen.Width / distX;
                 var zoomY = game.Screen.Height / distY;
-                var zoom = MathHelper.Clamp(Math.Min(zoomX, zoomY), 0.1f, 3f);
+                var zoom = MathHelper.Clamp(Math.Min(zoomX, zoomY), MinZoom, MaxZoom);
 
                 game.Camera.Phy.Pos.X = centerX;
                 game.Camera.Phy.Pos.Y = centerY;
