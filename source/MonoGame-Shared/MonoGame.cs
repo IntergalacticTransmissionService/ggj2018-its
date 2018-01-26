@@ -20,7 +20,7 @@ namespace MonoGame_Shared
             for (int i = 0; i < 4; ++i)
                 Inputs.Add(new XBoxController(i));
 
-            for (int i = 0; i < 4; ++i)
+            for (int i = 0; i < 8; ++i)
                 Inputs.Add(new JoyConController(i));
 
             Inputs.Add(new KeyboardController());
@@ -32,6 +32,15 @@ namespace MonoGame_Shared
 #if !DEBUG
             Screen.ToggleFullscreen();
 #endif
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Inputs.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

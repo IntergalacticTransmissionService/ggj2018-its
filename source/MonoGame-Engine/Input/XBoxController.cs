@@ -113,5 +113,10 @@ namespace MonoGame_Engine.Input
                 vibration.RightMotorSpeed = (ushort)(ushort.MaxValue * high);
             }
         }
+
+        public override void Dispose()
+        {
+            // No-op
+        }
     }
 }

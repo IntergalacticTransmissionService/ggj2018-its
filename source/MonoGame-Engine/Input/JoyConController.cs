@@ -9,12 +9,20 @@ namespace MonoGame_Engine.Input
 {
     public class JoyConController : InputProvider
     {
-        private static JoyconManager manager = new JoyconManager();
+        private static JoyconManager manager;
+        private static HashSet<int> connected;
         private readonly int index;
 
         public JoyConController(int index)
         {
+            if (manager == null)
+            {
+                manager = new JoyconManager();
+                connected = new HashSet<int>();
+            }
+
             this.index = index;
+            connected.Add(this.index);
         }
 
         public override bool Get(Buttons btn)
@@ -84,6 +92,17 @@ namespace MonoGame_Engine.Input
             {
                 manager.Update(gameTime.ElapsedGameTime);
                 manager.RefreshJoyConList();
+            }
+        }
+
+        public override void Dispose()
+        {
+            connected.Remove(this.index);
+            
+            if (connected.Count() == 0)
+            {
+                manager.Dispose();
+                manager = null;
             }
         }
     }

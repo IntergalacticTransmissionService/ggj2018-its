@@ -88,5 +88,10 @@ namespace MonoGame_Engine.Input
         {
 
         }
+
+        public override void Dispose()
+        {
+            // no-op
+        }
     }
 }

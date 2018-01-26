@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MonoGame_Engine.Input
 {
-    public class Inputs
+    public class Inputs: IDisposable
     {
         private readonly List<InputState> states;
         private readonly Dictionary<int, int> playerMap;
@@ -57,6 +57,14 @@ namespace MonoGame_Engine.Input
         {
             foreach(var input in states)
                 input.Update(gameTime);
+        }
+
+        public void Dispose()
+        {
+            foreach (var input in states)
+                input.Dispose();
+            states.Clear();
+            playerMap.Clear();
         }
     }
 }

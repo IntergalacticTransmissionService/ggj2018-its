@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MonoGame_Engine.Input
 {
-    public class InputState
+    public class InputState : IDisposable
     {
         private readonly bool[] buttons;
         private readonly float[] sliders;
@@ -70,6 +70,12 @@ namespace MonoGame_Engine.Input
         {
             if (Provider != null)
                 Provider.Rumble(low, high, ms);
+        }
+
+        public void Dispose()
+        {
+            if (Provider != null)
+                Provider.Dispose();
         }
     }
 }
