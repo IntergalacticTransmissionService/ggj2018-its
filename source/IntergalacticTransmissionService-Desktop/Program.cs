@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MonoGame_Desktop
+namespace IntergalacticTransmissionService_Desktop
 {
     /// <summary>
     /// The main class.
@@ -13,7 +13,7 @@ namespace MonoGame_Desktop
         [STAThread]
         static void Main()
         {
-            using (var game = new MonoGame_Shared.MonoGame())
+            using (var game = new IntergalacticTransmissionService.ITSGame())
                 game.Run();
         }
     }

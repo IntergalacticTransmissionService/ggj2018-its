@@ -136,7 +136,7 @@ namespace MonoGame_Engine
             get
             {
 #if DEBUG
-                return "../../../../../MonoGame-Content/Content";
+                return "../../../../../IntergalacticTransmissionService-Content/Content";
 #else
                 return RootDirectory;
 #endif

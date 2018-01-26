@@ -7,11 +7,11 @@ using System.Linq;
 using MonoGame_Engine.Phy;
 using MonoGame_Engine;
 
-namespace MonoGame_Shared.Input
+namespace IntergalacticTransmissionService.Input
 {
     public class PlayfieldCamController : CamController
     {
-        public PlayfieldCamController(MonoGame game, int playerIdx) : base(game, playerIdx)
+        public PlayfieldCamController(ITSGame game, int playerIdx) : base(game, playerIdx)
         {
         }
 

@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MonoGame_Shared
+namespace IntergalacticTransmissionService
 {
     public class Player : Entity, IHasPhysics
     {

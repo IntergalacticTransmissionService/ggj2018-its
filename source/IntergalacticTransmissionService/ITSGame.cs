@@ -5,11 +5,11 @@ using System.Linq;
 using MonoGame_Engine;
 using MonoGame_Engine.Input;
 
-namespace MonoGame_Shared
+namespace IntergalacticTransmissionService
 {
-    public class MonoGame : BaseGame
+    public class ITSGame : BaseGame
     {
-        public MonoGame() : base()
+        public ITSGame() : base()
         {
         }
 

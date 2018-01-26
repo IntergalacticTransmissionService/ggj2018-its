@@ -8,14 +8,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MonoGame_Shared.Input
+namespace IntergalacticTransmissionService.Input
 {
     public class CamController : Entity
     {
-        protected readonly MonoGame game;
+        protected readonly ITSGame game;
         private readonly int playerIdx;
 
-        public CamController(MonoGame game, int playerIdx)
+        public CamController(ITSGame game, int playerIdx)
         {
             this.game = game;
             this.playerIdx = playerIdx;

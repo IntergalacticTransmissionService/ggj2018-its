@@ -1,14 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using IntergalacticTransmissionService.Input;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Engine;
 using MonoGame_Engine.Entities;
 using MonoGame_Engine.Gfx;
-using MonoGame_Shared.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MonoGame_Shared
+namespace IntergalacticTransmissionService
 {
     public class MainScene : Scene
     {
@@ -17,9 +17,9 @@ namespace MonoGame_Shared
 
         internal readonly List<Player> Players;
 
-        internal new MonoGame game {  get { return base.game as MonoGame; } }
+        internal new ITSGame game {  get { return base.game as ITSGame; } }
 
-        public MainScene(MonoGame game) : base(game)
+        public MainScene(ITSGame game) : base(game)
         {
             BackgroundImg = new TilingImage("Images/grass.jpg", game);
             Background = new Sprite(BackgroundImg);

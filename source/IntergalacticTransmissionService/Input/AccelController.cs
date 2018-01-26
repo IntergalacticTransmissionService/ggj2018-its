@@ -10,7 +10,7 @@ using MonoGame_Engine.Entities;
 using MonoGame_Engine;
 using MonoGame_Engine.Input;
 
-namespace MonoGame_Shared.Input
+namespace IntergalacticTransmissionService.Input
 {
     public class AccelController : Entity
     {
