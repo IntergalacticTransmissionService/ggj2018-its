@@ -6,7 +6,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.IO;
 
-namespace IntergalacticTransmissionService.HttpWebServer
+namespace IntergalacticTransmissionService.Net
 {
     public class WebServer
     {
@@ -61,7 +61,7 @@ namespace IntergalacticTransmissionService.HttpWebServer
             });
         }
 
-        public void Stop()
+        public void Dispose()
         {
             HttpListener.Stop();
             HttpListener.Close();
