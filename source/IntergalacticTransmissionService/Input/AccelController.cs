@@ -58,8 +58,9 @@ namespace IntergalacticTransmissionService.Input
                 Player.Phy.Accel.X += movement.X;
                 Player.Phy.Accel.Y += movement.Y;
 
-                // apply Rotation
-                Player.Phy.Rot = (float)Math.Atan2(Player.Phy.Spd.Y, Player.Phy.Spd.X);
+                // pass Parcel
+                if (cntrl.WasPressed(Buttons.A))
+                    Player.ReleaseParcel();
 
                 // shoot
                 if (cntrl.WasPressed(Buttons.B))

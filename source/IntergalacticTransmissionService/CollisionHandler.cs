@@ -8,23 +8,29 @@ namespace IntergalacticTransmissionService
 {
     public class CollisionHandler
     {
-        private readonly List<Player> players;
+        private readonly MainScene scene;
 
-        public CollisionHandler(List<Player> players)
+        public CollisionHandler(MainScene scene)
         {
-            this.players = players;
+            this.scene = scene;
         }
 
         public void Update(GameTime gameTime)
         {
-            for(int i=0; i<players.Count; ++i)
+            for(int i=0; i<scene.Players.Count; ++i)
             {
-                var left = players[i];
+                var left = scene.Players[i];
+
+                // check Parcel
+                if (left.Phy.CollidesWith(scene.Parcel.Phy))
+                {
+                    scene.Parcel.Grab(left);
+                }
 
                 // check other players
-                for (int j=0; j<players.Count; ++j)
+                for (int j=0; j< scene.Players.Count; ++j)
                 {
-                    var right = players[j];
+                    var right = scene.Players[j];
 
                     // collisions with other players
                     if (j > i)
@@ -35,7 +41,7 @@ namespace IntergalacticTransmissionService
                             right.WasHit();
 
                             float dist = Vector2.Distance(left.Phy.Pos, right.Phy.Pos);
-                            float correction = 0.5f * ((left.Radius + right.Radius) - dist);
+                            float correction = 0.5f * ((left.Phy.HitBox.Radius + right.Phy.HitBox.Radius) - dist);
                             Vector2 vec = Vector2.Normalize(Vector2.Subtract(right.Phy.Pos, left.Phy.Pos));
                             left.Phy.Pos -= 2 * correction * vec;
                             right.Phy.Pos += 2 * correction * vec;
