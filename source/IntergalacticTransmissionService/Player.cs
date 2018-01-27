@@ -13,7 +13,8 @@ namespace IntergalacticTransmissionService
 {
     public class Player : GameObject
     {
-        public const float MaxSpd = 800f;
+        public const float DefaultMaxSpd = 800f;
+        public float MaxSpd { get { return game.MainScene.Parcel.HoldBy == this ? DefaultMaxSpd * 0.9f : DefaultMaxSpd; } }
 
         public BulletSystem Bullets { get; private set; }
 

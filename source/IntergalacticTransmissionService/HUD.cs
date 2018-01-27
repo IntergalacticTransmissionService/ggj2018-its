@@ -68,7 +68,7 @@ namespace IntergalacticTransmissionService
                 var indicator = position + left;
 
                 spriteBatch.Draw(distanceScale, new Vector2(left, 0));
-                this.game.MainScene.leviathan.Gfx.Draw(spriteBatch, new Vector2(indicator, 10), MathHelper.PiOver2, 10f, Color.White);
+                this.game.MainScene.Leviathan.Gfx.Draw(spriteBatch, new Vector2(indicator, 10), MathHelper.PiOver2, 10f, Color.White);
             }
             spriteBatch.End();
         }
@@ -114,7 +114,7 @@ namespace IntergalacticTransmissionService
 
         internal override void Update(GameTime gameTime)
         {
-            this.distanceToMotherShip = Math.Abs((game.MainScene.leviathan.Phy.Pos - game.Camera.Phy.Pos).Length());
+            this.distanceToMotherShip = Math.Abs((game.MainScene.Leviathan.Phy.Pos - game.Camera.Phy.Pos).Length());
         }
 
         internal void ShowMessageForPlayer(Player player, string msg, TimeSpan duration)

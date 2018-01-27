@@ -380,3 +380,9 @@
 /processorParam:TextureFormat=Color
 /build:Images/boss.png
 
+#begin Sounds/powerup.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/powerup.wav
+
