@@ -66,7 +66,7 @@ namespace MonoGame_Engine.Entities
         {
             var colidedItem = this.collectebelsPool.FirstOrDefault(item => item.Phy.CollidesWith(player.Phy));
             colidedItem?.Phy.CollidesWith(player.Phy);
-            var type = colidedItem?.Grafic;
+            var type = colidedItem?.Graphics;
             colidedItem?.Dispose();
             return type;
         }

@@ -51,7 +51,7 @@ namespace MonoGame_Engine
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             foreach (var toDraw in this.list.Take(this.Count).Where(Blink))
-                this.Graphics[(int)toDraw.Grafic].Draw(spriteBatch, toDraw.Phy.Pos, toDraw.Phy.Rot);
+                this.Graphics[(int)toDraw.Graphics].Draw(spriteBatch, toDraw.Phy.Pos, toDraw.Phy.Rot);
         }
 
         private bool Blink(Collecteble arg)
@@ -86,7 +86,7 @@ namespace MonoGame_Engine
             newCollectibal.Phy.Spd = Vector2.Zero;
             newCollectibal.Phy.Pos = position;
             newCollectibal.Phy.Rot = rotation;
-            newCollectibal.Grafic = grafic;
+            newCollectibal.Graphics = grafic;
             newCollectibal.timeToLive = timeToLive;
             return newCollectibal;
         }
@@ -126,7 +126,7 @@ namespace MonoGame_Engine
 
             public TimeSpan timeToLive;
 
-            public CollectableType Grafic { get; set; }
+            public CollectableType Graphics { get; set; }
             public Phy.Physics Phy { get; set; }
 
             public bool IsActive => this.index <= this.pool.lastActive;
