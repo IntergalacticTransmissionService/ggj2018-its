@@ -11,12 +11,14 @@ namespace IntergalacticTransmissionService.Behaviors
         public MainScene Scene { get; }
         public float ChaseDist { get; }
         public float ForgetDist { get; }
+        public float Spd { get; }
 
-        public ChasingBehavior(MainScene scene, float chaseDist, float forgetDist)
+        public ChasingBehavior(MainScene scene, float chaseDist, float forgetDist, float spd)
         {
             this.Scene = scene;
             this.ChaseDist = chaseDist;
             this.ForgetDist = forgetDist;
+            this.Spd = spd;
         }
 
 
@@ -47,11 +49,16 @@ namespace IntergalacticTransmissionService.Behaviors
             if (Target != null && owner != null)
             {
                 owner.Phy.Dmp = 1f;
-                owner.Phy.Spd = Vector2.Normalize(Target.Phy.Pos - owner.Phy.Pos) * 300f;
+                owner.Phy.Spd = Vector2.Normalize(Target.Phy.Pos - owner.Phy.Pos) * Spd;
             } else
             {
                 owner.Phy.Dmp = 0.99f;
             }
+        }
+
+        public override void Reset()
+        {
+            this.Target = null;
         }
     }
 }

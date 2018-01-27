@@ -15,7 +15,9 @@ namespace IntergalacticTransmissionService
 
         private Texture2D indicator;
         private Vector2 origin;
-        private float scale = 3;
+        private float Scale = 5;
+
+        public bool HighlightIndicator;
 
         public GameObject(ITSGame game, string assetPath, Color baseColor, float radius) : base(assetPath, radius, baseColor)
         {
@@ -39,10 +41,17 @@ namespace IntergalacticTransmissionService
                 pos.X = MathHelper.Clamp(pos.X, camTopLeft.X + 15, camBottomRight.X - 15);
                 pos.Y = MathHelper.Clamp(pos.Y, camTopLeft.Y + 15, camBottomRight.Y - 15);
 
-                spriteBatch.Draw(indicator, pos, null, BaseColor,0, origin, scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(indicator, pos, null, BaseColor,0, origin, Scale, SpriteEffects.None, 0);
             }
 
             base.Draw(spriteBatch, gameTime);
+        }
+
+        internal override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            Scale = HighlightIndicator ? 3 : 1;
         }
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)

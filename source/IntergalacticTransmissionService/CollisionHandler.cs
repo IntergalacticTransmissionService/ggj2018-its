@@ -17,6 +17,7 @@ namespace IntergalacticTransmissionService
 
         public void Update(GameTime gameTime)
         {
+            // check Players
             for(int i=0; i<scene.Players.Count; ++i)
             {
                 var left = scene.Players[i];
@@ -65,6 +66,30 @@ namespace IntergalacticTransmissionService
                                 right.Bullets.Remove(k);
                                 left.WasHit();
                                 scene.Parcel.Release(left, 1000);
+                            }
+                            ++k;
+                        }
+                    }
+                }
+
+                // check enemies
+                for (int j=0; j<scene.Enemies.Count; ++j)
+                {
+                    var enemy = scene.Enemies[j];
+                    if (enemy.IsAlive)
+                    {
+                        if (left.Phy.CollidesWith(enemy.Phy))
+                        {
+                            // TODO: left.Die();
+                        }
+
+                        int k = 0;
+                        foreach (var bullet in left.Bullets)
+                        {
+                            if (enemy.Phy.CollidesWith(bullet))
+                            {
+                                left.Bullets.Remove(k);
+                                enemy.WasHit();
                             }
                             ++k;
                         }

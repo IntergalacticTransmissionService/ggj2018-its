@@ -66,6 +66,9 @@ namespace IntergalacticTransmissionService.Input
                 if (cntrl.WasPressed(Buttons.B))
                     Player.Bullets.Spawn();
                 Player.Shoot(cntrl.IsDown(Buttons.B));
+
+                // Where am i
+                Player.WhereAmI(cntrl.IsDown(Buttons.X));
             }
         }
 

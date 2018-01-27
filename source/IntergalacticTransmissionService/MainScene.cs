@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Engine;
 using MonoGame_Engine.Entities;
 using MonoGame_Engine.Gfx;
+using MonoGame_Engine.Math;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -50,8 +51,16 @@ namespace IntergalacticTransmissionService
             Parcel.Phy.Pos.X = 500;
             Children.Add(Parcel);
 
-            var testEnemy = new Enemy(game, Color.White, 128f, new Vector2(200, 200), (float)Math.PI, new ChasingBehavior(this, 500, 800));
-            Enemies.Add(testEnemy);
+            for (int i = 0; i < 10; ++i)
+            {
+                var testEnemy = new Enemy(game,
+                    Color.White,
+                    RandomFuncs.FromRange(16f, 64f),
+                    new Vector2(RandomFuncs.FromRange(-1000, 1000), RandomFuncs.FromRange(-1000, 1000)),
+                    (float)RandomFuncs.FromRange(0, MathHelper.TwoPi),
+                    new ChasingBehavior(this, 500, 800, RandomFuncs.FromRange(200, 500)));
+                Enemies.Add(testEnemy);
+            }
             foreach(var e in Enemies) { e.LoadContent(game.Content); }
         }
 
