@@ -5,6 +5,7 @@ using MonoGame_Engine.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using IntergalacticTransmissionService.Net;
 
 namespace IntergalacticTransmissionService
 {
@@ -12,6 +13,8 @@ namespace IntergalacticTransmissionService
     {
         private ITSGame game;
         private SpriteBatch spriteBatch;
+        private readonly string lanIp;
+        public Vector2 lanIpPos = new Vector2();
 
         private Texture2D[] chars = new Texture2D[4];
         private Vector2[] pos = new Vector2[4];
@@ -19,11 +22,14 @@ namespace IntergalacticTransmissionService
         public HUD(ITSGame game)
         {
             this.game = game;
+            lanIp = WebControllerManager.getLanIpWithPort();
         }
 
         internal override void Draw(SpriteBatch _, GameTime gameTime)
         {
             spriteBatch.Begin();
+            spriteBatch.DrawString(game.Fonts.Get(MonoGame_Engine.Font.DebugFont), lanIp, lanIpPos, Color.White);
+
             for(int i=0; i<4; i++)
             {
                 pos[i].X = i % 2 == 0 ? 10 : game.Screen.CanvasWidth - 10 - chars[i].Width;
@@ -55,6 +61,7 @@ namespace IntergalacticTransmissionService
             spriteBatch = new SpriteBatch(game.GraphicsDevice);
             for (int i = 0; i < 4; ++i)
                 chars[i] = content.Load<Texture2D>($"Images/character_{i+1:00}.png");
+            lanIpPos = new Vector2(chars[0].Width + 20, 10);
         }
 
         internal override void Update(GameTime gameTime)

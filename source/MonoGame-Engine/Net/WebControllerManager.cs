@@ -35,6 +35,8 @@ namespace IntergalacticTransmissionService.Net
 
     class WebControllerManager
     {
+        private static readonly int HTTP_PORT = 8080;
+        private static readonly int WS_PORT = 8082;
         private readonly WebServer WebServer;
         private readonly ClientConnection[] Clients = new ClientConnection[16];
         private readonly WebSocketServer WebSocketServer;
@@ -42,7 +44,7 @@ namespace IntergalacticTransmissionService.Net
         public WebControllerManager()
         {
             string host = getLanIp();
-            WebServer = new WebServer("http://" + host + ":8080/");
+            WebServer = new WebServer("http://" + host + ":" + HTTP_PORT + "/");
             WebServer.RegisterFile("/", "Content/WebController/index.html");
             string[] files = {
                 "style.css",
@@ -61,7 +63,7 @@ namespace IntergalacticTransmissionService.Net
             }
             WebServer.Run();
 
-            WebSocketServer = new WebSocketServer("ws://" + host + ":8082");
+            WebSocketServer = new WebSocketServer("ws://" + host + ":" + WS_PORT);
             WebSocketServer.Start(Connection =>
             {
                 Connection.OnOpen = () => OnOpen(Connection);
@@ -70,7 +72,7 @@ namespace IntergalacticTransmissionService.Net
             });
         }
 
-        private static string getLanIp()
+        public static string getLanIp()
         {
             // would be better to choose, but this should work for the GGJ:
             var host = Dns.GetHostEntry(Dns.GetHostName());
@@ -84,6 +86,11 @@ namespace IntergalacticTransmissionService.Net
                 }
             }
             return "127.0.0.1";
+        }
+
+        public static string getLanIpWithPort()
+        {
+            return getLanIp() + ":" + HTTP_PORT;
         }
 
         public void SetRumble(int index, int ms)
