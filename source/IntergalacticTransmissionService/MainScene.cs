@@ -83,6 +83,8 @@ namespace IntergalacticTransmissionService
 
             CheckForNewPlayers();
             Hud.Update(gameTime);
+
+            Enemies.RemoveAll(e => !e.IsAlive);
         }
 
         internal override int HandleInput(GameTime gameTime)
