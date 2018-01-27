@@ -47,13 +47,13 @@ namespace IntergalacticTransmissionService
             this.PlayerNum = playerNum;
             this.BaseColor = colors[playerNum % colors.Length];
             Phy = new OrientedPhysics(radius);
-            Bullets = new BulletSystem(this, "Images/particle.png", 300, 15);
+            Bullets = new BulletSystem(this, "Images/bullet.png", 300, 15);
         }
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
             halo = content.Load<Texture2D>("Images/player.png");
-            indicator = content.Load<Texture2D>("Images/particle.png");
+            indicator = content.Load<Texture2D>("Images/indicator.png");
             Bullets.LoadContent(content, wasReloaded);
             if (!wasReloaded)
             {

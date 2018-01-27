@@ -15,6 +15,7 @@ namespace IntergalacticTransmissionService
         internal readonly TilingImage BackgroundImg;
         internal readonly Sprite Background;
 
+        internal readonly Parcel Parcel;
         internal readonly List<Player> Players;
         internal readonly CollisionHandler CollisionHandler;
 
@@ -24,8 +25,9 @@ namespace IntergalacticTransmissionService
         {
             BackgroundImg = new TilingImage("Images/starfield.png", game);
             Background = new Sprite(BackgroundImg);
+            Parcel = new Parcel();
             Players = new List<Player>();
-            CollisionHandler = new CollisionHandler(Players);
+            CollisionHandler = new CollisionHandler(this);
         }
 
         internal override void Initialize()
@@ -40,6 +42,9 @@ namespace IntergalacticTransmissionService
             Background.LoadContent(game.Content);
             Background.Gfx.origin = Vector2.Zero;
             Children.Add(Background);
+
+            Parcel.LoadContent(game.Content);
+            Children.Add(Parcel);
         }
 
         internal override void Update(GameTime gameTime)

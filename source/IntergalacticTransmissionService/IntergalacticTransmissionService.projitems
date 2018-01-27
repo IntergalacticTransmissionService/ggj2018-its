@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Input\PlayfieldCamController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ITSGame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Parcel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Player.cs" />
   </ItemGroup>
 </Project>

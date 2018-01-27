@@ -8,23 +8,30 @@ namespace IntergalacticTransmissionService
 {
     public class CollisionHandler
     {
-        private readonly List<Player> players;
+        private readonly MainScene scene;
 
-        public CollisionHandler(List<Player> players)
+        public CollisionHandler(MainScene scene)
         {
-            this.players = players;
+            this.scene = scene;
         }
 
         public void Update(GameTime gameTime)
         {
-            for(int i=0; i<players.Count; ++i)
+            for(int i=0; i<scene.Players.Count; ++i)
             {
-                var left = players[i];
+                var left = scene.Players[i];
+
+                // check Parcel
+                if (left.Phy.CollidesWith(scene.Parcel.Phy))
+                {
+                    if (scene.Parcel.HoldBy == null)
+                        scene.Parcel.HoldBy = left;
+                }
 
                 // check other players
-                for (int j=0; j<players.Count; ++j)
+                for (int j=0; j< scene.Players.Count; ++j)
                 {
-                    var right = players[j];
+                    var right = scene.Players[j];
 
                     // collisions with other players
                     if (j > i)
