@@ -86,6 +86,15 @@ namespace IntergalacticTransmissionService.Net
             return "127.0.0.1";
         }
 
+        public void SetRumble(int index, int ms)
+        {
+            lock (Clients)
+            {
+                if (Clients[index] != null)
+                    Clients[index].Connection.Send("%|" + ms);
+            }
+        }
+
         public float getAxis(int index, int axis)
         {
             lock (Clients)

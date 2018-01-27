@@ -18,23 +18,23 @@ namespace MonoGame_Engine
     }
     class Pool : Entities.Entity, IEnumerable<ICollectable>
     {
-        private readonly Collecteble[] list;
-        private readonly Collecteble[] backupList;
+        private readonly Collectable[] list;
+        private readonly Collectable[] backupList;
         private int lastActive = -1;
 
         public int Count => this.lastActive + 1;
         public int Available => this.list.Length - this.Count;
 
-        public Pool(int initialSize, float itemRadios)
+        public Pool(int initialSize, float itemRadius)
         {
-            this.list = new Collecteble[initialSize];
-            this.backupList = new Collecteble[initialSize];
+            this.list = new Collectable[initialSize];
+            this.backupList = new Collectable[initialSize];
             for (int i = 0; i < this.list.Length; i++)
-                this.list[i] = new Collecteble(i, this) { Phy = new Phy.Physics(itemRadios) };
+                this.list[i] = new Collectable(i, this) { Phy = new Phy.Physics(itemRadius) };
         }
         internal override void Update(GameTime gameTime)
         {
-            foreach (var toUpdate in this.OfType<Collecteble>())
+            foreach (var toUpdate in this.OfType<Collectable>())
             {
                 toUpdate.Phy.Update(gameTime);
                 toUpdate.timeToLive -= gameTime.ElapsedGameTime;
@@ -54,7 +54,7 @@ namespace MonoGame_Engine
                 this.Graphics[(int)toDraw.Graphics].Draw(spriteBatch, toDraw.Phy.Pos, toDraw.Phy.Rot);
         }
 
-        private bool Blink(Collecteble arg)
+        private bool Blink(Collectable arg)
         {
             if (
                 arg.timeToLive > TimeSpan.FromSeconds(3.0)
@@ -91,7 +91,7 @@ namespace MonoGame_Engine
             return newCollectibal;
         }
 
-        protected void ReturnCollectible(Collecteble c)
+        protected void ReturnCollectible(Collectable c)
         {
             if (c.index != this.lastActive)
             {
@@ -119,7 +119,7 @@ namespace MonoGame_Engine
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
 
-        protected class Collecteble : ICollectable
+        protected class Collectable : ICollectable
         {
             public int index;
             private Pool pool;
@@ -131,7 +131,7 @@ namespace MonoGame_Engine
 
             public bool IsActive => this.index <= this.pool.lastActive;
 
-            public Collecteble(int i, Pool pool)
+            public Collectable(int i, Pool pool)
             {
                 this.index = i;
                 this.pool = pool;
