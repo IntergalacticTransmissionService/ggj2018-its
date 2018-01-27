@@ -17,6 +17,7 @@ namespace IntergalacticTransmissionService
 
         internal readonly Parcel Parcel;
         internal readonly List<Player> Players;
+        internal readonly List<Enemy> Enemies;
         internal readonly CollisionHandler CollisionHandler;
 
         internal new ITSGame game {  get { return base.game as ITSGame; } }
@@ -27,6 +28,7 @@ namespace IntergalacticTransmissionService
             Background = new Sprite(BackgroundImg, -1);
             Parcel = new Parcel(game, Color.LightPink, 32f);
             Players = new List<Player>();
+            Enemies = new List<Enemy>();
             CollisionHandler = new CollisionHandler(this);
         }
 
@@ -46,10 +48,20 @@ namespace IntergalacticTransmissionService
             Parcel.LoadContent(game.Content);
             Parcel.Phy.Pos.X = 500;
             Children.Add(Parcel);
+
+            Enemies.Add(new Enemy(game, Color.White, 64f, new Vector2(200, 200)));
+            foreach(var e in Enemies) { e.LoadContent(game.Content); }
+        }
+
+        internal override void Draw(SpriteBatch batch, GameTime gameTime)
+        {
+            base.Draw(batch, gameTime);
+            foreach (var e in Enemies) { e.Draw(batch, gameTime); }
         }
 
         internal override void Update(GameTime gameTime)
         {
+            foreach(var e in Enemies) { e.Update(gameTime); }
             CollisionHandler.Update(gameTime);
             base.Update(gameTime);
             CheckForNewPlayers();
