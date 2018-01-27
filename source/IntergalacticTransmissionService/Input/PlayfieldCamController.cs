@@ -14,8 +14,8 @@ namespace IntergalacticTransmissionService.Input
     public class PlayfieldCamController : Entity
     {
         private readonly ITSGame game;
-        private const float MinZoom = 0.3f;
-        private const float MaxZoom = 1.2f;
+        private const float MinZoom = 0.5f;
+        private const float MaxZoom = 1.5f;
 
         public PlayfieldCamController(ITSGame game, int playerIdx)
         {

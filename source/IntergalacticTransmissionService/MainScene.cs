@@ -13,10 +13,11 @@ namespace IntergalacticTransmissionService
     public class MainScene : Scene
     {
         internal readonly TilingImage BackgroundImg;
-        internal readonly Sprite Background;
+        internal Sprite Background;
 
         internal readonly Parcel Parcel;
         internal readonly List<Player> Players;
+        internal readonly List<Enemy> Enemies;
         internal readonly CollisionHandler CollisionHandler;
 
         internal readonly Level Level;
@@ -27,9 +28,10 @@ namespace IntergalacticTransmissionService
         public MainScene(ITSGame game) : base(game)
         {
             BackgroundImg = new TilingImage("Images/starfield.png", game);
-            Background = new Sprite(BackgroundImg);
+            Background = new Sprite(BackgroundImg, -1);
             Parcel = new Parcel(game, Color.LightPink, 32f);
             Players = new List<Player>();
+            Enemies = new List<Enemy>();
             CollisionHandler = new CollisionHandler(this);
             Level = new Level(game, 300, 1000, 3);
         }
@@ -52,10 +54,20 @@ namespace IntergalacticTransmissionService
             Children.Add(Parcel);
             Level.LoadContent(game.Content);
             Children.Add(Level);
+
+            Enemies.Add(new Enemy(game, Color.White, 128f, new Vector2(200, 200), (float)Math.PI));
+            foreach(var e in Enemies) { e.LoadContent(game.Content); }
+        }
+
+        internal override void Draw(SpriteBatch batch, GameTime gameTime)
+        {
+            base.Draw(batch, gameTime);
+            foreach (var e in Enemies) { e.Draw(batch, gameTime); }
         }
 
         internal override void Update(GameTime gameTime)
         {
+            foreach(var e in Enemies) { e.Update(gameTime); }
             CollisionHandler.Update(gameTime);
             base.Update(gameTime);
 

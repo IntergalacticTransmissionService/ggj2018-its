@@ -15,7 +15,8 @@ namespace MonoGame_Engine.Phy
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            Rot = (float)Atan2(Spd.Y, Spd.X);
+            if (Spd.Length() > 2)
+                Rot = (float)Atan2(Spd.Y, Spd.X);
         }
 
     }

@@ -29,5 +29,11 @@ namespace MonoGame_Engine.Gfx
 
             spriteBatch.GraphicsDevice.SamplerStates[0] = oldSamplerState;
         }
+
+        public override void Draw(SpriteBatch spriteBatch, Vector2 pos, float rot, float size, Color color)
+        {
+            Draw(spriteBatch, pos, rot);
+        }
+
     }
 }
