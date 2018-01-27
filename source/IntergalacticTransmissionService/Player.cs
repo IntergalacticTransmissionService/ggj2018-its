@@ -20,9 +20,11 @@ namespace IntergalacticTransmissionService
         public int PlayerNum { get; private set; }
 
         public bool IsAlive { get; private set; }
+        public bool IsInvincible { get { return InvincibleCooldown > TimeSpan.Zero; } }
         public BulletType BulletType { get; private set; }
 
-        public TimeSpan Cooldown;
+        public TimeSpan RespawnCooldown;
+        public TimeSpan InvincibleCooldown;
         public readonly int[] Collectables;
 
         public static Color[] colors = new Color[] {
@@ -74,6 +76,11 @@ namespace IntergalacticTransmissionService
 
         internal override void Update(GameTime gameTime)
         {
+            if (IsInvincible)
+            {
+                InvincibleCooldown -= gameTime.ElapsedGameTime;
+            }
+
             if (IsAlive)
             {
                 Phy.Dmp = 0.95f;
@@ -87,8 +94,8 @@ namespace IntergalacticTransmissionService
             }
             else
             {
-                if (Cooldown > TimeSpan.Zero)
-                    Cooldown -= gameTime.ElapsedGameTime;
+                if (RespawnCooldown > TimeSpan.Zero)
+                    RespawnCooldown -= gameTime.ElapsedGameTime;
             }
 
             for (int i = 0; i < Collectables.Length; i++)
@@ -142,7 +149,7 @@ namespace IntergalacticTransmissionService
 
         internal void Spawn()
         {
-            if (Cooldown <= TimeSpan.Zero)
+            if (RespawnCooldown <= TimeSpan.Zero)
             {
                 var rnd = new Random();
                 IsAlive = true;
@@ -150,14 +157,19 @@ namespace IntergalacticTransmissionService
                 Phy.Pos.Y = game.Camera.Phy.Pos.Y + (float)(rnd.NextDouble() - 0.5) * 500;
                 Phy.Spd = Vector2.Zero;
                 Phy.Accel = Vector2.Zero;
+                RespawnCooldown = TimeSpan.Zero;
+                InvincibleCooldown = TimeSpan.FromSeconds(4);
             }
         }
 
         public void Die()
         {
-            Shoot(false);
-            IsAlive = false;
-            Cooldown = TimeSpan.FromSeconds(3);
+            if (!IsInvincible)
+            {
+                Shoot(false);
+                IsAlive = false;
+                RespawnCooldown = TimeSpan.FromSeconds(3);
+            }
         }
     }
 }
