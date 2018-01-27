@@ -11,9 +11,8 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BulletSystem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CollisionHandler.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)EntityWithIndicator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\AccelController.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\CamController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\PlayfieldCamController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ITSGame.cs" />

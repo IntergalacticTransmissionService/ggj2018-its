@@ -8,7 +8,7 @@ using System.Text;
 
 namespace IntergalacticTransmissionService
 {
-    public class Parcel : EntityWithIndicator
+    public class Parcel : GameObject
     {
         public Player LastHeldBy { get; set; }
         public Player HoldBy { get; set; }
@@ -17,28 +17,17 @@ namespace IntergalacticTransmissionService
         private Texture2D img;
         private Vector2 origin;
 
-        public Parcel(ITSGame game, Color color, float radius) : base(game, color, radius)
+        public Parcel(ITSGame game, Color color, float radius) : base(game, "Images/parcel.png", color, radius)
         {
         }
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
             base.LoadContent(content, wasReloaded);
-            img = content.Load<Texture2D>("Images/parcel.png");
-            origin = new Vector2(img.Width * 0.5f, img.Height * 0.5f);
-
             if (!wasReloaded)
             {
                 Phy.Dmp = 0.95f;
             }
-        }
-
-        internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        {
-            base.Draw(spriteBatch, gameTime);
-
-            var scale = new Vector2(Phy.HitBox.Radius / (img.Width * 0.5f), Phy.HitBox.Radius / (img.Height * 0.5f));
-            spriteBatch.Draw(img, Phy.Pos, null, null, origin, Phy.Rot, scale, BaseColor);
         }
 
         internal override void Update(GameTime gameTime)
