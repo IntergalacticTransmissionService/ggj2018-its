@@ -18,7 +18,7 @@ namespace IntergalacticTransmissionService
         public void Update(GameTime gameTime)
         {
             // check Players
-            for(int i=0; i<scene.Players.Count; ++i)
+            for (int i = 0; i < scene.Players.Count; ++i)
             {
                 var left = scene.Players[i];
 
@@ -29,7 +29,7 @@ namespace IntergalacticTransmissionService
                 }
 
                 // check other players
-                for (int j=0; j< scene.Players.Count; ++j)
+                for (int j = 0; j < scene.Players.Count; ++j)
                 {
                     var right = scene.Players[j];
 
@@ -73,7 +73,7 @@ namespace IntergalacticTransmissionService
                 }
 
                 // check enemies
-                for (int j=0; j<scene.Enemies.Count; ++j)
+                for (int j = 0; j < scene.Enemies.Count; ++j)
                 {
                     var enemy = scene.Enemies[j];
                     if (enemy.IsAlive)
@@ -96,7 +96,15 @@ namespace IntergalacticTransmissionService
                         }
                     }
                 }
+
+                var collectible = scene.Level.Collides(scene.Players[i]);
+                if (collectible.HasValue)
+                {
+                    scene.Players[i].Collectables[(int)collectible.Value]++;
+                }
+
             }
+
         }
     }
 }

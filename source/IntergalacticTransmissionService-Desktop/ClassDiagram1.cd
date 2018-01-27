@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MonoGame_Engine.Phy.OrientedPhysics" Collapsed="true">
+    <Position X="9.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Phy\OrientedPhysics.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGame_Engine.Phy.Physics" Collapsed="true">
+    <Position X="9.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAgAAAAAAABAAABAAAAADAIgAAAAAAAAAAAIA=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Phy\Physics.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGame_Engine.Math.BaseFuncs" Collapsed="true">
+    <Position X="13.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAgAgAIEAAAAAAEAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Math\BaseFuncs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGame_Engine.Math.Circle" Collapsed="true">
+    <Position X="15.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAIA=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Math\Circle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGame_Engine.Math.MathExtensions" Collapsed="true">
+    <Position X="15.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Math\MathExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGame_Engine.Math.RandomFuncs" Collapsed="true">
+    <Position X="17" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Math\RandomFuncs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGame_Engine.Input.InputProvider" Collapsed="true">
+    <Position X="4.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAABAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Input\InputProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MonoGame_Engine.Input.Inputs" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAGAAQAAABCAAAAAAAAAAAAAEAAACAQAAAAA=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Input\Inputs.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonoGame_Engine.Input.InputState" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QEQAAABAAiAEAAAAIEAAAAgAEAAAAAAAAAEgAAIABAA=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Input\InputState.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonoGame_Engine.Input.JoyConController" Collapsed="true">
+    <Position X="2" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAABAACAAAABAAAAAAAAEAAgAAAAAAAAAAAIBAAA=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Input\JoyConController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGame_Engine.Input.KeyboardController" Collapsed="true">
+    <Position X="6.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAAAABACAAAABAAAAAAAAAAAAAACAAAAAAAAIAAAA=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Input\KeyboardController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGame_Engine.Input.XBoxController" Collapsed="true">
+    <Position X="4.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAASAAAIBIAAAIAAAAACAAACAAAAAAAAIBBAA=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Input\XBoxController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGame_Engine.Entities.Entity" Collapsed="true">
+    <Position X="5.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Entities\Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGame_Engine.Entities.Group" Collapsed="true">
+    <Position X="4.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAEAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Entities\Group.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGame_Engine.Entities.ParticleEmitter" Collapsed="true">
+    <Position X="6.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>DBQAAAAEgAAAxgAQAokAAYQAAACAACAIACAAoAAAAIQ=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Entities\ParticleEmitter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGame_Engine.Entities.ParticleSystem" Collapsed="true">
+    <Position X="2" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAQiABAAAAAAiAAAAAAAIIAAAAIAAAAAQ=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Entities\ParticleSystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGame_Engine.Entities.Reloadable" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAQ=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Entities\Reloadable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGame_Engine.Entities.Scene" Collapsed="true">
+    <Position X="4.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEECAAAAAAwAAAAAAAAAAAAAAAAAIAQAAAAAAAAQ=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Entities\Scene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGame_Engine.Gfx.Image" Collapsed="true">
+    <Position X="11" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CEAAAAAAAAAAAgAAAIAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Gfx\Image.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGame_Engine.Entities.Sprite" Collapsed="true">
+    <Position X="8.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACAAAAAAgAAAAAAAAAAAAAAAAAAAABAAAAAAAQ=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Entities\Sprite.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Phy" />
+      <Property Name="Gfx" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="MonoGame_Engine.Phy.IHasPhysics" Collapsed="true">
+    <Position X="13.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Phy\IHasPhysics.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="MonoGame_Engine.Input.Buttons" Collapsed="true">
+    <Position X="13.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAIAAACAwAAAAAAAAAAAAAAIAAAAAAAAAYAUIYQA=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Input\Buttons.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MonoGame_Engine.Input.Sliders" Collapsed="true">
+    <Position X="15.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAABAAAAAAAAAAAABgAAAAAAAgAAAAAAAABAAA=</HashCode>
+      <FileName>C:\Users\patri\Source\Repos\ggj2018-its\source\MonoGame-Engine\Input\Sliders.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

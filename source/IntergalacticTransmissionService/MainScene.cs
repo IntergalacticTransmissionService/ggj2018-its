@@ -22,7 +22,10 @@ namespace IntergalacticTransmissionService
         internal readonly List<Enemy> Enemies;
         internal readonly CollisionHandler CollisionHandler;
 
-        internal new ITSGame game {  get { return base.game as ITSGame; } }
+        internal readonly Level Level;
+
+
+        internal new ITSGame game { get { return base.game as ITSGame; } }
 
         public MainScene(ITSGame game) : base(game)
         {
@@ -32,6 +35,7 @@ namespace IntergalacticTransmissionService
             Players = new List<Player>();
             Enemies = new List<Enemy>();
             CollisionHandler = new CollisionHandler(this);
+            Level = new Level(game, 300, 1000, 30, 40);
         }
 
         internal override void Initialize()
@@ -50,6 +54,8 @@ namespace IntergalacticTransmissionService
             Parcel.LoadContent(game.Content);
             Parcel.Phy.Pos.X = 500;
             Children.Add(Parcel);
+            Level.LoadContent(game.Content);
+            Children.Add(Level);
 
             for (int i = 0; i < 10; ++i)
             {
@@ -62,7 +68,7 @@ namespace IntergalacticTransmissionService
                     new ChasingBehavior(this, 500, 800, RandomFuncs.FromRange(100, 300)));
                 Enemies.Add(testEnemy);
             }
-            foreach(var e in Enemies) { e.LoadContent(game.Content); }
+            foreach (var e in Enemies) { e.LoadContent(game.Content); }
         }
 
         internal override void Draw(SpriteBatch batch, GameTime gameTime)
@@ -73,9 +79,10 @@ namespace IntergalacticTransmissionService
 
         internal override void Update(GameTime gameTime)
         {
-            foreach(var e in Enemies) { e.Update(gameTime); }
+            foreach (var e in Enemies) { e.Update(gameTime); }
             CollisionHandler.Update(gameTime);
             base.Update(gameTime);
+
             CheckForNewPlayers();
         }
 

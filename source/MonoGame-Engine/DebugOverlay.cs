@@ -6,6 +6,7 @@ using System.Text;
 
 namespace MonoGame_Engine
 {
+[System.Diagnostics.DebuggerDisplay("{Text}")]
     public class DebugOverlay
     {
         private readonly BaseGame game;
