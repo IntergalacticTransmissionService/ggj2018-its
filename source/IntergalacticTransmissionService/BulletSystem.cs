@@ -115,8 +115,8 @@ namespace IntergalacticTransmissionService
             if (active < maxParticles)
             {
                 pos[active] = player.Phy.Pos;
-                var rotationMatrix = Matrix.CreateRotationZ(rotation);
-                spd[active] = player.Phy.Spd + Vector2.Transform(Vector2.Normalize(player.Phy.Spd), rotationMatrix) * 2000;
+                var rotationMatrix = Matrix.CreateRotationZ(player.Phy.Rot + rotation);
+                spd[active] = player.Phy.Spd + Vector2.Transform(new Vector2(1, 0), rotationMatrix) * 2000;
                 col[active] = player.BaseColor;
                 maxCol[active] = col[active];
                 maxCol[active].A = 0;
