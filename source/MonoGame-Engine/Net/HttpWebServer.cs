@@ -57,7 +57,10 @@ namespace IntergalacticTransmissionService.Net
                         }, HttpListener.GetContext());
                     }
                 }
-                catch { }
+                catch (Exception exc)
+                {
+                    Console.Error.WriteLine(exc.Message);
+                }
             });
         }
 
