@@ -18,7 +18,7 @@ namespace IntergalacticTransmissionService
         private SoundEffect sndGrab;
         private SoundEffect sndRelease;
 
-        public Parcel(ITSGame game, Color color, float radius) : base(game, "Images/parcel.png", color, radius)
+        public Parcel(ITSGame game, Color color, float radius) : base(game, "Images/parcel.png", "Images/parcel.png", color, color, radius)
         {
         }
 

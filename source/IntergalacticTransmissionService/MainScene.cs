@@ -61,17 +61,6 @@ namespace IntergalacticTransmissionService
             Level.LoadContent(game.Content);
             Children.Add(Level);
 
-            for (int i = 0; i < 10; ++i)
-            {
-                var dist = 3000;
-                var testEnemy = new Enemy(game,
-                    Color.White,
-                    RandomFuncs.FromRange(16f, 64f),
-                    new Vector2(RandomFuncs.FromRange(-dist, dist), RandomFuncs.FromRange(-dist, dist)),
-                    (float)RandomFuncs.FromRange(0, MathHelper.TwoPi),
-                    new ChasingBehavior(this, 500, 800, RandomFuncs.FromRange(100, 300)));
-                Enemies.Add(testEnemy);
-            }
             Leviathan.LoadContent(game.Content);
             this.Children.Add(Leviathan);
 
