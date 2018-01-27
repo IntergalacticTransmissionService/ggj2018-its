@@ -12,7 +12,7 @@ namespace MonoGame_Engine.Entities
     public class Level : Entity
     {
 
-        public Level(ITSGame game, float minSpanDistance, float maxSpanDistance, int itemsCount)
+        public Level(ITSGame game, float minSpanDistance, float maxSpanDistance, int itemsCount, float speed)
         {
             if (itemsCount < 1)
                 throw new ArgumentOutOfRangeException(nameof(itemsCount), itemsCount, "must 1 or greater");
@@ -21,15 +21,15 @@ namespace MonoGame_Engine.Entities
 
             this.collectebelsPool = new Pool(itemsCount, 5);
             this.game = game;
+            this.speed = speed;
         }
 
 
         private readonly Pool collectebelsPool;
         private readonly ITSGame game;
+        private readonly float speed;
         private readonly float minSpanDistance;
         private readonly float maxSpanDistance;
-        private readonly float fillRatio;
-        private readonly int sampleRate;
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
@@ -49,19 +49,21 @@ namespace MonoGame_Engine.Entities
 
             foreach (var item in this.collectebelsPool)
             {
-                var relativPosition = item.Phy.Pos - game.Camera.Phy.Pos;
-                if (System.Math.Abs(relativPosition.X) > this.maxSpanDistance || System.Math.Abs(relativPosition.Y) > this.maxSpanDistance)
-                    item.Dispose();
+                var relativPosition = item.Phy.Pos - this.game.Camera.Phy.Pos;
+                //if (System.Math.Abs(relativPosition.X) > this.maxSpanDistance || System.Math.Abs(relativPosition.Y) > this.maxSpanDistance)
+                //    item.Dispose();
             }
 
-            while (this.collectebelsPool.Available > 0)
+            if (this.collectebelsPool.Available > 0)
             {
-                var position = new Vector2(Math.RandomFuncs.FromRange(this.minSpanDistance, this.maxSpanDistance), Math.RandomFuncs.FromRange(this.minSpanDistance, this.maxSpanDistance)) + game.Camera.Phy.Pos;
-                var x = this.collectebelsPool.Get(CollectebleGrafic.Stuff, position, 0);
+                var position = new Vector2(Math.RandomFuncs.FromRange(this.minSpanDistance, this.maxSpanDistance), Math.RandomFuncs.FromRange(this.minSpanDistance, this.maxSpanDistance));
+                position *= new Vector2(Math.RandomFuncs.FromRange(0, 1) > 0.5 ? 1f : -1f, Math.RandomFuncs.FromRange(0, 1) > 0.5 ? 1f : -1f);
+                position += this.game.Camera.Phy.Pos;
+                var x = this.collectebelsPool.Get(CollectebleGrafic.Stuff, position, 0, TimeSpan.FromSeconds(Math.RandomFuncs.FromRange(20, 30)));
                 x.Phy.RotSpd = 1f;
-                var direction = (game.Camera.Phy.Pos - position);
+                var direction = (this.game.Camera.Phy.Pos - position);
                 direction.Normalize();
-                x.Phy.Spd = direction * 30f; ;
+                x.Phy.Spd = direction * this.speed;
             }
 
 

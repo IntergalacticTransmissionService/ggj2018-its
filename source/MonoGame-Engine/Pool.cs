@@ -31,8 +31,13 @@ namespace MonoGame_Engine
         }
         internal override void Update(GameTime gameTime)
         {
-            foreach (var toUpdate in this.list.Take(this.Count))
+            foreach (var toUpdate in this.OfType<Collecteble>())
+            {
                 toUpdate.Phy.Update(gameTime);
+                toUpdate.timeToLive -= gameTime.ElapsedGameTime;
+                if (toUpdate.timeToLive.Ticks < 0)
+                    toUpdate.Dispose();
+            }
         }
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
@@ -42,13 +47,30 @@ namespace MonoGame_Engine
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            foreach (var toDraw in this.list.Take(this.Count))
+            foreach (var toDraw in this.list.Take(this.Count).Where(Blink))
                 this.Graphics[(int)toDraw.Grafic].Draw(spriteBatch, toDraw.Phy.Pos, toDraw.Phy.Rot);
+        }
+
+        private bool Blink(Collecteble arg)
+        {
+            if (
+                arg.timeToLive > TimeSpan.FromSeconds(3.0)
+                || arg.timeToLive > TimeSpan.FromSeconds(2.6) && arg.timeToLive < TimeSpan.FromSeconds(3.0)
+                || arg.timeToLive > TimeSpan.FromSeconds(2.0) && arg.timeToLive < TimeSpan.FromSeconds(2.4)
+                || arg.timeToLive > TimeSpan.FromSeconds(1.8) && arg.timeToLive < TimeSpan.FromSeconds(2.0)
+                || arg.timeToLive > TimeSpan.FromSeconds(1.4) && arg.timeToLive < TimeSpan.FromSeconds(1.6)
+                || arg.timeToLive > TimeSpan.FromSeconds(1.0) && arg.timeToLive < TimeSpan.FromSeconds(1.2)
+                || arg.timeToLive > TimeSpan.FromSeconds(0.6) && arg.timeToLive < TimeSpan.FromSeconds(0.8)
+                || arg.timeToLive > TimeSpan.FromSeconds(0.2) && arg.timeToLive < TimeSpan.FromSeconds(0.4)
+                )
+                return true;
+
+            return false;
         }
 
         protected virtual IReadOnlyList<Gfx.Image> Graphics { get; } = new Gfx.Image[] { new Gfx.Image("Images/collectable.png") };
 
-        public ICollecteble Get(CollectebleGrafic grafic, Vector2 position, float rotation)
+        public ICollecteble Get(CollectebleGrafic grafic, Vector2 position, float rotation, TimeSpan timeToLive)
         {
             if (this.lastActive == this.list.Length - 1)
                 return null;
@@ -62,6 +84,7 @@ namespace MonoGame_Engine
             newCollectibal.Phy.Pos = position;
             newCollectibal.Phy.Rot = rotation;
             newCollectibal.Grafic = grafic;
+            newCollectibal.timeToLive = timeToLive;
             return newCollectibal;
         }
 
@@ -85,17 +108,20 @@ namespace MonoGame_Engine
         public IEnumerator<ICollecteble> GetEnumerator()
         {
             // save for eventuell deletes while itterating
-            Array.Copy(this.list, this.backupList, this.list.Length);
-            return this.backupList.Take(this.Count).GetEnumerator();
+            //Array.Copy(this.list, this.backupList, this.list.Length);
+            //return this.backupList.Take(this.Count).GetEnumerator();
+            return this.list.Take(this.Count).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
 
-        public class Collecteble : ICollecteble
+        protected class Collecteble : ICollecteble
         {
             public int index;
             private Pool pool;
+
+            public TimeSpan timeToLive;
 
             public CollectebleGrafic Grafic { get; set; }
             public Phy.Physics Phy { get; set; }

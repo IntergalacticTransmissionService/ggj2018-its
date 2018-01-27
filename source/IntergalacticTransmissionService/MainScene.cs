@@ -34,7 +34,7 @@ namespace IntergalacticTransmissionService
             Players = new List<Player>();
             Enemies = new List<Enemy>();
             CollisionHandler = new CollisionHandler(this);
-            Level = new Level(game, 300, 1000, 3);
+            Level = new Level(game, 300, 1000, 30, 40);
         }
 
         internal override void Initialize()
@@ -58,7 +58,7 @@ namespace IntergalacticTransmissionService
 
             var testEnemy = new Enemy(game, Color.White, 128f, new Vector2(200, 200), (float)Math.PI, new ChasingBehavior(this, 500, 800));
             Enemies.Add(testEnemy);
-            foreach(var e in Enemies) { e.LoadContent(game.Content); }
+            foreach (var e in Enemies) { e.LoadContent(game.Content); }
         }
 
         internal override void Draw(SpriteBatch batch, GameTime gameTime)
@@ -69,7 +69,7 @@ namespace IntergalacticTransmissionService
 
         internal override void Update(GameTime gameTime)
         {
-            foreach(var e in Enemies) { e.Update(gameTime); }
+            foreach (var e in Enemies) { e.Update(gameTime); }
             CollisionHandler.Update(gameTime);
             base.Update(gameTime);
 
