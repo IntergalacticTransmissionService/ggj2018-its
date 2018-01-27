@@ -53,6 +53,7 @@ namespace IntergalacticTransmissionService
                 Phy.Spd = Vector2.Zero;
                 Cooldown = TimeSpan.Zero;
                 sndGrab.Play();
+                player.SetEventText("You grabbed the parcel. Deliver it!", TimeSpan.FromSeconds(5));
             } else if (player != LastHeldBy)
             {
                 Phy.Spd *= 0.5f;

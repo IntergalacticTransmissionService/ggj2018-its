@@ -56,6 +56,11 @@ namespace IntergalacticTransmissionService
                         var textPosXOffset = i % 2 == 0 ? pos[i].X + chars[i].Width: pos[i].X;
                         var textPosYOffset = i / 2 == 0 ? pos[i].Y : pos[i].Y + chars[i].Height - chars[2].Height;
                         DrawTextBox(i, spriteBatch, text, new Vector2(textPosXOffset, textPosYOffset), new Color(player.BaseColor, alpha));
+                    } else if(player.EventTextTime > TimeSpan.Zero) {
+                        player.EventTextTime -= gameTime.ElapsedGameTime;
+                        var textPosXOffset = i % 2 == 0 ? pos[i].X + chars[i].Width: pos[i].X;
+                        var textPosYOffset = i / 2 == 0 ? pos[i].Y : pos[i].Y + chars[i].Height - chars[2].Height;
+                        DrawTextBox(i, spriteBatch, player.EventText, new Vector2(textPosXOffset, textPosYOffset), player.BaseColor);
                     }
                 }
             }

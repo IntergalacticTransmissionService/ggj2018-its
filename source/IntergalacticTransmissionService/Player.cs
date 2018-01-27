@@ -13,6 +13,13 @@ namespace IntergalacticTransmissionService
 {
     public class Player : GameObject
     {
+        public static readonly string[] CollectableNames = {
+            "Rapid Fire",
+            "Spread Shoot",
+            "Back Shoot",
+            "Up Down Shoot",
+        };
+
         public const float DefaultMaxSpd = 800f;
         public float MaxSpd { get { return game.MainScene.Parcel.HoldBy == this ? DefaultMaxSpd * 0.9f : DefaultMaxSpd; } }
 
@@ -21,6 +28,8 @@ namespace IntergalacticTransmissionService
         public int PlayerNum { get; private set; }
 
         public bool IsAlive { get; private set; }
+        public string EventText { get; private set; }
+        public TimeSpan EventTextTime { get; set; }
         public bool IsInvincible { get { return InvincibleCooldown > TimeSpan.Zero; } }
         public BulletType BulletType { get; private set; }
 
@@ -90,6 +99,11 @@ namespace IntergalacticTransmissionService
             Bullets.Emitting = active;
         }
 
+        public void SetEventText(string text, TimeSpan time) {
+            EventText = text;
+            EventTextTime = time;
+        }
+
         internal override void Update(GameTime gameTime)
         {
             if (IsInvincible)
@@ -157,6 +171,13 @@ namespace IntergalacticTransmissionService
             //game.DebugOverlay.Text += String.Join("  ", Enum.GetValues(typeof(CollectibleType)).Cast<CollectibleType>().Select(c => $"{c}: {this.Collectables[c]}").ToArray()) + "\n";
         }
 
+        internal void AddCollectable(CollectableType value)
+        {
+            Collectables[value]++;
+            string message = "You collected a " + CollectableNames[(int)value] + " powerup!";
+            SetEventText(message, TimeSpan.FromSeconds(5));
+        }
+
         internal void WhereAmI(bool show)
         {
             HighlightIndicator = show;
@@ -174,6 +195,7 @@ namespace IntergalacticTransmissionService
                 Phy.Accel = Vector2.Zero;
                 RespawnCooldown = TimeSpan.Zero;
                 InvincibleCooldown = TimeSpan.FromSeconds(4);
+                SetEventText("Get the package and deliver it!", TimeSpan.FromSeconds(5));
             }
         }
 
