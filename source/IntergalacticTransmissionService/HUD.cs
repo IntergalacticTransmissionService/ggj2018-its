@@ -15,7 +15,6 @@ namespace IntergalacticTransmissionService
         private ITSGame game;
         private SpriteBatch spriteBatch;
         private readonly string lanIp;
-        public Vector2 lanIpPos = new Vector2();
 
         private Texture2D[] chars = new Texture2D[4];
         private Texture2D distanceScale;
@@ -34,7 +33,8 @@ namespace IntergalacticTransmissionService
         internal override void Draw(SpriteBatch _, GameTime gameTime)
         {
             spriteBatch.Begin();
-            spriteBatch.DrawString(game.Fonts.Get(MonoGame_Engine.Font.DebugFont), lanIp, lanIpPos, Color.White);
+            var lanIpSize = game.Fonts.Get(MonoGame_Engine.Font.DebugFont).MeasureString(lanIp);
+            spriteBatch.DrawString(game.Fonts.Get(MonoGame_Engine.Font.DebugFont), lanIp, new Vector2((game.Screen.CanvasWidth-lanIpSize.X) / 2, game.Screen.CanvasHeight-20), Color.White);
 
             for (int i = 0; i < 4; i++)
             {
@@ -102,7 +102,6 @@ namespace IntergalacticTransmissionService
             // load chars
             for (int i = 0; i < 4; ++i)
                 chars[i] = content.Load<Texture2D>($"Images/character_{i+1:00}.png");
-            lanIpPos = new Vector2(chars[0].Width + 20, 10);
             distanceScale = content.Load<Texture2D>("Images/DistanceIndicator.png");
 
 
