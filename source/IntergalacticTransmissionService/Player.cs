@@ -35,7 +35,7 @@ namespace IntergalacticTransmissionService
             new Color(0xBD, 0x0A, 0x7B)     // Purple
         };
 
-        public Player(ITSGame game, int playerNum, float radius) : base(game, "Images/player.png", colors[playerNum % colors.Length], radius)
+        public Player(ITSGame game, int playerNum, float radius) : base(game, "Images/player.png", $"Images/character_{(playerNum % 4)+1:00}.png", colors[playerNum % colors.Length], colors[playerNum % colors.Length], radius)
         {
             this.PlayerNum = playerNum;
             Collectables = new Dictionary<CollectableType, int>();
