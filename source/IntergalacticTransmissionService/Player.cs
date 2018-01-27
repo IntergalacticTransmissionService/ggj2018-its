@@ -12,6 +12,8 @@ namespace IntergalacticTransmissionService
 {
     public class Player : GameObject
     {
+        public const float MaxSpd = 800f;
+
         public BulletSystem Bullets { get; private set; }
 
         public int PlayerNum { get; private set; }
@@ -74,8 +76,8 @@ namespace IntergalacticTransmissionService
 
                 // Ensure MaxSpd
                 var spd = Phy.Spd.Length();
-                if (spd > 1200)
-                    Phy.Spd = Vector2.Normalize(Phy.Spd) * 1200.0f;
+                if (spd > MaxSpd)
+                    Phy.Spd = Vector2.Normalize(Phy.Spd) * MaxSpd;
             } else
             {
                 if (Cooldown > TimeSpan.Zero)
