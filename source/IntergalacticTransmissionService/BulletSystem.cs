@@ -11,6 +11,15 @@ using System.Text;
 
 namespace IntergalacticTransmissionService
 {
+
+    public enum BulletType
+    {
+        Normal,
+        Spread,
+        Back,
+        UpDown,
+    }
+
     public class BulletSystem : Entity, IEnumerable<Vector2>
     {
         private Player player;
@@ -41,6 +50,8 @@ namespace IntergalacticTransmissionService
 
         public bool Emitting { get; set; }
 
+        public TimeSpan RapidFire { get; set; }
+
         public BulletSystem(Player player, string asset, int maxParticles, float spawnRateInPartPerSec)
         {
             this.player = player;
@@ -68,12 +79,38 @@ namespace IntergalacticTransmissionService
             }
         }
 
-        public void Spawn()
+        public void Spawn(BulletType type)
+        {
+
+            switch (type)
+            {
+                case BulletType.Normal:
+                default:
+                    SpawnSingel(0f);
+                    break;
+                case BulletType.Spread:
+                    SpawnSingel(0f);
+                    SpawnSingel(-MathHelper.PiOver4 / 2);
+                    SpawnSingel(MathHelper.PiOver4 / 2);
+                    break;
+                case BulletType.Back:
+                    SpawnSingel(0f);
+                    SpawnSingel(MathHelper.Pi);
+                    break;
+                case BulletType.UpDown:
+                    SpawnSingel(MathHelper.PiOver2);
+                    SpawnSingel(-MathHelper.PiOver2);
+                    break;
+            }
+        }
+
+        private void SpawnSingel(float rotation)
         {
             if (active < maxParticles)
             {
                 pos[active] = player.Phy.Pos;
-                spd[active] = player.Phy.Spd + Vector2.Normalize(player.Phy.Spd) * 2000;
+                var rotationMatrix = Matrix.CreateRotationZ(rotation);
+                spd[active] = player.Phy.Spd + Vector2.Transform(Vector2.Normalize(player.Phy.Spd), rotationMatrix) * 2000;
                 col[active] = player.BaseColor;
                 maxCol[active] = col[active];
                 maxCol[active].A = 0;
@@ -100,12 +137,18 @@ namespace IntergalacticTransmissionService
             accumulator += delta;
             var numParticlesToSpawn = accumulator * SpawnRate;
 
-            while (Emitting && numParticlesToSpawn > 1)
+            if (RapidFire.Ticks > 0 && Emitting)
             {
-                Spawn();
-                accumulator -= 1 / SpawnRate;
-                --numParticlesToSpawn;
+                RapidFire -= gameTime.ElapsedGameTime;
+                while (numParticlesToSpawn > 1)
+                {
+                    Spawn(player.BulletType);
+                    accumulator -= 1 / SpawnRate;
+                    --numParticlesToSpawn;
+                }
             }
+
+            DebugOverlay.Instance.Text += $"Rapdiffire ({this.player.PlayerNum}): {RapidFire}\n";
 
             // Update
             for (int i = 0; i < active; ++i)

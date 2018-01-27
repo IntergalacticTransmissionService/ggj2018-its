@@ -18,6 +18,7 @@ namespace MonoGame_Engine.Gfx
         {
             this.assetPath = assetPath;
         }
+        
 
         internal override void LoadContent(ContentManager content, bool wasReloaded)
         {

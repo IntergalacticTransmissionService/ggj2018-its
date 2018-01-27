@@ -18,6 +18,8 @@ namespace IntergalacticTransmissionService
         public int PlayerNum { get; private set; }
 
         public bool IsAlive { get; private set; }
+        public BulletType BulletType { get; private set; }
+
         public TimeSpan Cooldown;
         public readonly int[] Collectables;
 
@@ -35,6 +37,7 @@ namespace IntergalacticTransmissionService
             Collectables = new int[Enum.GetValues(typeof(CollectibleType)).Length];
             Bullets = new BulletSystem(this, "Images/bullet.png", 300, 15);
             IsAlive = true;
+            BulletType = BulletType.Normal;
         }
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
@@ -79,11 +82,51 @@ namespace IntergalacticTransmissionService
                 var spd = Phy.Spd.Length();
                 if (spd > 1200)
                     Phy.Spd = Vector2.Normalize(Phy.Spd) * 1200.0f;
-            } else
+            }
+            else
             {
                 if (Cooldown > TimeSpan.Zero)
                     Cooldown -= gameTime.ElapsedGameTime;
             }
+
+            for (int i = 0; i < Collectables.Length; i++)
+            {
+                ref int count = ref Collectables[i];
+                switch ((CollectibleType)i)
+                {
+                    case CollectibleType.RapidFire:
+                        while (count > 0)
+                        {
+                            Bullets.RapidFire += TimeSpan.FromSeconds(10);
+                            count--;
+                        }
+                        break;
+                    case CollectibleType.SpreadShoot:
+                        if (count > 0)
+                        {
+                            count = 0;
+                            BulletType = BulletType.Spread;
+                        }
+                        break;
+                    case CollectibleType.BackShoot:
+                        if (count > 0)
+                        {
+                            count = 0;
+                            BulletType = BulletType.Back;
+                        }
+                        break;
+                    case CollectibleType.UpDownShoot:
+                        if (count > 0)
+                        {
+                            count = 0;
+                            this.BulletType = BulletType.UpDown;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             Bullets.Update(gameTime);
 
 

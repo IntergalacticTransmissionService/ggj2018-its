@@ -10,5 +10,7 @@ namespace MonoGame_Engine.Math
         {
             return (float)(min + rng.NextDouble() * (max - min));
         }
+
+        internal static int FromRangeInt(int min, int max) => min + rng.Next(max - min);
     }
 }

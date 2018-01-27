@@ -11,7 +11,10 @@ namespace MonoGame_Engine
 {
     public enum CollectibleType : int
     {
-        Stuff = 0,
+        RapidFire,
+        SpreadShoot,
+        BackShoot,
+        UpDownShoot,
     }
     class Pool : Entities.Entity, IEnumerable<ICollecteble>
     {
@@ -68,7 +71,7 @@ namespace MonoGame_Engine
             return false;
         }
 
-        protected virtual IReadOnlyList<Gfx.Image> Graphics { get; } = new Gfx.Image[] { new Gfx.Image("Images/collectable.png") };
+        protected virtual IReadOnlyList<Gfx.Image> Graphics { get; } = new Gfx.Image[] { new Gfx.Image("Images/collectableRapidFire.png"), new Gfx.Image("Images/collectableSpread.png"), new Gfx.Image("Images/collectableBack.png"), new Gfx.Image("Images/collectableUpDown.png"), };
 
         public ICollecteble Get(CollectibleType grafic, Vector2 position, float rotation, TimeSpan timeToLive)
         {

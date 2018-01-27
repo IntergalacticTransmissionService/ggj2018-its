@@ -48,7 +48,10 @@ namespace MonoGame_Engine.Entities
                 var position = new Vector2(Math.RandomFuncs.FromRange(this.game.Camera.TopRight.X, this.game.Camera.TopRight.X * 2), Math.RandomFuncs.FromRange(this.game.Camera.TopRight.Y, this.game.Camera.TopRight.Y * 2));
                 position *= new Vector2(Math.RandomFuncs.FromRange(0, 1) > 0.5 ? 1f : -1f, Math.RandomFuncs.FromRange(0, 1) > 0.5 ? 1f : -1f);
                 position += this.game.Camera.Phy.Pos;
-                var x = this.collectebelsPool.Get(CollectibleType.Stuff, position, 0, TimeSpan.FromSeconds(Math.RandomFuncs.FromRange(20, 30)));
+
+                var type = (CollectibleType)Math.RandomFuncs.FromRangeInt(0, CollectibleType.GetValues(typeof(CollectibleType)).Length);
+
+                var x = this.collectebelsPool.Get(type, position, 0, TimeSpan.FromSeconds(Math.RandomFuncs.FromRange(20, 30)));
                 x.Phy.RotSpd = 1f;
                 var direction = (this.game.Camera.Phy.Pos - position);
                 direction.Normalize();
