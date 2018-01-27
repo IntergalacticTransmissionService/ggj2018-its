@@ -31,10 +31,20 @@ namespace IntergalacticTransmissionService
 
                 if (game.MainScene.Players.Count > i)
                 {
+                    var player = game.MainScene.Players[i];
                     var fx = i % 2 == 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-                    var alpha = (game.MainScene.Players[i].IsInvincible && gameTime.TotalGameTime.TotalMilliseconds % 300 < 150) ? 0.2f : 1.0f;
-                    var color = new Color(1f, 1f, 1f, alpha);
+                    var alpha = (gameTime.TotalGameTime.TotalMilliseconds % 300 < 150) ? 0.2f : 1.0f;
+                    var color = new Color(1f, 1f, 1f, player.IsInvincible ? alpha : 1f);
                     spriteBatch.Draw(chars[i], pos[i], null, color, 0, Vector2.Zero, Vector2.One, fx, 0);
+
+                    if (!player.IsAlive)
+                    {
+                        var text = "Press Button to join";
+                        var textPosXOffset = i % 2 == 0 ? 0 : -chars[i].Width-game.Fonts.Get(MonoGame_Engine.Font.DebugFont).MeasureString(text).Y;
+                        var textPosYOffset = i / 2 == 0 ? chars[i].Height + 10 : -chars[i].Height - 10;
+
+                        spriteBatch.DrawString(game.Fonts.Get(MonoGame_Engine.Font.DebugFont), text, new Vector2(pos[i].X + textPosXOffset, pos[i].Y + textPosYOffset), new Color(player.BaseColor, alpha));
+                    }
                 }
             }
             spriteBatch.End();

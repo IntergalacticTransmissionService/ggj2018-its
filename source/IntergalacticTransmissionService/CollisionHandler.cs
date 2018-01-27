@@ -100,7 +100,7 @@ namespace IntergalacticTransmissionService
                 var collectible = scene.Level.Collides(scene.Players[i]);
                 if (collectible.HasValue)
                 {
-                    scene.Players[i].Collectables[(int)collectible.Value]++;
+                    scene.Players[i].Collectables[collectible.Value]++;
                 }
 
             }

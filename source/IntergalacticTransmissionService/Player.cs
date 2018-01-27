@@ -25,7 +25,7 @@ namespace IntergalacticTransmissionService
 
         public TimeSpan RespawnCooldown;
         public TimeSpan InvincibleCooldown;
-        public readonly int[] Collectables;
+        public readonly Dictionary<CollectibleType, int> Collectables;
 
         public static Color[] colors = new Color[] {
             new Color(0xF3, 0x00, 0x28),    // Red
@@ -37,7 +37,9 @@ namespace IntergalacticTransmissionService
         public Player(ITSGame game, int playerNum, float radius) : base(game, "Images/player.png", colors[playerNum % colors.Length], radius)
         {
             this.PlayerNum = playerNum;
-            Collectables = new int[Enum.GetValues(typeof(CollectibleType)).Length];
+            Collectables = new Dictionary<CollectibleType, int>();
+            foreach(CollectibleType e in Enum.GetValues(typeof(CollectibleType)))
+                Collectables.Add(e, 0);
             Bullets = new BulletSystem(this, "Images/bullet.png", 300, 15);
             IsAlive = true;
             BulletType = BulletType.Normal;
@@ -111,36 +113,35 @@ namespace IntergalacticTransmissionService
                     RespawnCooldown -= gameTime.ElapsedGameTime;
             }
 
-            for (int i = 0; i < Collectables.Length; i++)
+            foreach(CollectibleType e in Enum.GetValues(typeof(CollectibleType)))
             {
-                ref int count = ref Collectables[i];
-                switch ((CollectibleType)i)
+                switch (e)
                 {
                     case CollectibleType.RapidFire:
-                        while (count > 0)
+                        while (Collectables[e] > 0)
                         {
                             Bullets.RapidFire += TimeSpan.FromSeconds(10);
-                            count--;
+                            Collectables[e]--;
                         }
                         break;
                     case CollectibleType.SpreadShoot:
-                        if (count > 0)
+                        if (Collectables[e] > 0)
                         {
-                            count = 0;
+                            Collectables[e] = 0;
                             BulletType = BulletType.Spread;
                         }
                         break;
                     case CollectibleType.BackShoot:
-                        if (count > 0)
+                        if (Collectables[e] > 0)
                         {
-                            count = 0;
+                            Collectables[e] = 0;
                             BulletType = BulletType.Back;
                         }
                         break;
                     case CollectibleType.UpDownShoot:
-                        if (count > 0)
+                        if (Collectables[e] > 0)
                         {
-                            count = 0;
+                            Collectables[e] = 0;
                             this.BulletType = BulletType.UpDown;
                         }
                         break;
@@ -152,7 +153,7 @@ namespace IntergalacticTransmissionService
             Bullets.Update(gameTime);
 
 
-            game.DebugOverlay.Text += String.Join("  ", Enum.GetValues(typeof(CollectibleType)).Cast<int>().Select(c => $"{(CollectibleType)c}: {this.Collectables[c]}").ToArray()) + "\n";
+            //game.DebugOverlay.Text += String.Join("  ", Enum.GetValues(typeof(CollectibleType)).Cast<CollectibleType>().Select(c => $"{c}: {this.Collectables[c]}").ToArray()) + "\n";
         }
 
         internal void WhereAmI(bool show)
@@ -181,7 +182,7 @@ namespace IntergalacticTransmissionService
             {
                 Shoot(false);
                 IsAlive = false;
-                RespawnCooldown = TimeSpan.FromSeconds(3);
+                RespawnCooldown = TimeSpan.FromSeconds(1);
             }
         }
     }
