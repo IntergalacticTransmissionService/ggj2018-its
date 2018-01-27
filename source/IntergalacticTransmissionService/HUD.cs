@@ -25,6 +25,8 @@ namespace IntergalacticTransmissionService
         private Texture2D[] textbox = new Texture2D[9];
         private string[] texts = new string[4];
 
+        public float ScreenBorder = 30;
+
         public HUD(ITSGame game)
         {
             this.game = game;
@@ -38,8 +40,8 @@ namespace IntergalacticTransmissionService
 
             for (int i = 0; i < 4; i++)
             {
-                pos[i].X = i % 2 == 0 ? 10 : game.Screen.CanvasWidth - 10 - chars[i].Width;
-                pos[i].Y = i / 2 == 0 ? 10 : game.Screen.CanvasHeight - 10 - chars[i].Height;
+                pos[i].X = i % 2 == 0 ? ScreenBorder : game.Screen.CanvasWidth - ScreenBorder - chars[i].Width;
+                pos[i].Y = i / 2 == 0 ? ScreenBorder : game.Screen.CanvasHeight - ScreenBorder - chars[i].Height;
 
                 if (game.MainScene.Players.Count > i)
                 {

@@ -19,12 +19,13 @@ namespace IntergalacticTransmissionService
 
         private SoundEffect sndExplode;
 
-        public Leviathan(ITSGame game, Color baseColor, float radius, Vector2 startPos, float startRot = 0, Behavior behavior = null) : base(game, "Images/boss.png", baseColor, radius,false)
+        public Leviathan(ITSGame game, Color baseColor, float radius, Vector2 startPos, float startRot = 0, Behavior behavior = null) : base(game, "Images/boss.png", "Images/boss.png", Color.SlateGray, baseColor, radius,false)
         {
             this.StartPos = startPos;
             this.StartRot = startRot;
             this.Behavior = behavior;
             this.IsAlive = true;
+            this.HighlightIndicator = true;
         }
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
