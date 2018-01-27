@@ -25,7 +25,7 @@ namespace IntergalacticTransmissionService
 
         public TimeSpan RespawnCooldown;
         public TimeSpan InvincibleCooldown;
-        public readonly Dictionary<CollectibleType, int> Collectables;
+        public readonly Dictionary<CollectableType, int> Collectables;
 
         public static Color[] colors = new Color[] {
             new Color(0xF3, 0x00, 0x28),    // Red
@@ -37,8 +37,8 @@ namespace IntergalacticTransmissionService
         public Player(ITSGame game, int playerNum, float radius) : base(game, "Images/player.png", colors[playerNum % colors.Length], radius)
         {
             this.PlayerNum = playerNum;
-            Collectables = new Dictionary<CollectibleType, int>();
-            foreach(CollectibleType e in Enum.GetValues(typeof(CollectibleType)))
+            Collectables = new Dictionary<CollectableType, int>();
+            foreach(CollectableType e in Enum.GetValues(typeof(CollectableType)))
                 Collectables.Add(e, 0);
             Bullets = new BulletSystem(this, "Images/bullet.png", 300, 15);
             IsAlive = true;
@@ -113,32 +113,32 @@ namespace IntergalacticTransmissionService
                     RespawnCooldown -= gameTime.ElapsedGameTime;
             }
 
-            foreach(CollectibleType e in Enum.GetValues(typeof(CollectibleType)))
+            foreach(CollectableType e in Enum.GetValues(typeof(CollectableType)))
             {
                 switch (e)
                 {
-                    case CollectibleType.RapidFire:
+                    case CollectableType.RapidFire:
                         while (Collectables[e] > 0)
                         {
                             Bullets.RapidFire += TimeSpan.FromSeconds(10);
                             Collectables[e]--;
                         }
                         break;
-                    case CollectibleType.SpreadShoot:
+                    case CollectableType.SpreadShoot:
                         if (Collectables[e] > 0)
                         {
                             Collectables[e] = 0;
                             BulletType = BulletType.Spread;
                         }
                         break;
-                    case CollectibleType.BackShoot:
+                    case CollectableType.BackShoot:
                         if (Collectables[e] > 0)
                         {
                             Collectables[e] = 0;
                             BulletType = BulletType.Back;
                         }
                         break;
-                    case CollectibleType.UpDownShoot:
+                    case CollectableType.UpDownShoot:
                         if (Collectables[e] > 0)
                         {
                             Collectables[e] = 0;
