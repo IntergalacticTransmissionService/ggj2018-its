@@ -1,9 +1,11 @@
-﻿using IntergalacticTransmissionService.Input;
+﻿using IntergalacticTransmissionService.Behaviors;
+using IntergalacticTransmissionService.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Engine;
 using MonoGame_Engine.Entities;
 using MonoGame_Engine.Gfx;
+using MonoGame_Engine.Math;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,17 +15,27 @@ namespace IntergalacticTransmissionService
     public class MainScene : Scene
     {
         internal readonly TilingImage BackgroundImg;
-        internal readonly Sprite Background;
+        internal Sprite Background;
 
+        internal readonly Parcel Parcel;
         internal readonly List<Player> Players;
+        internal readonly List<Enemy> Enemies;
+        internal readonly CollisionHandler CollisionHandler;
 
-        internal new ITSGame game {  get { return base.game as ITSGame; } }
+        internal readonly Level Level;
+
+
+        internal new ITSGame game { get { return base.game as ITSGame; } }
 
         public MainScene(ITSGame game) : base(game)
         {
-            BackgroundImg = new TilingImage("Images/grass.jpg", game);
-            Background = new Sprite(BackgroundImg);
+            BackgroundImg = new TilingImage("Images/starfield.png", game);
+            Background = new Sprite(BackgroundImg, -1);
+            Parcel = new Parcel(game, Color.LightPink, 32f);
             Players = new List<Player>();
+            Enemies = new List<Enemy>();
+            CollisionHandler = new CollisionHandler(this);
+            Level = new Level(game, 300, 1000, 30, 40);
         }
 
         internal override void Initialize()
@@ -38,11 +50,39 @@ namespace IntergalacticTransmissionService
             Background.LoadContent(game.Content);
             Background.Gfx.origin = Vector2.Zero;
             Children.Add(Background);
+
+            Parcel.LoadContent(game.Content);
+            Parcel.Phy.Pos.X = 500;
+            Children.Add(Parcel);
+            Level.LoadContent(game.Content);
+            Children.Add(Level);
+
+            for (int i = 0; i < 10; ++i)
+            {
+                var dist = 3000;
+                var testEnemy = new Enemy(game,
+                    Color.White,
+                    RandomFuncs.FromRange(16f, 64f),
+                    new Vector2(RandomFuncs.FromRange(-dist, dist), RandomFuncs.FromRange(-dist, dist)),
+                    (float)RandomFuncs.FromRange(0, MathHelper.TwoPi),
+                    new ChasingBehavior(this, 500, 800, RandomFuncs.FromRange(100, 300)));
+                Enemies.Add(testEnemy);
+            }
+            foreach (var e in Enemies) { e.LoadContent(game.Content); }
+        }
+
+        internal override void Draw(SpriteBatch batch, GameTime gameTime)
+        {
+            base.Draw(batch, gameTime);
+            foreach (var e in Enemies) { e.Draw(batch, gameTime); }
         }
 
         internal override void Update(GameTime gameTime)
         {
+            foreach (var e in Enemies) { e.Update(gameTime); }
+            CollisionHandler.Update(gameTime);
             base.Update(gameTime);
+
             CheckForNewPlayers();
         }
 
@@ -62,8 +102,10 @@ namespace IntergalacticTransmissionService
         {
             while (Players.Count < game.Inputs.NumPlayers)
             {
+                var rnd = new Random();
                 var player = new Player(game, Players.Count, 32f);
                 player.LoadContent(game.Content);
+                player.Spawn();
                 Children.Add(player);
 
                 var controller = new AccelController(game, Players.Count, player);

@@ -22,7 +22,8 @@ namespace MonoGame_Engine
         public readonly Dictionary<string, string> Map;
 
         private bool changed;
-        public bool Changed {
+        public bool Changed
+        {
             get { return changed; }
             private set
             {
@@ -69,7 +70,7 @@ namespace MonoGame_Engine
             Map.Clear();
             foreach (var line in lines)
             {
-                if (!line.StartsWith("#") && !line.StartsWith(";"))
+                if (!line.StartsWith("#") && !line.StartsWith(";") && !string.IsNullOrWhiteSpace(line))
                 {
                     var tokens = line.Split('=');
                     var key = tokens[0];
@@ -110,7 +111,8 @@ namespace MonoGame_Engine
                         Thread.Sleep(1000);
                     }
                 } while (maxTries > 0);
-            } else
+            }
+            else
             {
                 Console.Error.WriteLine($"AssetMap not found at {mapFile}");
             }

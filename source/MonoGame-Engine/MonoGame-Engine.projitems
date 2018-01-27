@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BaseGame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Camera.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Level.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Reloadable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\JoyConController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LiveContentManager.cs" />
@@ -41,6 +42,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Math\RandomFuncs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Math\MathExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Scene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Screen.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Sound\Synth.cs" />

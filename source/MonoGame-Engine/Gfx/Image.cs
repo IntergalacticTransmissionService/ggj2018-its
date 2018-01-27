@@ -11,11 +11,14 @@ namespace MonoGame_Engine.Gfx
         protected Texture2D tex;
 
         public Vector2 origin;
+        public int Width {  get { return this.tex?.Width ?? 0; } }
+        public int Height {  get { return this.tex?.Height ?? 0; } }
 
         public Image(string assetPath)
         {
             this.assetPath = assetPath;
         }
+        
 
         internal override void LoadContent(ContentManager content, bool wasReloaded)
         {
@@ -29,6 +32,14 @@ namespace MonoGame_Engine.Gfx
         public virtual void Draw(SpriteBatch spriteBatch, Vector2 pos, float rot)
         {
             spriteBatch.Draw(tex, pos, null, null, origin, rot);
+        }
+
+        public virtual void Draw(SpriteBatch spriteBatch, Vector2 pos, float rot, float size, Color color)
+        {
+            var scale = new Vector2(size / Width, size / Height);
+
+            spriteBatch.Draw(tex, pos, null, null, origin, rot, scale, color);
+
         }
     }
 }

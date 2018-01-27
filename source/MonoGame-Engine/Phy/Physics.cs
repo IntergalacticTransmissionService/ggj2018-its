@@ -14,7 +14,7 @@ namespace MonoGame_Engine.Phy
         public Vector2 Accel;
         public float Dmp = 1.0f;
 
-        public Circle HitBox;
+        public readonly Circle HitBox;
 
         public Physics(float? radius)
         {
@@ -58,6 +58,14 @@ namespace MonoGame_Engine.Phy
                 return false;
 
             return HitBox.Intersects(other.HitBox);
+        }
+
+        public bool CollidesWith(Vector2 pos)
+        {
+            if (HitBox == null || pos == null)
+                return false;
+
+            return HitBox.Contains(pos);
         }
 
     }

@@ -9,10 +9,19 @@
     <Import_RootNamespace>MonoGame_Content</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\collectableBack.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\collectableRapidFire.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\collectableSpread.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\collectableUpDown.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\enemy.png" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\grass.jpg" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\grass_01.jpg" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\halo.png" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\image1920x1080.jpg" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\parcel.png" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\particle.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\player.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\starfield.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Content\WebController\index.html">

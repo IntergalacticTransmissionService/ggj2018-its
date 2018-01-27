@@ -56,6 +56,7 @@ namespace MonoGame_Engine.Entities
                     emitters[i] = emitters[active - 1];
                     age[i] = age[active-1];
                     maxAge[i] = age[active - 1];
+                    --i;
                     --active;
                 }
             }

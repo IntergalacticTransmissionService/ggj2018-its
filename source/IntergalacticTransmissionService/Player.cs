@@ -5,29 +5,25 @@ using MonoGame_Engine;
 using MonoGame_Engine.Entities;
 using MonoGame_Engine.Phy;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
 namespace IntergalacticTransmissionService
 {
-    public class Player : Entity, IHasPhysics
+    public class Player : GameObject
     {
-        private readonly BaseGame game;
+        public const float MaxSpd = 800f;
 
-        private Texture2D halo;
-        private Vector2 haloOrigin;
-
-        public Color BaseColor { get; private set; }
-
-        public Physics Phy { get; private set; }
-
-        public float Radius
-        {
-            get { return this.Phy.HitBox.Radius; }
-            set { this.Phy.HitBox.Radius = value; }
-        }
+        public BulletSystem Bullets { get; private set; }
 
         public int PlayerNum { get; private set; }
+
+        public bool IsAlive { get; private set; }
+        public BulletType BulletType { get; private set; }
+
+        public TimeSpan Cooldown;
+        public readonly int[] Collectables;
 
         public static Color[] colors = new Color[] {
             new Color(0xCC, 0x00, 0x00),    // Red
@@ -37,32 +33,33 @@ namespace IntergalacticTransmissionService
             new Color(0xCC, 0x00, 0x88)     // Purple
         };
 
-        public Player(BaseGame game, int playerNum, float radius)
+        public Player(ITSGame game, int playerNum, float radius) : base(game, "Images/player.png", colors[playerNum % colors.Length], radius)
         {
-            this.game = game;
             this.PlayerNum = playerNum;
-            this.BaseColor = colors[playerNum % colors.Length];
-            Phy = new OrientedPhysics(radius);
+            Collectables = new int[Enum.GetValues(typeof(CollectibleType)).Length];
+            Bullets = new BulletSystem(this, "Images/bullet.png", 300, 15);
+            IsAlive = true;
+            BulletType = BulletType.Normal;
         }
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
-            halo = content.Load<Texture2D>("Images/halo.png");
-            if (!wasReloaded)
-            {
-                haloOrigin = new Vector2(halo.Width * 0.5f, halo.Height * 0.5f);
-            }
+            base.LoadContent(content, wasReloaded);
+            Bullets.LoadContent(content, wasReloaded);
         }
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            var pos = new Vector2();
-            pos.X = Phy.Pos.X;
-            pos.Y = Phy.Pos.Y;
+            if (IsAlive)
+            {
+                base.Draw(spriteBatch, gameTime);
+            }
+            Bullets.Draw(spriteBatch, gameTime);
+        }
 
-            var scale = new Vector2(Phy.HitBox.Radius / (halo.Width * 0.5f), Phy.HitBox.Radius / (halo.Height * 0.5f));
-
-            spriteBatch.Draw(halo, pos, null, null, haloOrigin, 0, scale, BaseColor);
+        internal void ReleaseParcel()
+        {
+            game.MainScene.Parcel.Release(this);
         }
 
         public void WasHit()
@@ -70,30 +67,97 @@ namespace IntergalacticTransmissionService
             game.Inputs.Player(PlayerNum).Rumble(160, 320, 200);
         }
 
+        public void Shoot(bool active)
+        {
+            Bullets.Emitting = active;
+        }
+
         internal override void Update(GameTime gameTime)
         {
-            var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (IsAlive)
+            {
+                Phy.Dmp = 0.95f;
 
-            Phy.Dmp = 0.95f;
+                base.Update(gameTime);
 
-            // Integrate
-            Phy.Update(gameTime);
+                // Ensure MaxSpd
+                var spd = Phy.Spd.Length();
+                if (spd > MaxSpd)
+                    Phy.Spd = Vector2.Normalize(Phy.Spd) * MaxSpd;
+            }
+            else
+            {
+                if (Cooldown > TimeSpan.Zero)
+                    Cooldown -= gameTime.ElapsedGameTime;
+            }
 
-            // Ensure Physics Bounds
-            //if (Phy.Pos.X < Radius) Phy.Pos.X = Radius;
-            //if (Phy.Pos.X > game.Screen.CanvasWidth - Radius) Phy.Pos.X = game.Screen.CanvasWidth - Radius;
-            //if (Phy.Pos.Y < Radius) Phy.Pos.Y = Radius;
-            //if (Phy.Pos.Y > game.Screen.CanvasHeight - Radius) Phy.Pos.Y = game.Screen.CanvasHeight - Radius;
+            for (int i = 0; i < Collectables.Length; i++)
+            {
+                ref int count = ref Collectables[i];
+                switch ((CollectibleType)i)
+                {
+                    case CollectibleType.RapidFire:
+                        while (count > 0)
+                        {
+                            Bullets.RapidFire += TimeSpan.FromSeconds(10);
+                            count--;
+                        }
+                        break;
+                    case CollectibleType.SpreadShoot:
+                        if (count > 0)
+                        {
+                            count = 0;
+                            BulletType = BulletType.Spread;
+                        }
+                        break;
+                    case CollectibleType.BackShoot:
+                        if (count > 0)
+                        {
+                            count = 0;
+                            BulletType = BulletType.Back;
+                        }
+                        break;
+                    case CollectibleType.UpDownShoot:
+                        if (count > 0)
+                        {
+                            count = 0;
+                            this.BulletType = BulletType.UpDown;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
 
-            // Ensure MaxSpd
-            var spd = Phy.Spd.Length();
-            if (spd > 1200)
-                Phy.Spd = Vector2.Normalize(Phy.Spd) * 1200.0f;
+            Bullets.Update(gameTime);
 
-            //if (Phy.Spd.X > 1200) Phy.Spd.X = 1200;
-            //if (Phy.Spd.X < -1200) Phy.Spd.X = -1200;
-            //if (Phy.Spd.Y > 1200) Phy.Spd.Y = 1200;
-            //if (Phy.Spd.Y < -1200) Phy.Spd.Y = -1200;
+
+            game.DebugOverlay.Text += String.Join("  ", Enum.GetValues(typeof(CollectibleType)).Cast<int>().Select(c => $"{(CollectibleType)c}: {this.Collectables[c]}").ToArray()) + "\n";
+        }
+
+        internal void WhereAmI(bool show)
+        {
+            HighlightIndicator = show;
+        }
+
+        internal void Spawn()
+        {
+            if (Cooldown <= TimeSpan.Zero)
+            {
+                var rnd = new Random();
+                IsAlive = true;
+                Phy.Pos.X = game.Camera.Phy.Pos.X + (float)(rnd.NextDouble() - 0.5) * 500;
+                Phy.Pos.Y = game.Camera.Phy.Pos.Y + (float)(rnd.NextDouble() - 0.5) * 500;
+                Phy.Spd = Vector2.Zero;
+                Phy.Accel = Vector2.Zero;
+            }
+        }
+
+        public void Die()
+        {
+            Shoot(false);
+            IsAlive = false;
+            Cooldown = TimeSpan.FromSeconds(3);
         }
     }
 }

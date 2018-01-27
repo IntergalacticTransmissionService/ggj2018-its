@@ -23,7 +23,7 @@ namespace IntergalacticTransmissionService.Input
         private Color color;
 
         public Player Player { get; set; }
-
+        
         public AccelController(BaseGame game, int playerIdx, Player player)
         {
             this.game = game;
@@ -49,30 +49,46 @@ namespace IntergalacticTransmissionService.Input
             {
                 var cntrl = game.Inputs.Player(playerIdx);
 
-                // apply movement
-                var mat = Matrix.CreateRotationZ(game.Camera.Phy.Rot);
-                var movement = Vector3.Transform(
-                    new Vector3(cntrl.Value(Sliders.LeftStickX), cntrl.Value(Sliders.LeftStickY), 0) * 4000,
-                    mat);
+                if (Player.IsAlive)
+                {
+                    // apply movement
+                    var mat = Matrix.CreateRotationZ(game.Camera.Phy.Rot);
+                    var movement = Vector3.Transform(
+                        new Vector3(cntrl.Value(Sliders.LeftStickX), cntrl.Value(Sliders.LeftStickY), 0) * 4000,
+                        mat);
 
-                Player.Phy.Accel.X += movement.X;
-                Player.Phy.Accel.Y += movement.Y;
+                    Player.Phy.Accel.X += movement.X;
+                    Player.Phy.Accel.Y += movement.Y;
 
-                // rumble
-                if (cntrl.WasPressed(Buttons.B))
-                    Player.WasHit();
+                    // pass Parcel
+                    if (cntrl.WasPressed(Buttons.A))
+                        Player.ReleaseParcel();
+
+                    // shoot
+                    if (cntrl.WasPressed(Buttons.B))
+                        Player.Bullets.Spawn(Player.BulletType);
+                    Player.Shoot(cntrl.IsDown(Buttons.B));
+
+                    // Where am i
+                    Player.WhereAmI(cntrl.IsDown(Buttons.X));
+                }
+                else
+                {
+                    if (cntrl.AnyButtonDown)
+                        Player.Spawn();
+                }
             }
         }
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            var pos = new Vector2(Player.Phy.Pos.X, Player.Phy.Pos.Y);
-            for (int i = 1; i < 10; ++i)
-            {
-                spriteBatch.Draw(tex, pos, null, null, origin, 0, scale, Player.BaseColor);
-                pos.X += Player.Phy.Spd.X * i * 0.01f;
-                pos.Y += Player.Phy.Spd.Y * i * 0.01f;
-            }
+            //var pos = new Vector2(Player.Phy.Pos.X, Player.Phy.Pos.Y);
+            //for (int i = 1; i < 10; ++i)
+            //{
+            //    spriteBatch.Draw(tex, pos, null, null, origin, 0, scale, Player.BaseColor);
+            //    pos.X += Player.Phy.Spd.X * i * 0.01f;
+            //    pos.Y += Player.Phy.Spd.Y * i * 0.01f;
+            //}
         }
     }
 }
