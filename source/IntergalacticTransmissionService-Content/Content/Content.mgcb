@@ -1,4 +1,4 @@
-﻿
+
 #----------------------------- Global Properties ----------------------------#
 
 /outputDir:bin/$(Platform)
@@ -139,4 +139,28 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/enemy.png
+
+#begin Sounds/explosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/explosion.wav
+
+#begin Sounds/shot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/shot.wav
+
+#begin Sounds/push.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/push.wav
+
+#begin Sounds/grab.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/grab.wav
 
