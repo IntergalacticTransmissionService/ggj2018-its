@@ -97,6 +97,7 @@ namespace IntergalacticTransmissionService
                     }
                 }
 
+                // collectables
                 var collectible = scene.Level.Collides(scene.Players[i]);
                 if (collectible.HasValue)
                 {
