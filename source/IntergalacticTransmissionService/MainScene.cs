@@ -15,15 +15,19 @@ namespace IntergalacticTransmissionService
         internal readonly TilingImage BackgroundImg;
         internal readonly Sprite Background;
 
+        internal readonly Parcel Parcel;
         internal readonly List<Player> Players;
+        internal readonly CollisionHandler CollisionHandler;
 
         internal new ITSGame game {  get { return base.game as ITSGame; } }
 
         public MainScene(ITSGame game) : base(game)
         {
-            BackgroundImg = new TilingImage("Images/grass.jpg", game);
+            BackgroundImg = new TilingImage("Images/starfield.png", game);
             Background = new Sprite(BackgroundImg);
+            Parcel = new Parcel(game, Color.LightPink, 32f);
             Players = new List<Player>();
+            CollisionHandler = new CollisionHandler(this);
         }
 
         internal override void Initialize()
@@ -38,10 +42,15 @@ namespace IntergalacticTransmissionService
             Background.LoadContent(game.Content);
             Background.Gfx.origin = Vector2.Zero;
             Children.Add(Background);
+
+            Parcel.LoadContent(game.Content);
+            Parcel.Phy.Pos.X = 500;
+            Children.Add(Parcel);
         }
 
         internal override void Update(GameTime gameTime)
         {
+            CollisionHandler.Update(gameTime);
             base.Update(gameTime);
             CheckForNewPlayers();
         }
@@ -62,8 +71,11 @@ namespace IntergalacticTransmissionService
         {
             while (Players.Count < game.Inputs.NumPlayers)
             {
+                var rnd = new Random();
                 var player = new Player(game, Players.Count, 32f);
                 player.LoadContent(game.Content);
+                player.Phy.Pos.X = (float)(rnd.NextDouble() - 0.5) * 100;
+                player.Phy.Pos.Y = (float)(rnd.NextDouble() - 0.5) * 100;
                 Children.Add(player);
 
                 var controller = new AccelController(game, Players.Count, player);

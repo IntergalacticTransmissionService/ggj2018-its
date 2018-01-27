@@ -10,22 +10,14 @@ using System.Text;
 
 namespace IntergalacticTransmissionService
 {
-    public class Player : Entity, IHasPhysics
+    public class Player : EntityWithIndicator, IHasPhysics
     {
-        private readonly BaseGame game;
 
         private Texture2D halo;
         private Vector2 haloOrigin;
 
-        public Color BaseColor { get; private set; }
 
-        public Physics Phy { get; private set; }
-
-        public float Radius
-        {
-            get { return this.Phy.HitBox.Radius; }
-            set { this.Phy.HitBox.Radius = value; }
-        }
+        public BulletSystem Bullets { get; private set; }
 
         public int PlayerNum { get; private set; }
 
@@ -37,17 +29,17 @@ namespace IntergalacticTransmissionService
             new Color(0xCC, 0x00, 0x88)     // Purple
         };
 
-        public Player(BaseGame game, int playerNum, float radius)
+        public Player(ITSGame game, int playerNum, float radius) : base(game, colors[playerNum % colors.Length], radius)
         {
-            this.game = game;
             this.PlayerNum = playerNum;
-            this.BaseColor = colors[playerNum % colors.Length];
-            Phy = new OrientedPhysics(radius);
+            Bullets = new BulletSystem(this, "Images/bullet.png", 300, 15);
         }
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
-            halo = content.Load<Texture2D>("Images/halo.png");
+            base.LoadContent(content, wasReloaded);
+            halo = content.Load<Texture2D>("Images/player.png");
+            Bullets.LoadContent(content, wasReloaded);
             if (!wasReloaded)
             {
                 haloOrigin = new Vector2(halo.Width * 0.5f, halo.Height * 0.5f);
@@ -56,13 +48,21 @@ namespace IntergalacticTransmissionService
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
+            base.Draw(spriteBatch, gameTime);
+            Bullets.Draw(spriteBatch, gameTime);
+
             var pos = new Vector2();
             pos.X = Phy.Pos.X;
             pos.Y = Phy.Pos.Y;
 
             var scale = new Vector2(Phy.HitBox.Radius / (halo.Width * 0.5f), Phy.HitBox.Radius / (halo.Height * 0.5f));
 
-            spriteBatch.Draw(halo, pos, null, null, haloOrigin, 0, scale, BaseColor);
+            spriteBatch.Draw(halo, pos, null, null, haloOrigin, Phy.Rot, scale, BaseColor);
+        }
+
+        internal void ReleaseParcel()
+        {
+            game.MainScene.Parcel.Release(this);
         }
 
         public void WasHit()
@@ -70,30 +70,23 @@ namespace IntergalacticTransmissionService
             game.Inputs.Player(PlayerNum).Rumble(160, 320, 200);
         }
 
+        public void Shoot(bool active)
+        {
+            Bullets.Emitting = active;
+        }
+
         internal override void Update(GameTime gameTime)
         {
-            var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
             Phy.Dmp = 0.95f;
 
-            // Integrate
-            Phy.Update(gameTime);
-
-            // Ensure Physics Bounds
-            //if (Phy.Pos.X < Radius) Phy.Pos.X = Radius;
-            //if (Phy.Pos.X > game.Screen.CanvasWidth - Radius) Phy.Pos.X = game.Screen.CanvasWidth - Radius;
-            //if (Phy.Pos.Y < Radius) Phy.Pos.Y = Radius;
-            //if (Phy.Pos.Y > game.Screen.CanvasHeight - Radius) Phy.Pos.Y = game.Screen.CanvasHeight - Radius;
+            base.Update(gameTime);
 
             // Ensure MaxSpd
             var spd = Phy.Spd.Length();
             if (spd > 1200)
                 Phy.Spd = Vector2.Normalize(Phy.Spd) * 1200.0f;
 
-            //if (Phy.Spd.X > 1200) Phy.Spd.X = 1200;
-            //if (Phy.Spd.X < -1200) Phy.Spd.X = -1200;
-            //if (Phy.Spd.Y > 1200) Phy.Spd.Y = 1200;
-            //if (Phy.Spd.Y < -1200) Phy.Spd.Y = -1200;
+            Bullets.Update(gameTime);
         }
     }
 }

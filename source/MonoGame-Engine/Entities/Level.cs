@@ -73,6 +73,8 @@ namespace MonoGame_Engine.Entities
             }).ToArray();
 
 
+            
+
             foreach (var item in this.entrys)
                 item.Update(gameTime);
 

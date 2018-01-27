@@ -9,12 +9,15 @@
     <Import_RootNamespace>MonoGame_Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BulletSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CollisionHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EntityWithIndicator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\AccelController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\CamController.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\DirectController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\PlayfieldCamController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ITSGame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Parcel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Player.cs" />
   </ItemGroup>
 </Project>
