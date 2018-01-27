@@ -68,6 +68,7 @@ namespace MonoGame_Engine.Input
 
         public override void Rumble(float low, float high, int ms)
         {
+            manager.SetRumble(index, ms);
         }
 
         public override void Update(GameTime gameTime)

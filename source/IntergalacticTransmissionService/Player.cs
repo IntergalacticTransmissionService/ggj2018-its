@@ -178,6 +178,7 @@ namespace IntergalacticTransmissionService
 
         public void Die()
         {
+            WasHit();
             if (!IsInvincible)
             {
                 Shoot(false);
