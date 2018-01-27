@@ -36,7 +36,7 @@ namespace IntergalacticTransmissionService
                     // collisions with other players
                     if (j > i)
                     {
-                        if (left.Phy.CollidesWith(right.Phy))
+                        if (right.IsAlive && left.Phy.CollidesWith(right.Phy))
                         {
                             left.WasHit();
                             right.WasHit();
@@ -100,7 +100,7 @@ namespace IntergalacticTransmissionService
                 var collectible = scene.Level.Collides(scene.Players[i]);
                 if (collectible.HasValue)
                 {
-                    scene.Players[i].Collectables[(int)collectible.Value]++;
+                    scene.Players[i].Collectables[collectible.Value]++;
                 }
 
             }

@@ -84,33 +84,33 @@ namespace IntergalacticTransmissionService
 
         public bool Spawn(BulletType type, bool playSound = true)
         {
-            bool didSpanw = false;
+            bool didSpawn = false;
             switch (type)
             {
                 case BulletType.Normal:
                 default:
-                    didSpanw |= SpawnSingel(0f);
+                    didSpawn |= SpawnSingle(0f);
                     break;
                 case BulletType.Spread:
-                    didSpanw |= SpawnSingel(0f);
-                    didSpanw |= SpawnSingel(-MathHelper.PiOver4 / 2);
-                    didSpanw |= SpawnSingel(MathHelper.PiOver4 / 2);
+                    didSpawn |= SpawnSingle(0f);
+                    didSpawn |= SpawnSingle(-MathHelper.PiOver4 / 2);
+                    didSpawn |= SpawnSingle(MathHelper.PiOver4 / 2);
                     break;
                 case BulletType.Back:
-                    didSpanw |= SpawnSingel(0f);
-                    didSpanw |= SpawnSingel(MathHelper.Pi);
+                    didSpawn |= SpawnSingle(0f);
+                    didSpawn |= SpawnSingle(MathHelper.Pi);
                     break;
                 case BulletType.UpDown:
-                    didSpanw |= SpawnSingel(MathHelper.PiOver2);
-                    didSpanw |= SpawnSingel(-MathHelper.PiOver2);
+                    didSpawn |= SpawnSingle(MathHelper.PiOver2);
+                    didSpawn |= SpawnSingle(-MathHelper.PiOver2);
                     break;
             }
-            if (playSound && didSpanw)
+            if (playSound && didSpawn)
                 snd.Play();
-            return didSpanw;
+            return didSpawn;
         }
 
-        private bool SpawnSingel(float rotation)
+        private bool SpawnSingle(float rotation)
         {
             if (active < maxParticles)
             {
@@ -148,7 +148,7 @@ namespace IntergalacticTransmissionService
             if (RapidFire.Ticks > 0 && Emitting)
             {
                 RapidFire -= gameTime.ElapsedGameTime;
-                var numberOfParticalFired = numParticlesToSpawn;
+                var numberOfParticlesFired = numParticlesToSpawn;
                 while (numParticlesToSpawn > 1)
                 {
                     if (!Spawn(player.BulletType, false))
@@ -156,12 +156,12 @@ namespace IntergalacticTransmissionService
                     accumulator -= 1 / SpawnRate;
                     --numParticlesToSpawn;
                 }
-                numberOfParticalFired -= numParticlesToSpawn;
-                if (numberOfParticalFired > 0)
+                numberOfParticlesFired -= numParticlesToSpawn;
+                if (numberOfParticlesFired > 0)
                     snd.Play();
             }
 
-            DebugOverlay.Instance.Text += $"Rapdiffire ({this.player.PlayerNum}): {RapidFire}\n";
+            //DebugOverlay.Instance.Text += $"RapidFire ({this.player.PlayerNum}): {RapidFire}\n";
 
             // Update
             for (int i = 0; i < active; ++i)
