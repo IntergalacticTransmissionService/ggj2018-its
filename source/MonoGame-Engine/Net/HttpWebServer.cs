@@ -16,6 +16,7 @@ namespace IntergalacticTransmissionService.Net
 
         internal void RegisterFile(string key, string file)
         {
+            Console.WriteLine(key + ": " + file);
             Files[key] = file;
         }
 
@@ -40,16 +41,17 @@ namespace IntergalacticTransmissionService.Net
                             var ctx = c as HttpListenerContext;
                             try
                             {
-                                string rstr;
+                                byte[] buf;
                                 if (Files.ContainsKey(ctx.Request.RawUrl))
-                                    rstr = File.ReadAllText(Files[ctx.Request.RawUrl]);
+                                    buf = File.ReadAllBytes(Files[ctx.Request.RawUrl]);
                                 else
-                                    rstr = Result404;
-                                byte[] buf = Encoding.UTF8.GetBytes(rstr);
+                                    buf = Encoding.UTF8.GetBytes(Result404);
                                 ctx.Response.ContentLength64 = buf.Length;
                                 ctx.Response.OutputStream.Write(buf, 0, buf.Length);
                             }
-                            catch { }
+                            catch(Exception e) {
+                                Console.WriteLine(e);
+                            }
                             finally
                             {
                                 ctx.Response.OutputStream.Close();
