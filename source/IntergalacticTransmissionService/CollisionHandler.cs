@@ -17,6 +17,7 @@ namespace IntergalacticTransmissionService
 
         public void Update(GameTime gameTime)
         {
+            var leviathan = scene.Leviathan;
             // check Players
             for (int i = 0; i < scene.Players.Count; ++i)
             {
@@ -97,6 +98,20 @@ namespace IntergalacticTransmissionService
                     }
                 }
 
+                foreach (var bullet in left.Bullets)
+                {
+
+                    if (leviathan.Phy.CollidesWith(bullet))
+                        leviathan.WasHit(false);
+                }
+
+                if (left.IsAlive && left.Phy.CollidesWith(leviathan.Phy))
+                {
+                    left.Die();
+                    if(scene.Parcel.HoldBy == left)
+                        scene.Parcel.IsArmed = false;
+                }
+
                 // collectables
                 var collectible = scene.Level.Collides(left);
                 if (collectible.HasValue)
@@ -106,6 +121,11 @@ namespace IntergalacticTransmissionService
 
             }
 
+            if (scene.Parcel.IsArmed && leviathan.Phy.CollidesWith(scene.Parcel.Phy))
+            {
+                leviathan.WasHit(true);
+                scene.Parcel.IsArmed = false;
+            }
         }
     }
 }
