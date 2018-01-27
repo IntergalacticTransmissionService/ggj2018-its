@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame_Engine.Math;
 
 namespace IntergalacticTransmissionService
 {
@@ -51,6 +52,34 @@ namespace IntergalacticTransmissionService
             {
                 base.Update(gameTime);
                 Behavior?.Update(this, gameTime);
+
+                SpawnEnemies(gameTime);
+            }
+        }
+
+        private TimeSpan timeUntilNextSpawnWave = TimeSpan.FromSeconds(10);
+        private int waveNumber;
+
+        private void SpawnEnemies(GameTime gameTime)
+        {
+            timeUntilNextSpawnWave -= gameTime.ElapsedGameTime;
+            if (timeUntilNextSpawnWave < TimeSpan.Zero)
+            {
+                timeUntilNextSpawnWave += TimeSpan.FromSeconds(10 + waveNumber);
+
+                for (int i = 0; i < waveNumber * 2; ++i)
+                {
+                    var dist = 700;
+                    var enemy = new Enemy(game,
+                        Color.White,
+                        RandomFuncs.FromRange(16f, 64f),
+                        this.Phy.Pos + new Vector2(RandomFuncs.FromRange(-dist, dist), RandomFuncs.FromRange(-dist, dist)),
+                        (float)RandomFuncs.FromRange(0, MathHelper.TwoPi),
+                        new ChasingBehavior(game.MainScene, 500, 800, RandomFuncs.FromRange(100, 300)));
+                    enemy.LoadContent(game.Content);
+                    game.MainScene.Enemies.Add(enemy);
+                }
+                ++waveNumber;
             }
         }
 
