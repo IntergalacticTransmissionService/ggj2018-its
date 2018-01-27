@@ -37,6 +37,8 @@ namespace IntergalacticTransmissionService
 
         public TimeSpan RespawnCooldown;
         public TimeSpan InvincibleCooldown;
+        public TimeSpan OutOfScreenCountdown;
+
         public readonly Dictionary<CollectableType, int> Collectables;
 
         public static Color[] colors = new Color[] {
@@ -132,6 +134,19 @@ namespace IntergalacticTransmissionService
                 var spd = Phy.Spd.Length();
                 if (spd > MaxSpd)
                     Phy.Spd = Vector2.Normalize(Phy.Spd) * MaxSpd;
+
+                if (IsOutSideScreen())
+                {
+                    OutOfScreenCountdown += gameTime.ElapsedGameTime;
+                    if (OutOfScreenCountdown > TimeSpan.FromSeconds(6))
+                    {
+                        OutOfScreenCountdown = TimeSpan.Zero;
+                        Die();
+                    }
+                } else
+                {
+                    OutOfScreenCountdown = TimeSpan.Zero;
+                }
             }
             else
             {
@@ -183,6 +198,14 @@ namespace IntergalacticTransmissionService
             //game.DebugOverlay.Text += String.Join("  ", Enum.GetValues(typeof(CollectibleType)).Cast<CollectibleType>().Select(c => $"{c}: {this.Collectables[c]}").ToArray()) + "\n";
         }
 
+        private bool IsOutSideScreen()
+        {
+            var tl = game.Camera.TopLeft;
+            var br = game.Camera.BottomRight;
+
+            return (Phy.Pos.X + Radius < tl.X || Phy.Pos.X - Radius > br.X || Phy.Pos.Y + Radius < tl.Y || Phy.Pos.Y - Radius > br.Y);
+        }
+
         internal void AddCollectable(CollectableType value)
         {
             Collectables[value]++;
@@ -216,6 +239,7 @@ namespace IntergalacticTransmissionService
             WasHit();
             if (!IsInvincible)
             {
+                game.MainScene.Parcel.Release(this, 0);
                 Shoot(false);
                 IsAlive = false;
                 RespawnCooldown = TimeSpan.FromSeconds(1);
