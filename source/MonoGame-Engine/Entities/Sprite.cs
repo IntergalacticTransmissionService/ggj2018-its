@@ -51,6 +51,7 @@ namespace MonoGame_Engine.Entities
         internal override void Update(GameTime gameTime)
         {
             Phy.Update(gameTime);
+            Gfx.Update(gameTime);
         }
     }
 }

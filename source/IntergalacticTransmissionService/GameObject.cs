@@ -19,6 +19,10 @@ namespace IntergalacticTransmissionService
 
         public bool HighlightIndicator;
 
+        public GameObject(ITSGame game, MonoGame_Engine.Gfx.Image image, Color baseColor, float radius, bool orientedPhysics = true) : base(image, radius, baseColor, orientedPhysics)
+        {
+            this.game = game;
+        }
         public GameObject(ITSGame game, string assetPath, Color baseColor, float radius, bool orientedPhysics = true) : base(assetPath, radius, baseColor, orientedPhysics)
         {
             this.game = game;

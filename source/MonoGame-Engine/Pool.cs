@@ -41,6 +41,8 @@ namespace MonoGame_Engine
                 if (toUpdate.timeToLive.Ticks < 0)
                     toUpdate.Dispose();
             }
+            foreach (var g in Graphics)
+                g.Update(gameTime);
         }
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {

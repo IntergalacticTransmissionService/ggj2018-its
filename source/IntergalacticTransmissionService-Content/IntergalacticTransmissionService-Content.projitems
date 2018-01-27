@@ -9,6 +9,15 @@
     <Import_RootNamespace>MonoGame_Content</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\boss1.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\boss2.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\bullet.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\character_01.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\character_02.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\character_03.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\character_04.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\DistanceIndicator.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\indicator.png" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\Leviathan.png" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\collectableBack.png" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\collectableRapidFire.png" />
@@ -23,6 +32,16 @@
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\particle.png" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\player.png" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\starfield.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\starfield_02.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\textbox_b.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\textbox_bl.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\textbox_br.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\textbox_l.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\textbox_m.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\textbox_r.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\textbox_t.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\textbox_tl.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\textbox_tr.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Content\WebController\index.html">
