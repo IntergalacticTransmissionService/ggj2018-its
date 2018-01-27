@@ -14,7 +14,7 @@ namespace MonoGame_Engine.Phy
         public Vector2 Accel;
         public float Dmp = 1.0f;
 
-        public Circle HitBox;
+        public readonly Circle HitBox;
 
         public Physics(float? radius)
         {

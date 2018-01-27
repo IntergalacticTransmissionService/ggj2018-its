@@ -2,29 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using IntergalacticTransmissionService;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGame_Engine.Entities
 {
-    class Level : Entity
+    public class Level : Entity
     {
 
-        public Level(float minSpanDistance, float maxSpanDistance, float fillRatio, int sampleRate)
+        public Level(ITSGame game, float minSpanDistance, float maxSpanDistance, int itemsCount)
         {
-            if (sampleRate < 1)
-                throw new ArgumentOutOfRangeException(nameof(sampleRate), sampleRate, "must 1 or greater");
+            if (itemsCount < 1)
+                throw new ArgumentOutOfRangeException(nameof(itemsCount), itemsCount, "must 1 or greater");
             this.minSpanDistance = minSpanDistance;
             this.maxSpanDistance = maxSpanDistance;
-            this.fillRatio = fillRatio;
-            this.sampleRate = sampleRate;
+
+            this.collectebelsPool = new Pool(itemsCount, 5);
+            this.game = game;
         }
 
-        public Vector2 Center { get; set; }
 
-        private readonly Pool<LevelEntety> collectebelsPool = new Pool<LevelEntety>(40, PoolToSmallbehavior.ReturnDefault, () => new LevelEntety("collectable.png"));
-        private readonly List<LevelEntety> entrys = new List<LevelEntety>();
+        private readonly Pool collectebelsPool;
+        private readonly ITSGame game;
         private readonly float minSpanDistance;
         private readonly float maxSpanDistance;
         private readonly float fillRatio;
@@ -32,53 +33,36 @@ namespace MonoGame_Engine.Entities
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            foreach (var item in this.entrys)
-                item.Draw(spriteBatch, gameTime);
+            this.collectebelsPool.Draw(spriteBatch, gameTime);
         }
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
             this.collectebelsPool.LoadContent(content, wasReloaded);
-            foreach (var item in this.entrys)
-                item.LoadContent(content, wasReloaded);
         }
 
         internal override void Update(GameTime gameTime)
         {
 
-            var itemsToDelete = new List<LevelEntety>();
+            this.collectebelsPool.Update(gameTime);
 
 
-
-            var spanVector = new Vector2(Math.RandomFuncs.FromRange(this.minSpanDistance, this.maxSpanDistance), Math.RandomFuncs.FromRange(this.minSpanDistance, this.maxSpanDistance));
-            var delta = this.maxSpanDistance - this.minSpanDistance;
-
-            var blocksize = delta / this.sampleRate;
-
-
-            var sectors = this.entrys.GroupBy(x =>
+            foreach (var item in this.collectebelsPool)
             {
-                var relativPosition = x.Phy.Pos - Center;
-                ////to near to be interesting
-                //if (System.Math.Abs(relativPosition.Y) < minSpanDistance && System.Math.Abs(relativPosition.X) < minSpanDistance)
-                //    return (float.PositiveInfinity, float.PositiveInfinity);
+                var relativPosition = item.Phy.Pos - game.Camera.Phy.Pos;
+                if (System.Math.Abs(relativPosition.X) > this.maxSpanDistance || System.Math.Abs(relativPosition.Y) > this.maxSpanDistance)
+                    item.Dispose();
+            }
 
-                // To far away, delete
-                if (System.Math.Abs(relativPosition.Y) > maxSpanDistance || System.Math.Abs(relativPosition.X) > maxSpanDistance)
-                    return (float.NaN, float.NaN);
-
-                var sector = relativPosition / blocksize;
-
-                return (sector.X, sector.Y);
-            }).ToArray();
-
-
-            
-
-            foreach (var item in this.entrys)
-                item.Update(gameTime);
-
-
+            while (this.collectebelsPool.Available > 0)
+            {
+                var position = new Vector2(Math.RandomFuncs.FromRange(this.minSpanDistance, this.maxSpanDistance), Math.RandomFuncs.FromRange(this.minSpanDistance, this.maxSpanDistance)) + game.Camera.Phy.Pos;
+                var x = this.collectebelsPool.Get(CollectebleGrafic.Stuff, position, 0);
+                x.Phy.RotSpd = 1f;
+                var direction = (game.Camera.Phy.Pos - position);
+                direction.Normalize();
+                x.Phy.Spd = direction * 30f; ;
+            }
 
 
         }

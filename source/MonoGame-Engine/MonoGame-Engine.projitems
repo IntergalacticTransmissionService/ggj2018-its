@@ -12,7 +12,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)BaseGame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Camera.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Level.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Entities\LevelEntety.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Reloadable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\JoyConController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LiveContentManager.cs" />

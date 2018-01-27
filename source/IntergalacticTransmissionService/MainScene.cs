@@ -19,7 +19,10 @@ namespace IntergalacticTransmissionService
         internal readonly List<Player> Players;
         internal readonly CollisionHandler CollisionHandler;
 
-        internal new ITSGame game {  get { return base.game as ITSGame; } }
+        internal readonly Level Level;
+
+
+        internal new ITSGame game { get { return base.game as ITSGame; } }
 
         public MainScene(ITSGame game) : base(game)
         {
@@ -28,6 +31,7 @@ namespace IntergalacticTransmissionService
             Parcel = new Parcel(game, Color.LightPink, 32f);
             Players = new List<Player>();
             CollisionHandler = new CollisionHandler(this);
+            Level = new Level(game, 300, 1000, 3);
         }
 
         internal override void Initialize()
@@ -46,12 +50,15 @@ namespace IntergalacticTransmissionService
             Parcel.LoadContent(game.Content);
             Parcel.Phy.Pos.X = 500;
             Children.Add(Parcel);
+            Level.LoadContent(game.Content);
+            Children.Add(Level);
         }
 
         internal override void Update(GameTime gameTime)
         {
             CollisionHandler.Update(gameTime);
             base.Update(gameTime);
+
             CheckForNewPlayers();
         }
 
