@@ -4,12 +4,14 @@ using Microsoft.Xna.Framework.Input;
 using System.Linq;
 using MonoGame_Engine;
 using MonoGame_Engine.Input;
+using IntergalacticTransmissionService.WebController;
 
 namespace IntergalacticTransmissionService
 {
     public class ITSGame : BaseGame
     {
         public MainScene MainScene;
+        private ServerManager Manager;
 
         public ITSGame() : base()
         {
@@ -20,6 +22,7 @@ namespace IntergalacticTransmissionService
             base.Initialize();
 
             Screen.SetSize((int)(1920 * 0.75), (int)(1080 * 0.75), false);
+            Manager = new ServerManager();
 
             for (int i = 0; i < 4; ++i)
                 Inputs.Add(new XBoxController(i));
@@ -43,6 +46,7 @@ namespace IntergalacticTransmissionService
             if (disposing)
             {
                 Inputs.Dispose();
+                Manager.Stop();
             }
             base.Dispose(disposing);
         }

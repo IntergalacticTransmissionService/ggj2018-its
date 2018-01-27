@@ -23,7 +23,7 @@ namespace IntergalacticTransmissionService.Input
         private Color color;
 
         public Player Player { get; set; }
-
+        
         public AccelController(BaseGame game, int playerIdx, Player player)
         {
             this.game = game;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Engine.Entities;
@@ -14,8 +15,8 @@ namespace IntergalacticTransmissionService
         public Player HoldBy { get; set; }
         public TimeSpan Cooldown { get; private set; }
 
-        private Texture2D img;
-        private Vector2 origin;
+        private SoundEffect sndGrab;
+        private SoundEffect sndRelease;
 
         public Parcel(ITSGame game, Color color, float radius) : base(game, "Images/parcel.png", color, radius)
         {
@@ -24,6 +25,8 @@ namespace IntergalacticTransmissionService
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
             base.LoadContent(content, wasReloaded);
+            sndRelease = content.Load<SoundEffect>("Sounds/push");
+            sndGrab = content.Load<SoundEffect>("Sounds/grab");
             if (!wasReloaded)
             {
                 Phy.Dmp = 0.95f;
@@ -49,6 +52,7 @@ namespace IntergalacticTransmissionService
                 HoldBy = player;
                 Phy.Spd = Vector2.Zero;
                 Cooldown = TimeSpan.Zero;
+                sndGrab.Play();
             } else if (player != LastHeldBy)
             {
                 Phy.Spd *= 0.5f;
@@ -63,6 +67,7 @@ namespace IntergalacticTransmissionService
                 HoldBy = null;
                 Cooldown = TimeSpan.FromSeconds(1);
                 Phy.Spd = player.Phy.Spd + Vector2.Normalize(player.Phy.Spd) * power;
+                sndRelease.Play();
             }
         }
     }

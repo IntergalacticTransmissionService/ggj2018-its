@@ -1,5 +1,6 @@
 ﻿using IntergalacticTransmissionService;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Engine;
@@ -51,6 +52,7 @@ namespace IntergalacticTransmissionService
         public bool Emitting { get; set; }
 
         public TimeSpan RapidFire { get; set; }
+        private SoundEffect snd;
 
         public BulletSystem(Player player, string asset, int maxParticles, float spawnRateInPartPerSec)
         {
@@ -72,6 +74,7 @@ namespace IntergalacticTransmissionService
         internal override void LoadContent(ContentManager content, bool wasReloaded)
         {
             tex = content.Load<Texture2D>(asset);
+            snd = content.Load<SoundEffect>("Sounds/shot");
             if (!wasReloaded)
             {
                 origin = new Vector2(tex.Width * 0.5f, tex.Height * 0.5f);
@@ -116,6 +119,7 @@ namespace IntergalacticTransmissionService
                 maxCol[active].A = 0;
                 age[active] = 0;
                 active++;
+                snd.Play();
             }
         }
 
