@@ -1,4 +1,5 @@
-﻿using IntergalacticTransmissionService.Input;
+﻿using IntergalacticTransmissionService.Behaviors;
+using IntergalacticTransmissionService.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Engine;
@@ -49,7 +50,8 @@ namespace IntergalacticTransmissionService
             Parcel.Phy.Pos.X = 500;
             Children.Add(Parcel);
 
-            Enemies.Add(new Enemy(game, Color.White, 128f, new Vector2(200, 200), (float)Math.PI));
+            var testEnemy = new Enemy(game, Color.White, 128f, new Vector2(200, 200), (float)Math.PI, new ChasingBehavior(this, 500, 800));
+            Enemies.Add(testEnemy);
             foreach(var e in Enemies) { e.LoadContent(game.Content); }
         }
 
