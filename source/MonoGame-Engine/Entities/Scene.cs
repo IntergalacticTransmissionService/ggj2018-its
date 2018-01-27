@@ -51,7 +51,7 @@ namespace MonoGame_Engine.Entities
         {
             game.GraphicsDevice.Clear(BgColor);
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, null, cam.Matrix);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, cam.Matrix);
             Draw(spriteBatch, gameTime);
             spriteBatch.End();
         }

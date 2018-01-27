@@ -10,9 +10,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\grass.jpg" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\grass_01.jpg" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\halo.png" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\image1920x1080.jpg" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\particle.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\player.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\starfield.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Content\assetmap.ini">

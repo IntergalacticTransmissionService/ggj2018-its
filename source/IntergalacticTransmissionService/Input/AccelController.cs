@@ -58,21 +58,25 @@ namespace IntergalacticTransmissionService.Input
                 Player.Phy.Accel.X += movement.X;
                 Player.Phy.Accel.Y += movement.Y;
 
-                // rumble
+                // apply Rotation
+                Player.Phy.Rot = (float)Math.Atan2(Player.Phy.Spd.Y, Player.Phy.Spd.X);
+
+                // shoot
                 if (cntrl.WasPressed(Buttons.B))
-                    Player.WasHit();
+                    Player.Bullets.Spawn();
+                Player.Shoot(cntrl.IsDown(Buttons.B));
             }
         }
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            var pos = new Vector2(Player.Phy.Pos.X, Player.Phy.Pos.Y);
-            for (int i = 1; i < 10; ++i)
-            {
-                spriteBatch.Draw(tex, pos, null, null, origin, 0, scale, Player.BaseColor);
-                pos.X += Player.Phy.Spd.X * i * 0.01f;
-                pos.Y += Player.Phy.Spd.Y * i * 0.01f;
-            }
+            //var pos = new Vector2(Player.Phy.Pos.X, Player.Phy.Pos.Y);
+            //for (int i = 1; i < 10; ++i)
+            //{
+            //    spriteBatch.Draw(tex, pos, null, null, origin, 0, scale, Player.BaseColor);
+            //    pos.X += Player.Phy.Spd.X * i * 0.01f;
+            //    pos.Y += Player.Phy.Spd.Y * i * 0.01f;
+            //}
         }
     }
 }
