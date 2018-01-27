@@ -10,9 +10,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\Behavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\LeviathanBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BulletSystem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\ChasingBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CollisionHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Leviathan.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enemy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\AccelController.cs" />
@@ -21,8 +23,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)ITSGame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Parcel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Player.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Behaviors\" />
   </ItemGroup>
 </Project>

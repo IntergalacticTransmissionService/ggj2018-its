@@ -68,6 +68,10 @@ namespace IntergalacticTransmissionService
                     new ChasingBehavior(this, 500, 800, RandomFuncs.FromRange(100, 300)));
                 Enemies.Add(testEnemy);
             }
+            var leviathan = new Leviathan(game, Color.White, 400, game.Camera.Phy.Pos, MathHelper.PiOver2, new LeviathanBehavior(this));
+            leviathan.LoadContent(game.Content);
+            this.Children.Add(leviathan);
+
             foreach (var e in Enemies) { e.LoadContent(game.Content); }
         }
 

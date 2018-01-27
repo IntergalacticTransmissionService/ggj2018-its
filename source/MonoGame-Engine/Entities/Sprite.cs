@@ -11,21 +11,24 @@ namespace MonoGame_Engine.Entities
         public Physics Phy { get; private set; }
         public Image Gfx { get; private set; }
         public float Radius { get; private set; }
-        public Color BaseColor { get; set;}
+        public Color BaseColor { get; set; }
 
-        public Sprite(Image img, float radius) : this(img, radius, Color.White)
+        private readonly bool orientedPhysics;
+
+        public Sprite(Image img, float radius, bool orientedPhysics = true) : this(img, radius, Color.White, orientedPhysics)
         {
 
         }
 
-        public Sprite(Image img, float radius, Color color)
+        public Sprite(Image img, float radius, Color color, bool orientedPhysics = true)
         {
             Gfx = img;
             Radius = radius;
             BaseColor = color;
+            this.orientedPhysics = orientedPhysics;
         }
 
-        public Sprite(string assetPath, float radius, Color color) : this(new Image(assetPath), radius, color)
+        public Sprite(string assetPath, float radius, Color color, bool orientedPhysics = true) : this(new Image(assetPath), radius, color, orientedPhysics)
         {
         }
 
@@ -36,7 +39,7 @@ namespace MonoGame_Engine.Entities
                 Radius = Gfx.Width * 0.5f;
             if (!wasReloaded)
             {
-                Phy = new OrientedPhysics(Radius);
+                Phy = this.orientedPhysics ? new OrientedPhysics(Radius) : new Physics(Radius);
             }
         }
 
