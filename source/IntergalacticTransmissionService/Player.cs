@@ -70,5 +70,10 @@ namespace IntergalacticTransmissionService
 
             Bullets.Update(gameTime);
         }
+
+        internal void WhereAmI(bool show)
+        {
+            HighlightIndicator = show;
+        }
     }
 }
