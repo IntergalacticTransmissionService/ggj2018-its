@@ -51,6 +51,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Fleck, Version=0.14.0.59, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Fleck.0.14.0.59\lib\net40\Fleck.dll</HintPath>
+    </Reference>
     <Reference Include="JoyConLib, Version=0.0.1.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\JoyConLib.0.0.1.5\lib\net45\JoyConLib.dll</HintPath>
     </Reference>
