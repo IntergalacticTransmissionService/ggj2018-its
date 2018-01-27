@@ -9,6 +9,7 @@ using IntergalacticTransmissionService.Net;
 
 namespace IntergalacticTransmissionService
 {
+
     class HUD : Entity
     {
         private ITSGame game;
@@ -17,7 +18,9 @@ namespace IntergalacticTransmissionService
         public Vector2 lanIpPos = new Vector2();
 
         private Texture2D[] chars = new Texture2D[4];
+        private Texture2D distanceScale;
         private Vector2[] pos = new Vector2[4];
+        private float distanceToMotherShip;
 
         private Texture2D[] textbox = new Texture2D[9];
         private string[] texts = new string[4];
@@ -33,7 +36,7 @@ namespace IntergalacticTransmissionService
             spriteBatch.Begin();
             spriteBatch.DrawString(game.Fonts.Get(MonoGame_Engine.Font.DebugFont), lanIp, lanIpPos, Color.White);
 
-            for(int i=0; i<4; i++)
+            for (int i = 0; i < 4; i++)
             {
                 pos[i].X = i % 2 == 0 ? 10 : game.Screen.CanvasWidth - 10 - chars[i].Width;
                 pos[i].Y = i / 2 == 0 ? 10 : game.Screen.CanvasHeight - 10 - chars[i].Height;
@@ -55,6 +58,17 @@ namespace IntergalacticTransmissionService
                         DrawTextBox(i, spriteBatch, text, new Vector2(textPosXOffset, textPosYOffset), new Color(player.BaseColor, alpha));
                     }
                 }
+            }
+            if (distanceToMotherShip > 1000)
+            {
+                var position = (float)Math.Log(distanceToMotherShip,1.1);
+                position = MathHelper.Clamp(position, 0, 400);
+                var left = game.Screen.CanvasWidth / 2 - 200;
+                var rigth = game.Screen.CanvasWidth / 2 + 200;
+                var indicator = position + left;
+
+                spriteBatch.Draw(distanceScale, new Vector2(left, 0));
+                this.game.MainScene.leviathan.Gfx.Draw(spriteBatch, new Vector2(indicator, 10), MathHelper.PiOver2, 10f, Color.White);
             }
             spriteBatch.End();
         }
@@ -89,6 +103,8 @@ namespace IntergalacticTransmissionService
             for (int i = 0; i < 4; ++i)
                 chars[i] = content.Load<Texture2D>($"Images/character_{i+1:00}.png");
             lanIpPos = new Vector2(chars[0].Width + 20, 10);
+            distanceScale = content.Load<Texture2D>("Images/DistanceIndicator.png");
+
 
             // load textbox
             var tb = new string[] { "tl", "t", "tr", "l", "m", "r", "bl", "b", "br" };
@@ -98,7 +114,7 @@ namespace IntergalacticTransmissionService
 
         internal override void Update(GameTime gameTime)
         {
-
+            this.distanceToMotherShip = Math.Abs((game.MainScene.leviathan.Phy.Pos - game.Camera.Phy.Pos).Length());
         }
 
         internal void ShowMessageForPlayer(Player player, string msg, TimeSpan duration)

@@ -19,7 +19,7 @@ namespace IntergalacticTransmissionService
 
         public bool HighlightIndicator;
 
-        public GameObject(ITSGame game, string assetPath, Color baseColor, float radius) : base(assetPath, radius, baseColor)
+        public GameObject(ITSGame game, string assetPath, Color baseColor, float radius, bool orientedPhysics = true) : base(assetPath, radius, baseColor, orientedPhysics)
         {
             this.game = game;
         }
@@ -41,7 +41,7 @@ namespace IntergalacticTransmissionService
                 pos.X = MathHelper.Clamp(pos.X, camTopLeft.X + 15, camBottomRight.X - 15);
                 pos.Y = MathHelper.Clamp(pos.Y, camTopLeft.Y + 15, camBottomRight.Y - 15);
 
-                spriteBatch.Draw(indicator, pos, null, BaseColor,0, origin, Scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(indicator, pos, null, BaseColor, 0, origin, Scale, SpriteEffects.None, 0);
             }
 
             base.Draw(spriteBatch, gameTime);
