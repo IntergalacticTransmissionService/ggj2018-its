@@ -9,6 +9,7 @@
     <Import_RootNamespace>MonoGame_Content</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Content\Images\Leviathan.png" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\collectableBack.png" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\collectableRapidFire.png" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\collectableSpread.png" />
