@@ -49,7 +49,7 @@ namespace IntergalacticTransmissionService
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
-            halo = content.Load<Texture2D>("Images/halo.png");
+            halo = content.Load<Texture2D>("Images/player.png");
             indicator = content.Load<Texture2D>("Images/particle.png");
             if (!wasReloaded)
             {
@@ -65,7 +65,7 @@ namespace IntergalacticTransmissionService
 
             var scale = new Vector2(Phy.HitBox.Radius / (halo.Width * 0.5f), Phy.HitBox.Radius / (halo.Height * 0.5f));
 
-            spriteBatch.Draw(halo, pos, null, null, haloOrigin, 0, scale, BaseColor);
+            spriteBatch.Draw(halo, pos, null, null, haloOrigin, Phy.Rot, scale, BaseColor);
 
             var camTopLeft = game.Camera.TopLeft;
             var camBottomRight = game.Camera.BottomRight;
