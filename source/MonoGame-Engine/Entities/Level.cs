@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using IntergalacticTransmissionService;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -11,6 +12,7 @@ namespace MonoGame_Engine.Entities
 {
     public class Level : Entity
     {
+        private SoundEffect sndPowerUp;
 
         public Level(ITSGame game, float minSpanDistance, float maxSpanDistance, int itemsCount, float speed, TimeSpan spawnRate)
         {
@@ -42,6 +44,7 @@ namespace MonoGame_Engine.Entities
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
             this.collectebelsPool.LoadContent(content, wasReloaded);
+            sndPowerUp = content.Load<SoundEffect>("Sounds/powerup");
         }
 
         internal override void Update(GameTime gameTime)
@@ -75,6 +78,9 @@ namespace MonoGame_Engine.Entities
             colidedItem?.Phy.CollidesWith(player.Phy);
             var type = colidedItem?.Graphics;
             colidedItem?.Dispose();
+
+            if (type.HasValue)
+                sndPowerUp.Play();
             return type;
         }
     }

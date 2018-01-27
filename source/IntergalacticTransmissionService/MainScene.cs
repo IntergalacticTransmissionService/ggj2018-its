@@ -16,7 +16,7 @@ namespace IntergalacticTransmissionService
     {
         internal readonly TilingImage BackgroundImg;
         internal Sprite Background;
-        internal readonly Leviathan leviathan;
+        internal readonly Leviathan Leviathan;
         internal readonly Parcel Parcel;
         internal readonly List<Player> Players;
         internal readonly List<Enemy> Enemies;
@@ -37,7 +37,7 @@ namespace IntergalacticTransmissionService
             CollisionHandler = new CollisionHandler(this);
             Level = new Level(game, 300, 1000, 30, 40, TimeSpan.FromSeconds(2));
 
-            this.leviathan = new Leviathan(game, Color.White, 400, game.Camera.Phy.Pos, MathHelper.PiOver2, new LeviathanBehavior(this));
+            Leviathan = new Leviathan(game, Color.White, 400, game.Camera.Phy.Pos, MathHelper.PiOver2, new LeviathanBehavior(this));
 
             Hud = new HUD(game);
         }
@@ -72,8 +72,8 @@ namespace IntergalacticTransmissionService
                     new ChasingBehavior(this, 500, 800, RandomFuncs.FromRange(100, 300)));
                 Enemies.Add(testEnemy);
             }
-            leviathan.LoadContent(game.Content);
-            this.Children.Add(leviathan);
+            Leviathan.LoadContent(game.Content);
+            this.Children.Add(Leviathan);
 
             foreach (var e in Enemies) { e.LoadContent(game.Content); }
             Hud.LoadContent(game.Content);
