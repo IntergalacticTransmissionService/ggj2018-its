@@ -15,6 +15,7 @@ namespace IntergalacticTransmissionService
         private SpriteBatch spriteBatch;
 
         private Texture2D[] chars = new Texture2D[4];
+        private Texture2D distanceScale;
         private Vector2[] pos = new Vector2[4];
         private float distanceToMotherShip;
 
@@ -51,12 +52,13 @@ namespace IntergalacticTransmissionService
             }
             if (distanceToMotherShip > 1000)
             {
-                var position = (float)Math.Log(distanceToMotherShip);
+                var position = (float)Math.Log(distanceToMotherShip,1.1);
                 position = MathHelper.Clamp(position, 0, 400);
                 var left = game.Screen.CanvasWidth / 2 - 200;
                 var rigth = game.Screen.CanvasWidth / 2 + 200;
-                var indicator = position + game.Screen.CanvasWidth / 2;
+                var indicator = position + left;
 
+                spriteBatch.Draw(distanceScale, new Vector2(left, 0));
                 this.game.MainScene.leviathan.Gfx.Draw(spriteBatch, new Vector2(indicator, 10), MathHelper.PiOver2, 10f, Color.White);
             }
             spriteBatch.End();
@@ -67,6 +69,7 @@ namespace IntergalacticTransmissionService
             spriteBatch = new SpriteBatch(game.GraphicsDevice);
             for (int i = 0; i < 4; ++i)
                 chars[i] = content.Load<Texture2D>($"Images/character_{i + 1:00}.png");
+            distanceScale = content.Load<Texture2D>("Images/DistanceIndicator.png");
         }
 
         internal override void Update(GameTime gameTime)
