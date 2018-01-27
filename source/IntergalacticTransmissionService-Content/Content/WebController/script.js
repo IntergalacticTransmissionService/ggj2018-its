@@ -5,11 +5,37 @@ var buttonContainer = document.getElementById('buttonContainer');
 var sideMargin = 50;
 var joyContainerTop = 0;
 var joyContainerSize = 1;
-var enableSockets = true;
 var buttonsState = [0, 0, 0, 0];
 
+function enterFullscreen() {
+    var element = document.body;
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+    } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+    }
+}
+function exitFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    }
+}
+function toggleFullscreen() {
+    if (document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen)
+        exitFullscreen();
+    else
+        enterFullscreen();
+}
 function getLeftTouch(touches) {
-    var centerX = document.body.clientWidth / 2;
+    var centerX = document.body.clientWidth * 0.4;
     for (var i = 0; i < touches.length; i++) {
         var touch = touches[i];
         if (touch.clientX < centerX)
@@ -40,12 +66,15 @@ function updateButtonsState(touches) {
 }
 
 function init() {
-    if (enableSockets) {
+    try {
         websocket = new WebSocket("ws://" + document.location.hostname + ":8082/");
         websocket.onopen = function (evt) { onOpen(evt) };
         websocket.onclose = function (evt) { onClose(evt) };
         websocket.onmessage = function (evt) { onMessage(evt) };
         websocket.onerror = function (evt) { onError(evt) };
+    } catch (e) {
+        console.error('Websocket creation failed', e);
+        websocket = null;
     }
 
     document.body.addEventListener('touchmove', touchMove);
@@ -53,6 +82,7 @@ function init() {
     document.body.addEventListener('touchend', touchMove);
     updateSize();
     window.addEventListener('resize', updateSize);
+    document.getElementById('fullScreenToggle').addEventListener('click', toggleFullscreen, false);
 }
 function touchMove(e) {
     updateButtonsState(e.touches);
