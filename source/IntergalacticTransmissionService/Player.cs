@@ -54,6 +54,20 @@ namespace IntergalacticTransmissionService
         {
             if (IsAlive)
             {
+                if (IsInvincible)
+                {
+                    if (gameTime.TotalGameTime.TotalMilliseconds % 300 < 150)
+                    {
+                        BaseColor = new Color(BaseColor, 0.5f);
+                    } else
+                    {
+                        BaseColor = new Color(BaseColor, 1.0f);
+                    }
+                } else
+                {
+                    if (BaseColor.A < 255)
+                        BaseColor = new Color(BaseColor, 1.0f);
+                }
                 base.Draw(spriteBatch, gameTime);
             }
             Bullets.Draw(spriteBatch, gameTime);
