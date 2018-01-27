@@ -31,7 +31,7 @@ namespace IntergalacticTransmissionService
         {
             BackgroundImg = new TilingImage("Images/starfield.png", game);
             Background = new Sprite(BackgroundImg, -1);
-            Parcel = new Parcel(game, Color.LightPink, 32f);
+            Parcel = new Parcel(game, Color.White, 32f);
             Players = new List<Player>();
             Enemies = new List<Enemy>();
             CollisionHandler = new CollisionHandler(this);
