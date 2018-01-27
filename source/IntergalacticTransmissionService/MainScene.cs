@@ -13,7 +13,7 @@ namespace IntergalacticTransmissionService
     public class MainScene : Scene
     {
         internal readonly TilingImage BackgroundImg;
-        internal readonly Sprite Background;
+        internal Sprite Background;
 
         internal readonly Parcel Parcel;
         internal readonly List<Player> Players;
@@ -24,7 +24,7 @@ namespace IntergalacticTransmissionService
         public MainScene(ITSGame game) : base(game)
         {
             BackgroundImg = new TilingImage("Images/starfield.png", game);
-            Background = new Sprite(BackgroundImg);
+            Background = new Sprite(BackgroundImg, -1);
             Parcel = new Parcel(game, Color.LightPink, 32f);
             Players = new List<Player>();
             CollisionHandler = new CollisionHandler(this);

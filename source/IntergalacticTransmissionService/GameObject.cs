@@ -9,21 +9,15 @@ using System.Text;
 
 namespace IntergalacticTransmissionService
 {
-    public class EntityWithIndicator : Entity
+    public class GameObject : Sprite
     {
         protected readonly ITSGame game;
 
         private Texture2D indicator;
 
-        public Color BaseColor { get; private set; }
-
-        public Physics Phy { get; private set; }
-
-        public EntityWithIndicator(ITSGame game, Color baseColor, float? radius)
+        public GameObject(ITSGame game, string assetPath, Color baseColor, float radius) : base(assetPath, radius, baseColor)
         {
             this.game = game;
-            this.BaseColor = baseColor;
-            Phy = new OrientedPhysics(radius);
         }
 
 
@@ -43,16 +37,14 @@ namespace IntergalacticTransmissionService
 
                 spriteBatch.Draw(indicator, pos, BaseColor);
             }
+
+            base.Draw(spriteBatch, gameTime);
         }
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
             indicator = content.Load<Texture2D>("Images/indicator.png");
-        }
-
-        internal override void Update(GameTime gameTime)
-        {
-            Phy.Update(gameTime);
+            base.LoadContent(content, wasReloaded);
         }
     }
 }

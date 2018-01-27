@@ -10,13 +10,8 @@ using System.Text;
 
 namespace IntergalacticTransmissionService
 {
-    public class Player : EntityWithIndicator, IHasPhysics
+    public class Player : GameObject
     {
-
-        private Texture2D halo;
-        private Vector2 haloOrigin;
-
-
         public BulletSystem Bullets { get; private set; }
 
         public int PlayerNum { get; private set; }
@@ -29,7 +24,7 @@ namespace IntergalacticTransmissionService
             new Color(0xCC, 0x00, 0x88)     // Purple
         };
 
-        public Player(ITSGame game, int playerNum, float radius) : base(game, colors[playerNum % colors.Length], radius)
+        public Player(ITSGame game, int playerNum, float radius) : base(game, "Images/player.png", colors[playerNum % colors.Length], radius)
         {
             this.PlayerNum = playerNum;
             Bullets = new BulletSystem(this, "Images/bullet.png", 300, 15);
@@ -38,26 +33,13 @@ namespace IntergalacticTransmissionService
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
             base.LoadContent(content, wasReloaded);
-            halo = content.Load<Texture2D>("Images/player.png");
             Bullets.LoadContent(content, wasReloaded);
-            if (!wasReloaded)
-            {
-                haloOrigin = new Vector2(halo.Width * 0.5f, halo.Height * 0.5f);
-            }
         }
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             base.Draw(spriteBatch, gameTime);
             Bullets.Draw(spriteBatch, gameTime);
-
-            var pos = new Vector2();
-            pos.X = Phy.Pos.X;
-            pos.Y = Phy.Pos.Y;
-
-            var scale = new Vector2(Phy.HitBox.Radius / (halo.Width * 0.5f), Phy.HitBox.Radius / (halo.Height * 0.5f));
-
-            spriteBatch.Draw(halo, pos, null, null, haloOrigin, Phy.Rot, scale, BaseColor);
         }
 
         internal void ReleaseParcel()
