@@ -56,20 +56,20 @@ namespace IntergalacticTransmissionService
                     }
 
                     // collision with other players bullets
-                    if (i != j)
-                    {
-                        int k = 0;
-                        foreach (var bullet in right.Bullets)
-                        {
-                            if (left.Phy.CollidesWith(bullet))
-                            {
-                                right.Bullets.Remove(k);
-                                left.WasHit();
-                                scene.Parcel.Release(left, 1000);
-                            }
-                            ++k;
-                        }
-                    }
+                    //if (i != j)
+                    //{
+                    //    int k = 0;
+                    //    foreach (var bullet in right.Bullets)
+                    //    {
+                    //        if (left.Phy.CollidesWith(bullet))
+                    //        {
+                    //            right.Bullets.Remove(k);
+                    //            left.WasHit();
+                    //            scene.Parcel.Release(left, 1000);
+                    //        }
+                    //        ++k;
+                    //    }
+                    //}
                 }
 
                 // check enemies
