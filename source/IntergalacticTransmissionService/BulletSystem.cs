@@ -82,32 +82,35 @@ namespace IntergalacticTransmissionService
             }
         }
 
-        public void Spawn(BulletType type)
+        public bool Spawn(BulletType type, bool playSound = true)
         {
-
+            bool didSpanw = false;
             switch (type)
             {
                 case BulletType.Normal:
                 default:
-                    SpawnSingel(0f);
+                    didSpanw |= SpawnSingel(0f);
                     break;
                 case BulletType.Spread:
-                    SpawnSingel(0f);
-                    SpawnSingel(-MathHelper.PiOver4 / 2);
-                    SpawnSingel(MathHelper.PiOver4 / 2);
+                    didSpanw |= SpawnSingel(0f);
+                    didSpanw |= SpawnSingel(-MathHelper.PiOver4 / 2);
+                    didSpanw |= SpawnSingel(MathHelper.PiOver4 / 2);
                     break;
                 case BulletType.Back:
-                    SpawnSingel(0f);
-                    SpawnSingel(MathHelper.Pi);
+                    didSpanw |= SpawnSingel(0f);
+                    didSpanw |= SpawnSingel(MathHelper.Pi);
                     break;
                 case BulletType.UpDown:
-                    SpawnSingel(MathHelper.PiOver2);
-                    SpawnSingel(-MathHelper.PiOver2);
+                    didSpanw |= SpawnSingel(MathHelper.PiOver2);
+                    didSpanw |= SpawnSingel(-MathHelper.PiOver2);
                     break;
             }
+            if (playSound && didSpanw)
+                snd.Play();
+            return didSpanw;
         }
 
-        private void SpawnSingel(float rotation)
+        private bool SpawnSingel(float rotation)
         {
             if (active < maxParticles)
             {
@@ -119,8 +122,9 @@ namespace IntergalacticTransmissionService
                 maxCol[active].A = 0;
                 age[active] = 0;
                 active++;
-                snd.Play();
+                return true;
             }
+            return false;
         }
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -144,12 +148,17 @@ namespace IntergalacticTransmissionService
             if (RapidFire.Ticks > 0 && Emitting)
             {
                 RapidFire -= gameTime.ElapsedGameTime;
+                var numberOfParticalFired = numParticlesToSpawn;
                 while (numParticlesToSpawn > 1)
                 {
-                    Spawn(player.BulletType);
+                    if (!Spawn(player.BulletType, false))
+                        break;
                     accumulator -= 1 / SpawnRate;
                     --numParticlesToSpawn;
                 }
+                numberOfParticalFired -= numParticlesToSpawn;
+                if (numberOfParticalFired > 0)
+                    snd.Play();
             }
 
             DebugOverlay.Instance.Text += $"Rapdiffire ({this.player.PlayerNum}): {RapidFire}\n";
