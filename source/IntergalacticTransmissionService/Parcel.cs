@@ -55,24 +55,25 @@ namespace IntergalacticTransmissionService
 
         internal void Grab(Player player)
         {
-            if (HoldBy == null && Cooldown <= TimeSpan.Zero)
+            if (HoldBy == null && (Cooldown <= TimeSpan.Zero || player != LastHeldBy))
             {
                 HoldBy = player;
                 Phy.Spd = Vector2.Zero;
+                Cooldown = TimeSpan.Zero;
             } else if (player != LastHeldBy)
             {
                 Phy.Spd *= 0.5f;
             }
         }
 
-        internal void Release(Player player)
+        internal void Release(Player player, float power = 4000)
         {
             if (player == HoldBy)
             {
                 LastHeldBy = HoldBy;
                 HoldBy = null;
                 Cooldown = TimeSpan.FromSeconds(1);
-                Phy.Spd = player.Phy.Spd + Vector2.Normalize(player.Phy.Spd) * 4000;
+                Phy.Spd = player.Phy.Spd + Vector2.Normalize(player.Phy.Spd) * power;
             }
         }
     }

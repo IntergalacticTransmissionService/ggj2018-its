@@ -64,6 +64,7 @@ namespace IntergalacticTransmissionService
                             {
                                 right.Bullets.Remove(k);
                                 left.WasHit();
+                                scene.Parcel.Release(left, 1000);
                             }
                             ++k;
                         }
