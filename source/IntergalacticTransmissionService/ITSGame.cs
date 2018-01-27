@@ -36,6 +36,8 @@ namespace IntergalacticTransmissionService
             Scenes.Add("Main", MainScene);
             Scenes.Show("Main");
 
+
+
 #if !DEBUG
             Screen.ToggleFullscreen();
 #endif

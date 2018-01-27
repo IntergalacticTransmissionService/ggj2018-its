@@ -3,10 +3,9 @@ using System;
 
 namespace MonoGame_Engine
 {
-    public interface ICollecteble :IHasPhysics, IDisposable
+    public interface ICollectable : IHasPhysics, IDisposable
     {
-        CollectibleType Grafic { get; set; }
+        CollectableType Graphics { get; set; }
         bool IsActive { get; }
-        
     }
 }

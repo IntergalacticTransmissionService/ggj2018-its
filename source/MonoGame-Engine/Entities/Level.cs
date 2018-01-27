@@ -25,7 +25,7 @@ namespace MonoGame_Engine.Entities
         }
 
 
-        private readonly Pool collectebelsPool;
+        internal readonly Pool collectebelsPool;
         private readonly ITSGame game;
         private readonly float speed;
         private readonly float minSpanDistance;
@@ -49,7 +49,7 @@ namespace MonoGame_Engine.Entities
                 position *= new Vector2(Math.RandomFuncs.FromRange(0, 1) > 0.5 ? 1f : -1f, Math.RandomFuncs.FromRange(0, 1) > 0.5 ? 1f : -1f);
                 position += this.game.Camera.Phy.Pos;
 
-                var type = (CollectibleType)Math.RandomFuncs.FromRangeInt(0, CollectibleType.GetValues(typeof(CollectibleType)).Length);
+                var type = (CollectableType)Math.RandomFuncs.FromRangeInt(0, CollectableType.GetValues(typeof(CollectableType)).Length);
 
                 var x = this.collectebelsPool.Get(type, position, 0, TimeSpan.FromSeconds(Math.RandomFuncs.FromRange(20, 30)));
                 x.Phy.RotSpd = 1f;
@@ -62,11 +62,11 @@ namespace MonoGame_Engine.Entities
 
         }
 
-        internal CollectibleType? Collides(Player player)
+        internal CollectableType? Collides(Player player)
         {
             var colidedItem = this.collectebelsPool.FirstOrDefault(item => item.Phy.CollidesWith(player.Phy));
             colidedItem?.Phy.CollidesWith(player.Phy);
-            var type = colidedItem?.Grafic;
+            var type = colidedItem?.Graphics;
             colidedItem?.Dispose();
             return type;
         }
