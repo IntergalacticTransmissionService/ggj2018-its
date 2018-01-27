@@ -60,5 +60,13 @@ namespace MonoGame_Engine.Phy
             return HitBox.Intersects(other.HitBox);
         }
 
+        public bool CollidesWith(Vector2 pos)
+        {
+            if (HitBox == null || pos == null)
+                return false;
+
+            return HitBox.Contains(pos);
+        }
+
     }
 }

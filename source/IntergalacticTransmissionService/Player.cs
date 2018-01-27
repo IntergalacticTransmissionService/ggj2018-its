@@ -23,6 +23,8 @@ namespace IntergalacticTransmissionService
 
         public Physics Phy { get; private set; }
 
+        public BulletSystem Bullets { get; private set; }
+
         public float Radius
         {
             get { return this.Phy.HitBox.Radius; }
@@ -45,12 +47,14 @@ namespace IntergalacticTransmissionService
             this.PlayerNum = playerNum;
             this.BaseColor = colors[playerNum % colors.Length];
             Phy = new OrientedPhysics(radius);
+            Bullets = new BulletSystem(this, "Images/particle.png", 300, 15);
         }
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
             halo = content.Load<Texture2D>("Images/player.png");
             indicator = content.Load<Texture2D>("Images/particle.png");
+            Bullets.LoadContent(content, wasReloaded);
             if (!wasReloaded)
             {
                 haloOrigin = new Vector2(halo.Width * 0.5f, halo.Height * 0.5f);
@@ -59,6 +63,8 @@ namespace IntergalacticTransmissionService
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
+            Bullets.Draw(spriteBatch, gameTime);
+
             var pos = new Vector2();
             pos.X = Phy.Pos.X;
             pos.Y = Phy.Pos.Y;
@@ -84,6 +90,11 @@ namespace IntergalacticTransmissionService
             game.Inputs.Player(PlayerNum).Rumble(160, 320, 200);
         }
 
+        public void Shoot(bool active)
+        {
+            Bullets.Emitting = active;
+        }
+
         internal override void Update(GameTime gameTime)
         {
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -97,6 +108,8 @@ namespace IntergalacticTransmissionService
             var spd = Phy.Spd.Length();
             if (spd > 1200)
                 Phy.Spd = Vector2.Normalize(Phy.Spd) * 1200.0f;
+
+            Bullets.Update(gameTime);
         }
     }
 }

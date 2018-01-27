@@ -11,8 +11,8 @@ namespace IntergalacticTransmissionService.Input
 {
     public class PlayfieldCamController : CamController
     {
-        private const float MinZoom = 0.5f;
-        private const float MaxZoom = 1.5f;
+        private const float MinZoom = 0.2f;
+        private const float MaxZoom = 1.2f;
 
         public PlayfieldCamController(ITSGame game, int playerIdx) : base(game, playerIdx)
         {
@@ -36,8 +36,8 @@ namespace IntergalacticTransmissionService.Input
                 var distX = Math.Abs(right - left);
                 var distY = Math.Abs(bottom - top);
 
-                var zoomX = game.Screen.Width / distX;
-                var zoomY = game.Screen.Height / distY;
+                var zoomX = (game.Screen.CanvasWidth - 150) / distX;
+                var zoomY = (game.Screen.CanvasHeight - 150)/ distY;
                 var zoom = MathHelper.Clamp(Math.Min(zoomX, zoomY), MinZoom, MaxZoom);
 
                 game.Camera.Phy.Pos.X = centerX;
