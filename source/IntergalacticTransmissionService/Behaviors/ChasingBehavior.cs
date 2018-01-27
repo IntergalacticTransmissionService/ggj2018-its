@@ -26,30 +26,46 @@ namespace IntergalacticTransmissionService.Behaviors
         {
             if (Target == null)
             {
-                // search nearest Player
+                // search nearest Player or track parcel
                 Player nearest = null;
                 float nearestDist = float.MaxValue;
                 foreach (var player in Scene.Players)
                 {
                     var dist = Vector2.Distance(player.Phy.Pos, owner.Phy.Pos);
-                    if (dist < nearestDist && dist < ChaseDist)
+                    if (dist < nearestDist && dist < ChaseDist && player.IsAlive)
                     {
                         nearestDist = dist;
                         nearest = player;
                     }
                 }
                 Target = nearest;
+
+                if (Target == null)
+                {
+                    var dist = Vector2.Distance(Scene.Parcel.Phy.Pos, owner.Phy.Pos);
+                    if (dist > ForgetDist)
+                        Target = Scene.Parcel;
+                }
             } else
             {
                 var dist = Vector2.Distance(Target.Phy.Pos, owner.Phy.Pos);
-                if (dist > ForgetDist)
-                    Target = null;
+                if (Target is Player)
+                {
+                    if (dist > ForgetDist || !((Target as Player)?.IsAlive ?? false))
+                        Target = null;
+                } else
+                {
+                    if (dist < ChaseDist)
+                        Target = null;
+                }
             }
 
             if (Target != null && owner != null)
             {
+                var spd = Target is Player ? Spd : Spd * 0.3f;
+
                 owner.Phy.Dmp = 1f;
-                owner.Phy.Spd = Vector2.Normalize(Target.Phy.Pos - owner.Phy.Pos) * Spd;
+                owner.Phy.Spd = Vector2.Normalize(Target.Phy.Pos - owner.Phy.Pos) * spd;
             } else
             {
                 owner.Phy.Dmp = 0.99f;

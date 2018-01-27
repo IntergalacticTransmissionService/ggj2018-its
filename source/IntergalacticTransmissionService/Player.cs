@@ -16,6 +16,9 @@ namespace IntergalacticTransmissionService
 
         public int PlayerNum { get; private set; }
 
+        public bool IsAlive { get; private set; }
+        public TimeSpan Cooldown;
+
         public static Color[] colors = new Color[] {
             new Color(0xCC, 0x00, 0x00),    // Red
             new Color(0x44, 0xFF, 0x00),    // Green
@@ -28,6 +31,7 @@ namespace IntergalacticTransmissionService
         {
             this.PlayerNum = playerNum;
             Bullets = new BulletSystem(this, "Images/bullet.png", 300, 15);
+            IsAlive = true;
         }
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
@@ -38,7 +42,10 @@ namespace IntergalacticTransmissionService
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            base.Draw(spriteBatch, gameTime);
+            if (IsAlive)
+            {
+                base.Draw(spriteBatch, gameTime);
+            }
             Bullets.Draw(spriteBatch, gameTime);
         }
 
@@ -59,21 +66,47 @@ namespace IntergalacticTransmissionService
 
         internal override void Update(GameTime gameTime)
         {
-            Phy.Dmp = 0.95f;
+            if (IsAlive)
+            {
+                Phy.Dmp = 0.95f;
 
-            base.Update(gameTime);
+                base.Update(gameTime);
 
-            // Ensure MaxSpd
-            var spd = Phy.Spd.Length();
-            if (spd > 1200)
-                Phy.Spd = Vector2.Normalize(Phy.Spd) * 1200.0f;
-
+                // Ensure MaxSpd
+                var spd = Phy.Spd.Length();
+                if (spd > 1200)
+                    Phy.Spd = Vector2.Normalize(Phy.Spd) * 1200.0f;
+            } else
+            {
+                if (Cooldown > TimeSpan.Zero)
+                    Cooldown -= gameTime.ElapsedGameTime;
+            }
             Bullets.Update(gameTime);
         }
 
         internal void WhereAmI(bool show)
         {
             HighlightIndicator = show;
+        }
+
+        internal void Spawn()
+        {
+            if (Cooldown <= TimeSpan.Zero)
+            {
+                var rnd = new Random();
+                IsAlive = true;
+                Phy.Pos.X = game.Camera.Phy.Pos.X + (float)(rnd.NextDouble() - 0.5) * 500;
+                Phy.Pos.Y = game.Camera.Phy.Pos.Y + (float)(rnd.NextDouble() - 0.5) * 500;
+                Phy.Spd = Vector2.Zero;
+                Phy.Accel = Vector2.Zero;
+            }
+        }
+
+        public void Die()
+        {
+            Shoot(false);
+            IsAlive = false;
+            Cooldown = TimeSpan.FromSeconds(3);
         }
     }
 }
