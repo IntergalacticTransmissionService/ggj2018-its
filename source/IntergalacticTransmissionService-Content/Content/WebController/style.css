@@ -39,7 +39,7 @@ html, body {
 }
 #fullScreenToggle {
     position: absolute;
-    top: 50px;
+    top: 55px;
     left: 50%;
     margin-left: -25px;
     width: 40px;
