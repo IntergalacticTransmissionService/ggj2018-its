@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Engine.Entities;
+using MonoGame_Engine.Gfx;
 using MonoGame_Engine.Phy;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace IntergalacticTransmissionService
     {
         protected readonly ITSGame game;
 
+        public Image flame { get; }
+
         private Texture2D indicator;
         private Vector2 origin;
         private float Scale = 5;
@@ -22,10 +25,12 @@ namespace IntergalacticTransmissionService
         public GameObject(ITSGame game, MonoGame_Engine.Gfx.Image image, Color baseColor, float radius, bool orientedPhysics = true) : base(image, radius, baseColor, orientedPhysics)
         {
             this.game = game;
+            this.flame = new MonoGame_Engine.Gfx.Image(TimeSpan.FromSeconds(0.2), "Images/PlayerFlame-1.png", "Images/PlayerFlame-2.png");
         }
         public GameObject(ITSGame game, string assetPath, Color baseColor, float radius, bool orientedPhysics = true) : base(assetPath, radius, baseColor, orientedPhysics)
         {
             this.game = game;
+            this.flame = new MonoGame_Engine.Gfx.Image(TimeSpan.FromSeconds(0.2), "Images/PlayerFlame-1.png", "Images/PlayerFlame-2.png");
         }
 
 
@@ -48,13 +53,14 @@ namespace IntergalacticTransmissionService
                 spriteBatch.Draw(indicator, pos, null, BaseColor, 0, origin, Scale, SpriteEffects.None, 0);
             }
 
+            flame.Draw(spriteBatch, Phy.Pos, Phy.Rot, Phy.HitBox.Radius, Color.White);
             base.Draw(spriteBatch, gameTime);
         }
 
         internal override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
+            flame.Update(gameTime);
             Scale = HighlightIndicator ? 3 : 1;
         }
 
@@ -62,6 +68,7 @@ namespace IntergalacticTransmissionService
         {
             indicator = content.Load<Texture2D>("Images/indicator.png");
             origin = new Vector2(indicator.Width * 0.5f, indicator.Height * 0.5f);
+            flame.LoadContent(content, wasReloaded);
             base.LoadContent(content, wasReloaded);
         }
     }
