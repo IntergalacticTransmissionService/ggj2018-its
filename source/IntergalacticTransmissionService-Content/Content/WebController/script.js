@@ -2,10 +2,12 @@ var websocket;
 var joyContainer = document.getElementById('joyContainer');
 var joyThumb = document.getElementById('joyThumb');
 var buttonContainer = document.getElementById('buttonContainer');
-var sideMargin = 50;
+var leftMargin = 60;
+var rightMargin = 75;
 var joyContainerTop = 0;
 var joyContainerSize = 1;
 var buttonsState = [0, 0, 0, 0];
+var dirX = 0, dirY = 0;
 
 function enterFullscreen() {
     var element = document.body;
@@ -35,7 +37,7 @@ function toggleFullscreen() {
         enterFullscreen();
 }
 function getLeftTouch(touches) {
-    var centerX = document.body.clientWidth * 0.4;
+    var centerX = document.body.offsetWidth * 0.4;
     for (var i = 0; i < touches.length; i++) {
         var touch = touches[i];
         if (touch.clientX < centerX)
@@ -88,10 +90,11 @@ function touchMove(e) {
     updateButtonsState(e.touches);
     var touch = getLeftTouch(e.touches);
     var radius = joyContainerSize / 2;
-    var dirX = 0, dirY = 0;
     if (touch) {
-        dirX = (touch.clientX - (sideMargin + radius)) / radius;
+        dirX = (touch.clientX - (leftMargin + radius)) / radius;
         dirY = ((joyContainerTop + radius) - touch.clientY) / radius;
+    } else {
+        dirX = dirY = 0;
     }
     var dirLen = Math.sqrt(dirX * dirX + dirY * dirY);
     if (dirLen > 1) {
@@ -101,6 +104,11 @@ function touchMove(e) {
     if (websocket)
         websocket.send(`^|${dirX}|${dirY}`);
     // console.log(dirX, dirY);
+    updateThumbPosition();
+}
+
+function updateThumbPosition() {
+    var radius = joyContainerSize / 2;
     var top = radius - dirY * radius;
     var left = radius + dirX * radius;
 
@@ -109,8 +117,8 @@ function touchMove(e) {
 }
 
 function updateSize() {
-    var w = document.body.clientWidth;
-    var h = document.body.clientHeight;
+    var w = document.body.offsetWidth;
+    var h = document.body.offsetHeight;
     var hw = w / 2;
     joyContainerSize = (hw > h ? h : hw) * 0.5;
     var sizePx = joyContainerSize + 'px';
@@ -119,11 +127,12 @@ function updateSize() {
     joyContainer.style.height = sizePx;
     joyContainer.style.width = sizePx;
     joyContainer.style.top = topPx;
-    joyContainer.style.left = sideMargin + 'px';
+    joyContainer.style.left = leftMargin + 'px';
     buttonContainer.style.height = sizePx;
     buttonContainer.style.width = sizePx;
     buttonContainer.style.top = topPx;
-    buttonContainer.style.right = sideMargin + 'px';
+    buttonContainer.style.right = rightMargin + 'px';
+    updateThumbPosition();
 }
 
 function onOpen(evt) {

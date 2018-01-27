@@ -26,7 +26,7 @@ namespace MonoGame_Engine.Entities
         }
 
 
-        private readonly Pool collectebelsPool;
+        internal readonly Pool collectebelsPool;
         private readonly ITSGame game;
         private readonly float speed;
         private readonly TimeSpan spawnRate;

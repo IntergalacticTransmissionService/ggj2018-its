@@ -23,7 +23,7 @@ namespace IntergalacticTransmissionService
         internal readonly CollisionHandler CollisionHandler;
 
         internal readonly Level Level;
-
+        internal readonly HUD Hud;
 
         internal new ITSGame game { get { return base.game as ITSGame; } }
 
@@ -36,6 +36,8 @@ namespace IntergalacticTransmissionService
             Enemies = new List<Enemy>();
             CollisionHandler = new CollisionHandler(this);
             Level = new Level(game, 300, 1000, 30, 40, TimeSpan.FromSeconds(2));
+
+            Hud = new HUD(game);
         }
 
         internal override void Initialize()
@@ -73,12 +75,14 @@ namespace IntergalacticTransmissionService
             this.Children.Add(leviathan);
 
             foreach (var e in Enemies) { e.LoadContent(game.Content); }
+            Hud.LoadContent(game.Content);
         }
 
         internal override void Draw(SpriteBatch batch, GameTime gameTime)
         {
             base.Draw(batch, gameTime);
             foreach (var e in Enemies) { e.Draw(batch, gameTime); }
+            Hud.Draw(batch, gameTime);
         }
 
         internal override void Update(GameTime gameTime)
@@ -88,6 +92,7 @@ namespace IntergalacticTransmissionService
             base.Update(gameTime);
 
             CheckForNewPlayers();
+            Hud.Update(gameTime);
         }
 
         internal override int HandleInput(GameTime gameTime)

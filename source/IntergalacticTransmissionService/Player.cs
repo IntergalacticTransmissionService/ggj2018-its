@@ -20,23 +20,26 @@ namespace IntergalacticTransmissionService
         public int PlayerNum { get; private set; }
 
         public bool IsAlive { get; private set; }
+        public bool IsInvincible { get { return InvincibleCooldown > TimeSpan.Zero; } }
         public BulletType BulletType { get; private set; }
 
-        public TimeSpan Cooldown;
-        public readonly int[] Collectables;
+        public TimeSpan RespawnCooldown;
+        public TimeSpan InvincibleCooldown;
+        public readonly Dictionary<CollectibleType, int> Collectables;
 
         public static Color[] colors = new Color[] {
-            new Color(0xCC, 0x00, 0x00),    // Red
-            new Color(0x44, 0xFF, 0x00),    // Green
-            new Color(0x00, 0x44, 0xff),    // Blue    
-            new Color(0xFF, 0xCC, 0x00),    // Yellow
-            new Color(0xCC, 0x00, 0x88)     // Purple
+            new Color(0xF3, 0x00, 0x28),    // Red
+            new Color(0x00, 0x28, 0xF3),    // Blue
+            new Color(0x00, 0x88, 0x3F),    // Green    
+            new Color(0xBD, 0x0A, 0x7B)     // Purple
         };
 
         public Player(ITSGame game, int playerNum, float radius) : base(game, "Images/player.png", colors[playerNum % colors.Length], radius)
         {
             this.PlayerNum = playerNum;
-            Collectables = new int[Enum.GetValues(typeof(CollectibleType)).Length];
+            Collectables = new Dictionary<CollectibleType, int>();
+            foreach(CollectibleType e in Enum.GetValues(typeof(CollectibleType)))
+                Collectables.Add(e, 0);
             Bullets = new BulletSystem(this, "Images/bullet.png", 300, 15);
             IsAlive = true;
             BulletType = BulletType.Normal;
@@ -52,6 +55,20 @@ namespace IntergalacticTransmissionService
         {
             if (IsAlive)
             {
+                if (IsInvincible)
+                {
+                    if (gameTime.TotalGameTime.TotalMilliseconds % 300 < 150)
+                    {
+                        BaseColor = new Color(BaseColor, 0.5f);
+                    } else
+                    {
+                        BaseColor = new Color(BaseColor, 1.0f);
+                    }
+                } else
+                {
+                    if (BaseColor.A < 255)
+                        BaseColor = new Color(BaseColor, 1.0f);
+                }
                 base.Draw(spriteBatch, gameTime);
             }
             Bullets.Draw(spriteBatch, gameTime);
@@ -74,6 +91,11 @@ namespace IntergalacticTransmissionService
 
         internal override void Update(GameTime gameTime)
         {
+            if (IsInvincible)
+            {
+                InvincibleCooldown -= gameTime.ElapsedGameTime;
+            }
+
             if (IsAlive)
             {
                 Phy.Dmp = 0.95f;
@@ -87,40 +109,39 @@ namespace IntergalacticTransmissionService
             }
             else
             {
-                if (Cooldown > TimeSpan.Zero)
-                    Cooldown -= gameTime.ElapsedGameTime;
+                if (RespawnCooldown > TimeSpan.Zero)
+                    RespawnCooldown -= gameTime.ElapsedGameTime;
             }
 
-            for (int i = 0; i < Collectables.Length; i++)
+            foreach(CollectibleType e in Enum.GetValues(typeof(CollectibleType)))
             {
-                ref int count = ref Collectables[i];
-                switch ((CollectibleType)i)
+                switch (e)
                 {
                     case CollectibleType.RapidFire:
-                        while (count > 0)
+                        while (Collectables[e] > 0)
                         {
                             Bullets.RapidFire += TimeSpan.FromSeconds(10);
-                            count--;
+                            Collectables[e]--;
                         }
                         break;
                     case CollectibleType.SpreadShoot:
-                        if (count > 0)
+                        if (Collectables[e] > 0)
                         {
-                            count = 0;
+                            Collectables[e] = 0;
                             BulletType = BulletType.Spread;
                         }
                         break;
                     case CollectibleType.BackShoot:
-                        if (count > 0)
+                        if (Collectables[e] > 0)
                         {
-                            count = 0;
+                            Collectables[e] = 0;
                             BulletType = BulletType.Back;
                         }
                         break;
                     case CollectibleType.UpDownShoot:
-                        if (count > 0)
+                        if (Collectables[e] > 0)
                         {
-                            count = 0;
+                            Collectables[e] = 0;
                             this.BulletType = BulletType.UpDown;
                         }
                         break;
@@ -132,7 +153,7 @@ namespace IntergalacticTransmissionService
             Bullets.Update(gameTime);
 
 
-            game.DebugOverlay.Text += String.Join("  ", Enum.GetValues(typeof(CollectibleType)).Cast<int>().Select(c => $"{(CollectibleType)c}: {this.Collectables[c]}").ToArray()) + "\n";
+            //game.DebugOverlay.Text += String.Join("  ", Enum.GetValues(typeof(CollectibleType)).Cast<CollectibleType>().Select(c => $"{c}: {this.Collectables[c]}").ToArray()) + "\n";
         }
 
         internal void WhereAmI(bool show)
@@ -142,7 +163,7 @@ namespace IntergalacticTransmissionService
 
         internal void Spawn()
         {
-            if (Cooldown <= TimeSpan.Zero)
+            if (RespawnCooldown <= TimeSpan.Zero)
             {
                 var rnd = new Random();
                 IsAlive = true;
@@ -150,14 +171,19 @@ namespace IntergalacticTransmissionService
                 Phy.Pos.Y = game.Camera.Phy.Pos.Y + (float)(rnd.NextDouble() - 0.5) * 500;
                 Phy.Spd = Vector2.Zero;
                 Phy.Accel = Vector2.Zero;
+                RespawnCooldown = TimeSpan.Zero;
+                InvincibleCooldown = TimeSpan.FromSeconds(4);
             }
         }
 
         public void Die()
         {
-            Shoot(false);
-            IsAlive = false;
-            Cooldown = TimeSpan.FromSeconds(3);
+            if (!IsInvincible)
+            {
+                Shoot(false);
+                IsAlive = false;
+                RespawnCooldown = TimeSpan.FromSeconds(1);
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ namespace IntergalacticTransmissionService.Net
 
         public void SetButtonsState(string state)
         {
-            for(var i=0; i<Buttons.Length; i++)
+            for (var i = 0; i < Buttons.Length; i++)
                 Buttons[i] = state[i] == '1';
             // Console.WriteLine("Buttons: " + state);
         }
@@ -44,8 +44,21 @@ namespace IntergalacticTransmissionService.Net
             string host = getLanIp();
             WebServer = new WebServer("http://" + host + ":8080/");
             WebServer.RegisterFile("/", "Content/WebController/index.html");
-            WebServer.RegisterFile("/style.css", "Content/WebController/style.css");
-            WebServer.RegisterFile("/script.js", "Content/WebController/script.js");
+            string[] files = {
+                "style.css",
+                "script.js",
+                "controller-body.png",
+                "controller-button-a.png",
+                "controller-button-b.png",
+                "controller-button-x.png",
+                "controller-button-y.png",
+                "controller-pad.png",
+                "controller-padstick.png",
+                "fullscreen.png"
+            };
+            foreach(string file in files) {
+                WebServer.RegisterFile("/" + file, "Content/WebController/" + file);
+            }
             WebServer.Run();
 
             WebSocketServer = new WebSocketServer("ws://" + host + ":8082");
