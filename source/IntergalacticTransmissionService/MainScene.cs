@@ -49,7 +49,7 @@ namespace IntergalacticTransmissionService
             Parcel.Phy.Pos.X = 500;
             Children.Add(Parcel);
 
-            Enemies.Add(new Enemy(game, Color.White, 64f, new Vector2(200, 200)));
+            Enemies.Add(new Enemy(game, Color.White, 128f, new Vector2(200, 200), (float)Math.PI));
             foreach(var e in Enemies) { e.LoadContent(game.Content); }
         }
 
