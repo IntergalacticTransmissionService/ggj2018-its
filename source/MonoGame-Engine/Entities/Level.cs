@@ -12,7 +12,7 @@ namespace MonoGame_Engine.Entities
     public class Level : Entity
     {
 
-        public Level(ITSGame game, float minSpanDistance, float maxSpanDistance, int itemsCount, float speed)
+        public Level(ITSGame game, float minSpanDistance, float maxSpanDistance, int itemsCount, float speed, TimeSpan spawnRate)
         {
             if (itemsCount < 1)
                 throw new ArgumentOutOfRangeException(nameof(itemsCount), itemsCount, "must 1 or greater");
@@ -22,12 +22,15 @@ namespace MonoGame_Engine.Entities
             this.collectebelsPool = new Pool(itemsCount, 5);
             this.game = game;
             this.speed = speed;
+            this.spawnRate = spawnRate;
         }
 
 
         private readonly Pool collectebelsPool;
         private readonly ITSGame game;
         private readonly float speed;
+        private readonly TimeSpan spawnRate;
+        private TimeSpan lstSpan;
         private readonly float minSpanDistance;
         private readonly float maxSpanDistance;
 
@@ -43,9 +46,13 @@ namespace MonoGame_Engine.Entities
 
         internal override void Update(GameTime gameTime)
         {
-            if (this.collectebelsPool.Available > 0)
+            if (this.collectebelsPool.Available > 0 && this.lstSpan.Ticks < 0)
             {
-                var position = new Vector2(Math.RandomFuncs.FromRange(this.game.Camera.TopRight.X, this.game.Camera.TopRight.X * 2), Math.RandomFuncs.FromRange(this.game.Camera.TopRight.Y, this.game.Camera.TopRight.Y * 2));
+                lstSpan = spawnRate;
+                var camaraWidth = this.game.Camera.TopLeft.X - this.game.Camera.TopRight.X;
+                var camaraHeigt = this.game.Camera.TopLeft.Y - this.game.Camera.BottomRight.Y;
+
+                var position = new Vector2(Math.RandomFuncs.FromRange(camaraWidth / 2, camaraWidth), Math.RandomFuncs.FromRange(camaraHeigt / 2, camaraHeigt));
                 position *= new Vector2(Math.RandomFuncs.FromRange(0, 1) > 0.5 ? 1f : -1f, Math.RandomFuncs.FromRange(0, 1) > 0.5 ? 1f : -1f);
                 position += this.game.Camera.Phy.Pos;
 
@@ -57,7 +64,7 @@ namespace MonoGame_Engine.Entities
                 direction.Normalize();
                 x.Phy.Spd = direction * this.speed;
             }
-
+            lstSpan -= gameTime.ElapsedGameTime;
             this.collectebelsPool.Update(gameTime);
 
         }

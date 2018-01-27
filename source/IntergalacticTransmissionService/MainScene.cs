@@ -35,7 +35,7 @@ namespace IntergalacticTransmissionService
             Players = new List<Player>();
             Enemies = new List<Enemy>();
             CollisionHandler = new CollisionHandler(this);
-            Level = new Level(game, 300, 1000, 30, 40);
+            Level = new Level(game, 300, 1000, 30, 40, TimeSpan.FromSeconds(2));
         }
 
         internal override void Initialize()
