@@ -47,6 +47,7 @@ namespace IntergalacticTransmissionService.Net
             string[] files = {
                 "style.css",
                 "script.js",
+                "controller-body.png",
                 "controller-button-a.png",
                 "controller-button-b.png",
                 "controller-button-x.png",

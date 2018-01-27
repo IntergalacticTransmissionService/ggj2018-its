@@ -33,6 +33,9 @@
     <None Include="$(MSBuildThisFileDirectory)Content\WebController\script.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)Content\WebController\controller-body.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="$(MSBuildThisFileDirectory)Content\WebController\controller-button-a.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
