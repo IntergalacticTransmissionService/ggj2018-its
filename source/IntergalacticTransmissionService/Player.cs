@@ -46,11 +46,11 @@ namespace IntergalacticTransmissionService
             new Color(0xBD, 0x0A, 0x7B)     // Purple
         };
 
-        public Player(ITSGame game, int playerNum, float radius) : base(game, "Images/player.png", $"Images/character_{(playerNum % 4)+1:00}.png", colors[playerNum % colors.Length], colors[playerNum % colors.Length], radius)
+        public Player(ITSGame game, int playerNum, float radius) : base(game, "Images/player.png", $"Images/character_{(playerNum % 4) + 1:00}.png", colors[playerNum % colors.Length], colors[playerNum % colors.Length], radius)
         {
             this.PlayerNum = playerNum;
             Collectables = new Dictionary<CollectableType, int>();
-            foreach(CollectableType e in Enum.GetValues(typeof(CollectableType)))
+            foreach (CollectableType e in Enum.GetValues(typeof(CollectableType)))
                 Collectables.Add(e, 0);
             Bullets = new BulletSystem(this, "Images/bullet.png", 300, 15);
             IsAlive = true;
@@ -76,19 +76,21 @@ namespace IntergalacticTransmissionService
                     if (gameTime.TotalGameTime.TotalMilliseconds % 300 < 150)
                     {
                         BaseColor = new Color(BaseColor, 0.5f);
-                    } else
+                    }
+                    else
                     {
                         BaseColor = new Color(BaseColor, 1.0f);
                     }
-                } else
+                }
+                else
                 {
                     if (BaseColor.A < 255)
                         BaseColor = new Color(BaseColor, 1.0f);
                 }
                 base.Draw(spriteBatch, gameTime);
+                flame.Draw(spriteBatch, Phy.Pos, Phy.Rot, Phy.HitBox.Radius, Color.White);
             }
             Bullets.Draw(spriteBatch, gameTime);
-            flame.Draw(spriteBatch, Phy.Pos, Phy.Rot, Phy.HitBox.Radius, Color.White);
 
         }
 
@@ -107,7 +109,8 @@ namespace IntergalacticTransmissionService
             Bullets.Emitting = active;
         }
 
-        public void SetEventText(string text, TimeSpan time) {
+        public void SetEventText(string text, TimeSpan time)
+        {
             EventText = text;
             EventTextTime = time;
         }
@@ -136,7 +139,7 @@ namespace IntergalacticTransmissionService
                     RespawnCooldown -= gameTime.ElapsedGameTime;
             }
 
-            foreach(CollectableType e in Enum.GetValues(typeof(CollectableType)))
+            foreach (CollectableType e in Enum.GetValues(typeof(CollectableType)))
             {
                 switch (e)
                 {
