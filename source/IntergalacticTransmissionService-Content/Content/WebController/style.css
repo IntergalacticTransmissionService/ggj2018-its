@@ -12,6 +12,7 @@ html, body {
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+    outline: none !important;
 }
 #joyContainer {
     position: absolute;
@@ -32,7 +33,6 @@ html, body {
     background-size: 100%;
     border: none;
     text-align: center;
-    outline: none;
 }
 #joyThumb {
     width: 100%;
@@ -51,13 +51,12 @@ html, body {
     right: 0;
     top: 0;
 }
-#buttonContainer > button {
+#buttonContainer > div {
     background-size: 100%;
     border: none;
     height: 40%;
     width: 40%;
     position: absolute;
-    outline: none;
 }
 #button0 {
     top: -10%;
