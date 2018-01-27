@@ -9,14 +9,14 @@ using System.Text;
 
 namespace MonoGame_Engine
 {
-    public enum CollectibleType : int
+    public enum CollectableType : int
     {
         RapidFire,
         SpreadShoot,
         BackShoot,
         UpDownShoot,
     }
-    class Pool : Entities.Entity, IEnumerable<ICollecteble>
+    class Pool : Entities.Entity, IEnumerable<ICollectable>
     {
         private readonly Collecteble[] list;
         private readonly Collecteble[] backupList;
@@ -51,7 +51,7 @@ namespace MonoGame_Engine
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             foreach (var toDraw in this.list.Take(this.Count).Where(Blink))
-                this.Graphics[(int)toDraw.Grafic].Draw(spriteBatch, toDraw.Phy.Pos, toDraw.Phy.Rot);
+                this.Graphics[(int)toDraw.Graphics].Draw(spriteBatch, toDraw.Phy.Pos, toDraw.Phy.Rot);
         }
 
         private bool Blink(Collecteble arg)
@@ -73,7 +73,7 @@ namespace MonoGame_Engine
 
         internal virtual IReadOnlyList<Gfx.Image> Graphics { get; } = new Gfx.Image[] { new Gfx.Image("Images/collectableRapidFire.png"), new Gfx.Image("Images/collectableSpread.png"), new Gfx.Image("Images/collectableBack.png"), new Gfx.Image("Images/collectableUpDown.png"), };
 
-        public ICollecteble Get(CollectibleType grafic, Vector2 position, float rotation, TimeSpan timeToLive)
+        public ICollectable Get(CollectableType grafic, Vector2 position, float rotation, TimeSpan timeToLive)
         {
             if (this.lastActive == this.list.Length - 1)
                 return null;
@@ -86,7 +86,7 @@ namespace MonoGame_Engine
             newCollectibal.Phy.Spd = Vector2.Zero;
             newCollectibal.Phy.Pos = position;
             newCollectibal.Phy.Rot = rotation;
-            newCollectibal.Grafic = grafic;
+            newCollectibal.Graphics = grafic;
             newCollectibal.timeToLive = timeToLive;
             return newCollectibal;
         }
@@ -108,7 +108,7 @@ namespace MonoGame_Engine
             this.lastActive--;
         }
 
-        public IEnumerator<ICollecteble> GetEnumerator()
+        public IEnumerator<ICollectable> GetEnumerator()
         {
             // save for eventuell deletes while itterating
             //Array.Copy(this.list, this.backupList, this.list.Length);
@@ -119,14 +119,14 @@ namespace MonoGame_Engine
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
 
-        protected class Collecteble : ICollecteble
+        protected class Collecteble : ICollectable
         {
             public int index;
             private Pool pool;
 
             public TimeSpan timeToLive;
 
-            public CollectibleType Grafic { get; set; }
+            public CollectableType Graphics { get; set; }
             public Phy.Physics Phy { get; set; }
 
             public bool IsActive => this.index <= this.pool.lastActive;
