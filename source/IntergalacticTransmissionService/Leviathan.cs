@@ -69,7 +69,7 @@ namespace IntergalacticTransmissionService
 
                 for (int i = 0; i < waveNumber * 2; ++i)
                 {
-                    var dist = 700;
+                    var dist = 20;
                     var enemy = new Enemy(game,
                         Color.White,
                         RandomFuncs.FromRange(16f, 64f),
