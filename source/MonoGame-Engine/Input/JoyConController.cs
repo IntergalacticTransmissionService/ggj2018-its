@@ -12,6 +12,7 @@ namespace MonoGame_Engine.Input
         private static JoyconManager manager;
         private static HashSet<int> connected;
         private readonly int index;
+        private TimeSpan nextJoyConRefreshList = new TimeSpan(0,0,0);
 
         public JoyConController(int index)
         {
@@ -92,7 +93,10 @@ namespace MonoGame_Engine.Input
             if (index == 0)
             {
                 manager.Update(gameTime.ElapsedGameTime);
-                manager.RefreshJoyConList();
+                if(nextJoyConRefreshList < gameTime.TotalGameTime) {
+                    manager.RefreshJoyConList();
+                    nextJoyConRefreshList = gameTime.TotalGameTime.Add(new TimeSpan(0, 0, 1));
+                }
             }
         }
 
