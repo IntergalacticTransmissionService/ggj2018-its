@@ -20,7 +20,9 @@ namespace IntergalacticTransmissionService
 
         private SoundEffect sndExplode;
 
-        public Enemy(ITSGame game, Color baseColor, float radius, Vector2 startPos, float startRot = 0, Behavior behavior = null) : base(game, GenerateImage(), baseColor, radius)
+        public override float IndicatorSmallScale => 0.25f;
+
+        public Enemy(ITSGame game, Color baseColor, float radius, Vector2 startPos, float startRot = 0, Behavior behavior = null) : base(game, GenerateImage(), null, new Color(0.8f, 0.8f, 0.8f, 0.4f), baseColor, radius)
         {
             this.StartPos = startPos;
             this.StartRot = startRot;

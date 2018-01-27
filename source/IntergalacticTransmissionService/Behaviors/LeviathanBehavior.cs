@@ -20,7 +20,7 @@ namespace IntergalacticTransmissionService
         public override void Update(GameObject owner, GameTime gameTime)
         {
             var rotationMatrix = Matrix.CreateRotationZ(owner.Phy.Rot);
-            owner.Phy.Spd = -Vector2.Transform(Vector2.UnitY, rotationMatrix) * (Player.MaxSpd * 0.7f);
+            owner.Phy.Spd = -Vector2.Transform(Vector2.UnitY, rotationMatrix) * (Player.DefaultMaxSpd * 0.5f);
             //owner.Phy.Spd = Vector2.UnitX * 30;
             //owner.Phy.Spd = -Vector2.UnitY * 30;
             const float maxTurnspeed = MathHelper.PiOver4 / 40;

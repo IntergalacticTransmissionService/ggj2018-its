@@ -8,14 +8,17 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using MonoGame_Engine.Gfx;
 
 namespace IntergalacticTransmissionService
 {
     public class Player : GameObject
     {
-        public const float MaxSpd = 800f;
+        public const float DefaultMaxSpd = 800f;
+        public float MaxSpd { get { return game.MainScene.Parcel.HoldBy == this ? DefaultMaxSpd * 0.9f : DefaultMaxSpd; } }
 
         public BulletSystem Bullets { get; private set; }
+        public Image flame { get; }
 
         public int PlayerNum { get; private set; }
 
@@ -34,7 +37,7 @@ namespace IntergalacticTransmissionService
             new Color(0xBD, 0x0A, 0x7B)     // Purple
         };
 
-        public Player(ITSGame game, int playerNum, float radius) : base(game, "Images/player.png", colors[playerNum % colors.Length], radius)
+        public Player(ITSGame game, int playerNum, float radius) : base(game, "Images/player.png", $"Images/character_{(playerNum % 4)+1:00}.png", colors[playerNum % colors.Length], colors[playerNum % colors.Length], radius)
         {
             this.PlayerNum = playerNum;
             Collectables = new Dictionary<CollectableType, int>();
@@ -43,12 +46,16 @@ namespace IntergalacticTransmissionService
             Bullets = new BulletSystem(this, "Images/bullet.png", 300, 15);
             IsAlive = true;
             BulletType = BulletType.Normal;
+            this.flame = new MonoGame_Engine.Gfx.Image(TimeSpan.FromSeconds(0.2), "Images/PlayerFlame-1.png", "Images/PlayerFlame-2.png");
+
         }
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
             base.LoadContent(content, wasReloaded);
             Bullets.LoadContent(content, wasReloaded);
+            flame.LoadContent(content, wasReloaded);
+
         }
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -72,6 +79,8 @@ namespace IntergalacticTransmissionService
                 base.Draw(spriteBatch, gameTime);
             }
             Bullets.Draw(spriteBatch, gameTime);
+            flame.Draw(spriteBatch, Phy.Pos, Phy.Rot, Phy.HitBox.Radius, Color.White);
+
         }
 
         internal void ReleaseParcel()
@@ -151,6 +160,7 @@ namespace IntergalacticTransmissionService
             }
 
             Bullets.Update(gameTime);
+            flame.Update(gameTime);
 
 
             //game.DebugOverlay.Text += String.Join("  ", Enum.GetValues(typeof(CollectibleType)).Cast<CollectibleType>().Select(c => $"{c}: {this.Collectables[c]}").ToArray()) + "\n";

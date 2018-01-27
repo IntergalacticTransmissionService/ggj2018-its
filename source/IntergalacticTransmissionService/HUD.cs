@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Engine.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using IntergalacticTransmissionService.Net;
 
 namespace IntergalacticTransmissionService
 {
@@ -13,6 +14,7 @@ namespace IntergalacticTransmissionService
     {
         private ITSGame game;
         private SpriteBatch spriteBatch;
+        private readonly string lanIp;
 
         private Texture2D[] chars = new Texture2D[4];
         private Texture2D distanceScale;
@@ -22,18 +24,24 @@ namespace IntergalacticTransmissionService
         private Texture2D[] textbox = new Texture2D[9];
         private string[] texts = new string[4];
 
+        public float ScreenBorder = 30;
+
         public HUD(ITSGame game)
         {
             this.game = game;
+            lanIp = WebControllerManager.getLanIpWithPort();
         }
 
         internal override void Draw(SpriteBatch _, GameTime gameTime)
         {
             spriteBatch.Begin();
+            var lanIpSize = game.Fonts.Get(MonoGame_Engine.Font.DebugFont).MeasureString(lanIp);
+            spriteBatch.DrawString(game.Fonts.Get(MonoGame_Engine.Font.DebugFont), lanIp, new Vector2((game.Screen.CanvasWidth-lanIpSize.X) / 2, game.Screen.CanvasHeight-20), Color.White);
+
             for (int i = 0; i < 4; i++)
             {
-                pos[i].X = i % 2 == 0 ? 10 : game.Screen.CanvasWidth - 10 - chars[i].Width;
-                pos[i].Y = i / 2 == 0 ? 10 : game.Screen.CanvasHeight - 10 - chars[i].Height;
+                pos[i].X = i % 2 == 0 ? ScreenBorder : game.Screen.CanvasWidth - ScreenBorder - chars[i].Width;
+                pos[i].Y = i / 2 == 0 ? ScreenBorder : game.Screen.CanvasHeight - ScreenBorder - chars[i].Height;
 
                 if (game.MainScene.Players.Count > i)
                 {
@@ -62,7 +70,7 @@ namespace IntergalacticTransmissionService
                 var indicator = position + left;
 
                 spriteBatch.Draw(distanceScale, new Vector2(left, 0));
-                this.game.MainScene.leviathan.Gfx.Draw(spriteBatch, new Vector2(indicator, 10), MathHelper.PiOver2, 10f, Color.White);
+                this.game.MainScene.Leviathan.Gfx.Draw(spriteBatch, new Vector2(indicator, 10), MathHelper.PiOver2, 10f, Color.White);
             }
             spriteBatch.End();
         }
@@ -107,7 +115,7 @@ namespace IntergalacticTransmissionService
 
         internal override void Update(GameTime gameTime)
         {
-            this.distanceToMotherShip = Math.Abs((game.MainScene.leviathan.Phy.Pos - game.Camera.Phy.Pos).Length());
+            this.distanceToMotherShip = Math.Abs((game.MainScene.Leviathan.Phy.Pos - game.Camera.Phy.Pos).Length());
         }
 
         internal void ShowMessageForPlayer(Player player, string msg, TimeSpan duration)
