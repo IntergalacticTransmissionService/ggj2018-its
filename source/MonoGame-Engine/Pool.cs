@@ -9,7 +9,7 @@ using System.Text;
 
 namespace MonoGame_Engine
 {
-    public enum CollectebleGrafic : int
+    public enum CollectibleType : int
     {
         Stuff = 0,
     }
@@ -70,7 +70,7 @@ namespace MonoGame_Engine
 
         protected virtual IReadOnlyList<Gfx.Image> Graphics { get; } = new Gfx.Image[] { new Gfx.Image("Images/collectable.png") };
 
-        public ICollecteble Get(CollectebleGrafic grafic, Vector2 position, float rotation, TimeSpan timeToLive)
+        public ICollecteble Get(CollectibleType grafic, Vector2 position, float rotation, TimeSpan timeToLive)
         {
             if (this.lastActive == this.list.Length - 1)
                 return null;
@@ -123,7 +123,7 @@ namespace MonoGame_Engine
 
             public TimeSpan timeToLive;
 
-            public CollectebleGrafic Grafic { get; set; }
+            public CollectibleType Grafic { get; set; }
             public Phy.Physics Phy { get; set; }
 
             public bool IsActive => this.index <= this.pool.lastActive;

@@ -5,7 +5,7 @@ namespace MonoGame_Engine
 {
     public interface ICollecteble :IHasPhysics, IDisposable
     {
-        CollectebleGrafic Grafic { get; set; }
+        CollectibleType Grafic { get; set; }
         bool IsActive { get; }
         
     }

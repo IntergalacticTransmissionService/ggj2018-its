@@ -74,6 +74,7 @@ namespace MonoGame_Engine
 
         protected override void Update(GameTime gameTime)
         {
+            DebugOverlay.Text = "";
             Content.Update(gameTime);
             Camera.Update(gameTime);
             Scenes.Current?.Update(gameTime);

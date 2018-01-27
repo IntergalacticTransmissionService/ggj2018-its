@@ -5,6 +5,7 @@ using MonoGame_Engine;
 using MonoGame_Engine.Entities;
 using MonoGame_Engine.Phy;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,6 +16,8 @@ namespace IntergalacticTransmissionService
         public BulletSystem Bullets { get; private set; }
 
         public int PlayerNum { get; private set; }
+
+        public readonly int[] Collectables;
 
         public static Color[] colors = new Color[] {
             new Color(0xCC, 0x00, 0x00),    // Red
@@ -27,6 +30,7 @@ namespace IntergalacticTransmissionService
         public Player(ITSGame game, int playerNum, float radius) : base(game, "Images/player.png", colors[playerNum % colors.Length], radius)
         {
             this.PlayerNum = playerNum;
+            Collectables = new int[Enum.GetValues(typeof(CollectibleType)).Length];
             Bullets = new BulletSystem(this, "Images/bullet.png", 300, 15);
         }
 
@@ -69,6 +73,9 @@ namespace IntergalacticTransmissionService
                 Phy.Spd = Vector2.Normalize(Phy.Spd) * 1200.0f;
 
             Bullets.Update(gameTime);
+
+
+            game.DebugOverlay.Text += String.Join("  ", Enum.GetValues(typeof(CollectibleType)).Cast<int>().Select(c => $"{(CollectibleType)c}: {this.Collectables[c]}").ToArray()) + "\n";
         }
 
         internal void WhereAmI(bool show)
