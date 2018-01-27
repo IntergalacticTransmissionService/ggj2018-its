@@ -6,19 +6,41 @@ var sideMargin = 50;
 var joyContainerTop = 0;
 var joyContainerSize = 1;
 var enableSockets = true;
+var buttonsState = [0, 0, 0, 0];
 
 function getLeftTouch(touches) {
-    var centerX = document.body.clientWidth/2;
-    for(var i=0; i<touches.length; i++) {
+    var centerX = document.body.clientWidth / 2;
+    for (var i = 0; i < touches.length; i++) {
         var touch = touches[i];
-        if(touch.clientX < centerX)
+        if (touch.clientX < centerX)
             return touch;
     }
     return null;
 }
 
+function updateButtonsState(touches) {
+    var newState = [0, 0, 0, 0];
+    for (var i = 0; i < touches.length; i++) {
+        var touch = touches[i];
+        var touchTarget = document.elementFromPoint(touch.clientX, touch.clientY);
+        if (touchTarget && touchTarget.id && touchTarget.id.startsWith("button")) {
+            var index = parseInt(touchTarget.id.substr(6));
+            newState[index] = 1;
+        }
+    }
+
+    for (var i = 0; i < 4; i++) {
+        if (buttonsState[i] != newState[i]) {
+            buttonsState = newState;
+            if (websocket)
+                websocket.send(`!|${buttonsState.join('')}`);
+            return;
+        }
+    }
+}
+
 function init() {
-    if(enableSockets) {
+    if (enableSockets) {
         websocket = new WebSocket("ws://" + document.location.hostname + ":8082/");
         websocket.onopen = function (evt) { onOpen(evt) };
         websocket.onclose = function (evt) { onClose(evt) };
@@ -29,31 +51,31 @@ function init() {
     document.body.addEventListener('touchmove', touchMove);
     document.body.addEventListener('touchstart', touchMove);
     document.body.addEventListener('touchend', touchMove);
-    for (var i = 0; i < 4; i++)
-        registerButton(i);
     updateSize();
     window.addEventListener('resize', updateSize);
 }
 function touchMove(e) {
+    updateButtonsState(e.touches);
     var touch = getLeftTouch(e.touches);
+    var radius = joyContainerSize / 2;
+    var dirX = 0, dirY = 0;
     if (touch) {
-        var radius = joyContainerSize / 2;
-        var dirX = (touch.clientX - (sideMargin + radius))/radius;
-        var dirY = ((joyContainerTop + radius) - touch.clientY)/radius;
-        var dirLen = Math.sqrt(dirX * dirX + dirY * dirY);
-        if(dirLen > 1) {
-            dirX /= dirLen;
-            dirY /= dirLen;
-        }
-        if(websocket)
-            websocket.send(`^|${dirX}|${dirY}`);
-        // console.log(dirX, dirY);
-        var top = radius - dirY * radius;
-        var left = radius + dirX * radius;
-
-        joyThumb.style.top = top + 'px';
-        joyThumb.style.left = left + 'px';
+        dirX = (touch.clientX - (sideMargin + radius)) / radius;
+        dirY = ((joyContainerTop + radius) - touch.clientY) / radius;
     }
+    var dirLen = Math.sqrt(dirX * dirX + dirY * dirY);
+    if (dirLen > 1) {
+        dirX /= dirLen;
+        dirY /= dirLen;
+    }
+    if (websocket)
+        websocket.send(`^|${dirX}|${dirY}`);
+    // console.log(dirX, dirY);
+    var top = radius - dirY * radius;
+    var left = radius + dirX * radius;
+
+    joyThumb.style.top = top + 'px';
+    joyThumb.style.left = left + 'px';
 }
 
 function updateSize() {
@@ -72,14 +94,6 @@ function updateSize() {
     buttonContainer.style.width = sizePx;
     buttonContainer.style.top = topPx;
     buttonContainer.style.right = sideMargin + 'px';
-}
-
-function registerButton(i) {
-    var button = document.getElementById('button' + i);
-    button.addEventListener('click', (e) => {
-        if(websocket)
-            websocket.send(`!|${i}`);
-    });
 }
 
 function onOpen(evt) {

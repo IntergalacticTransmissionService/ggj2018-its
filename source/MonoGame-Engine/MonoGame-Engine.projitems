@@ -34,6 +34,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Input\KeyboardController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\Sliders.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\XBoxController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\WebController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Net\HttpWebServer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Net\WebControllerManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Math\BaseFuncs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Math\RandomFuncs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Math\MathExtensions.cs" />

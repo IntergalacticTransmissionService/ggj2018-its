@@ -16,7 +16,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)MainScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ITSGame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Player.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)WebController\WebController.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)WebController\HttpWebServer.cs" />
   </ItemGroup>
 </Project>
