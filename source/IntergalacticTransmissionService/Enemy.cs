@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using IntergalacticTransmissionService.Behaviors;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -16,6 +17,8 @@ namespace IntergalacticTransmissionService
         public Behavior Behavior { get; set; }
         public bool IsAlive { get; internal set; }
 
+        private SoundEffect sndExplode;
+
         public Enemy(ITSGame game, Color baseColor, float radius, Vector2 startPos, float startRot = 0, Behavior behavior = null) : base(game, "Images/enemy.png", baseColor, radius)
         {
             this.StartPos = startPos;
@@ -27,6 +30,7 @@ namespace IntergalacticTransmissionService
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
             base.LoadContent(content, wasReloaded);
+            sndExplode = content.Load<SoundEffect>("Sounds/explosion");
             Phy.Pos = StartPos;
             Phy.Rot = StartRot;
         }
@@ -51,6 +55,7 @@ namespace IntergalacticTransmissionService
         public void Die()
         {
             this.IsAlive = false;
+            sndExplode.Play();
         }
 
         public void Reset(Vector2? pos = null, float? rot = null)
