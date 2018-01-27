@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Engine.Entities;
@@ -19,6 +19,9 @@ namespace IntergalacticTransmissionService
         private Texture2D[] chars = new Texture2D[4];
         private Vector2[] pos = new Vector2[4];
 
+        private Texture2D[] textbox = new Texture2D[9];
+        private string[] texts = new string[4];
+
         public HUD(ITSGame game)
         {
             this.game = game;
@@ -38,6 +41,7 @@ namespace IntergalacticTransmissionService
                 if (game.MainScene.Players.Count > i)
                 {
                     var player = game.MainScene.Players[i];
+
                     var fx = i % 2 == 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                     var alpha = (gameTime.TotalGameTime.TotalMilliseconds % 300 < 150) ? 0.2f : 1.0f;
                     var color = new Color(1f, 1f, 1f, player.IsInvincible ? alpha : 1f);
@@ -45,28 +49,62 @@ namespace IntergalacticTransmissionService
 
                     if (!player.IsAlive)
                     {
-                        var text = "Press Button to join";
-                        var textPosXOffset = i % 2 == 0 ? 0 : -chars[i].Width-game.Fonts.Get(MonoGame_Engine.Font.DebugFont).MeasureString(text).Y;
-                        var textPosYOffset = i / 2 == 0 ? chars[i].Height + 10 : -chars[i].Height - 10;
-
-                        spriteBatch.DrawString(game.Fonts.Get(MonoGame_Engine.Font.DebugFont), text, new Vector2(pos[i].X + textPosXOffset, pos[i].Y + textPosYOffset), new Color(player.BaseColor, alpha));
+                        var text = "You died!\r\nPress Button to join";
+                        var textPosXOffset = i % 2 == 0 ? pos[i].X + chars[i].Width: pos[i].X;
+                        var textPosYOffset = i / 2 == 0 ? pos[i].Y : pos[i].Y + chars[i].Height - chars[2].Height;
+                        DrawTextBox(i, spriteBatch, text, new Vector2(textPosXOffset, textPosYOffset), new Color(player.BaseColor, alpha));
                     }
                 }
             }
             spriteBatch.End();
         }
 
+        private void DrawTextBox(int charIdx, SpriteBatch spriteBatch, string text, Vector2 pos, Color color)
+        {
+            var fromRight = charIdx % 2 == 1;
+            var size = game.Fonts.Get(MonoGame_Engine.Font.DebugFont).MeasureString(text);
+            size.Y = Math.Max(size.Y, chars[0].Height - textbox[0].Height - textbox[6].Height);
+            var outer = size + new Vector2(textbox[0].Width + textbox[2].Width, 0);
+
+            if (fromRight)
+                pos.X -= outer.X;
+
+            spriteBatch.Draw(textbox[0], pos, Color.White);
+            spriteBatch.Draw(textbox[1], pos + Vector2.UnitX * textbox[0].Width, null, Color.White, 0, Vector2.Zero, new Vector2(size.X / textbox[1].Width, 1), SpriteEffects.None, 0);
+            spriteBatch.Draw(textbox[2], pos + Vector2.UnitX * (textbox[0].Width + size.X), Color.White);
+            spriteBatch.Draw(textbox[3], pos + Vector2.UnitY * textbox[0].Height, null, Color.White, 0, Vector2.Zero, new Vector2(1, size.Y / textbox[4].Height), SpriteEffects.None, 0);
+            spriteBatch.Draw(textbox[4], pos + new Vector2(textbox[0].Width, textbox[0].Height), null, Color.White, 0, Vector2.Zero, new Vector2(size.X / textbox[4].Width, size.Y / textbox[4].Height), SpriteEffects.None, 0);
+            spriteBatch.Draw(textbox[5], pos + new Vector2(textbox[0].Width + size.X, textbox[0].Height), null, Color.White, 0, Vector2.Zero, new Vector2(1, size.Y / textbox[4].Height), SpriteEffects.None, 0);
+            spriteBatch.Draw(textbox[6], pos + Vector2.UnitY * (textbox[0].Height + size.Y), Color.White);
+            spriteBatch.Draw(textbox[7], pos + new Vector2(textbox[0].Width, textbox[0].Height + size.Y), null, Color.White, 0, Vector2.Zero, new Vector2(size.X / textbox[7].Width, 1), SpriteEffects.None, 0);
+            spriteBatch.Draw(textbox[8], pos + new Vector2(textbox[0].Width + size.X, textbox[0].Height + size.Y), Color.White);
+            spriteBatch.DrawString(game.Fonts.Get(MonoGame_Engine.Font.DebugFont), text, pos + new Vector2(textbox[0].Width, textbox[0].Height), color);
+        }
+
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
             spriteBatch = new SpriteBatch(game.GraphicsDevice);
+
+            // load chars
             for (int i = 0; i < 4; ++i)
                 chars[i] = content.Load<Texture2D>($"Images/character_{i+1:00}.png");
             lanIpPos = new Vector2(chars[0].Width + 20, 10);
+
+            // load textbox
+            var tb = new string[] { "tl", "t", "tr", "l", "m", "r", "bl", "b", "br" };
+            for (int i = 0; i < 9; ++i)
+                textbox[i] = content.Load<Texture2D>($"Images/textbox_{tb[i]}.png");
         }
 
         internal override void Update(GameTime gameTime)
         {
 
         }
+
+        internal void ShowMessageForPlayer(Player player, string msg, TimeSpan duration)
+        {
+
+        }
+
     }
 }
