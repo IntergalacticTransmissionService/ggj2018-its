@@ -32,13 +32,13 @@ namespace MonoGame_Engine.Input
             {
                 switch (btn)
                 {
-                    case Buttons.A: return JoyCon.GetButtonDown(joycon.isLeft ? Joycon.Button.DPAD_LEFT : Joycon.Button.DPAD_RIGHT);
-                    case Buttons.B: return JoyCon.GetButtonDown(joycon.isLeft ? Joycon.Button.DPAD_DOWN : Joycon.Button.DPAD_UP);
-                    case Buttons.X: return JoyCon.GetButtonDown(joycon.isLeft ? Joycon.Button.DPAD_UP : Joycon.Button.DPAD_DOWN);
-                    case Buttons.Y: return JoyCon.GetButtonDown(joycon.isLeft ? Joycon.Button.DPAD_RIGHT : Joycon.Button.DPAD_LEFT);
+                    case Buttons.A: return JoyCon.GetButton(joycon.isLeft ? Joycon.Button.DPAD_LEFT : Joycon.Button.DPAD_RIGHT);
+                    case Buttons.B: return JoyCon.GetButton(joycon.isLeft ? Joycon.Button.DPAD_DOWN : Joycon.Button.DPAD_UP);
+                    case Buttons.X: return JoyCon.GetButton(joycon.isLeft ? Joycon.Button.DPAD_UP : Joycon.Button.DPAD_DOWN);
+                    case Buttons.Y: return JoyCon.GetButton(joycon.isLeft ? Joycon.Button.DPAD_RIGHT : Joycon.Button.DPAD_LEFT);
 
-                    case Buttons.R: return JoyCon.GetButtonDown(Joycon.Button.SR);
-                    case Buttons.L: return JoyCon.GetButtonDown(Joycon.Button.SL);
+                    case Buttons.R: return JoyCon.GetButton(Joycon.Button.SR);
+                    case Buttons.L: return JoyCon.GetButton(Joycon.Button.SL);
 
                     // TODO    
                     //case Buttons.LeftStick: return st.Buttons.LeftStick == XnaInput.ButtonState.Pressed;
@@ -52,6 +52,7 @@ namespace MonoGame_Engine.Input
                     //case Buttons.Select: return st.Buttons.Back == XnaInput.ButtonState.Pressed;
                     //case Buttons.Start: return st.Buttons.Start == XnaInput.ButtonState.Pressed;
                 }
+             
             }
             return false;
         }
