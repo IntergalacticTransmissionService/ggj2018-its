@@ -239,6 +239,7 @@ namespace IntergalacticTransmissionService
             WasHit();
             if (!IsInvincible)
             {
+                game.MainScene.Parcel.Release(this, 0);
                 Shoot(false);
                 IsAlive = false;
                 RespawnCooldown = TimeSpan.FromSeconds(1);
