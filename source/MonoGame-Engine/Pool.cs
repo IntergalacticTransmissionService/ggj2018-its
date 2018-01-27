@@ -50,25 +50,13 @@ namespace MonoGame_Engine
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            foreach (var toDraw in this.list.Take(this.Count).Where(Blink))
-                this.Graphics[(int)toDraw.Graphics].Draw(spriteBatch, toDraw.Phy.Pos, toDraw.Phy.Rot);
-        }
-
-        private bool Blink(Collectable arg)
-        {
-            if (
-                arg.timeToLive > TimeSpan.FromSeconds(3.0)
-                || arg.timeToLive > TimeSpan.FromSeconds(2.6) && arg.timeToLive < TimeSpan.FromSeconds(3.0)
-                || arg.timeToLive > TimeSpan.FromSeconds(2.0) && arg.timeToLive < TimeSpan.FromSeconds(2.4)
-                || arg.timeToLive > TimeSpan.FromSeconds(1.8) && arg.timeToLive < TimeSpan.FromSeconds(2.0)
-                || arg.timeToLive > TimeSpan.FromSeconds(1.4) && arg.timeToLive < TimeSpan.FromSeconds(1.6)
-                || arg.timeToLive > TimeSpan.FromSeconds(1.0) && arg.timeToLive < TimeSpan.FromSeconds(1.2)
-                || arg.timeToLive > TimeSpan.FromSeconds(0.6) && arg.timeToLive < TimeSpan.FromSeconds(0.8)
-                || arg.timeToLive > TimeSpan.FromSeconds(0.2) && arg.timeToLive < TimeSpan.FromSeconds(0.4)
-                )
-                return true;
-
-            return false;
+            foreach (var toDraw in this.list.Take(this.Count)) {
+                var scale = 1.0f;
+                if(toDraw.timeToLive < TimeSpan.FromSeconds(5.0))
+                    scale = (float)(toDraw.timeToLive.TotalSeconds / 5.0);
+                scale *= 1.4f;
+                this.Graphics[(int)toDraw.Graphics].Draw(spriteBatch, toDraw.Phy.Pos, toDraw.Phy.Rot, toDraw.Phy.HitBox.Radius * scale, Color.White);
+            }
         }
 
         internal virtual IReadOnlyList<Gfx.Image> Graphics { get; } = new Gfx.Image[] { new Gfx.Image("Images/collectableRapidFire.png"), new Gfx.Image("Images/collectableSpread.png"), new Gfx.Image("Images/collectableBack.png"), new Gfx.Image("Images/collectableUpDown.png"), };

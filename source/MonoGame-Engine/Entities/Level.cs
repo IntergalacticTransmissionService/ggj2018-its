@@ -19,7 +19,7 @@ namespace MonoGame_Engine.Entities
             this.minSpanDistance = minSpanDistance;
             this.maxSpanDistance = maxSpanDistance;
 
-            this.collectebelsPool = new Pool(itemsCount, 5);
+            this.collectebelsPool = new Pool(itemsCount, 40);
             this.game = game;
             this.speed = speed;
             this.spawnRate = spawnRate;
