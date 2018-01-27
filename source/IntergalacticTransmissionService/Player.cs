@@ -10,26 +10,14 @@ using System.Text;
 
 namespace IntergalacticTransmissionService
 {
-    public class Player : Entity, IHasPhysics
+    public class Player : EntityWithIndicator, IHasPhysics
     {
-        private readonly BaseGame game;
 
         private Texture2D halo;
         private Vector2 haloOrigin;
 
-        private Texture2D indicator;
-
-        public Color BaseColor { get; private set; }
-
-        public Physics Phy { get; private set; }
 
         public BulletSystem Bullets { get; private set; }
-
-        public float Radius
-        {
-            get { return this.Phy.HitBox.Radius; }
-            set { this.Phy.HitBox.Radius = value; }
-        }
 
         public int PlayerNum { get; private set; }
 
@@ -41,19 +29,16 @@ namespace IntergalacticTransmissionService
             new Color(0xCC, 0x00, 0x88)     // Purple
         };
 
-        public Player(BaseGame game, int playerNum, float radius)
+        public Player(ITSGame game, int playerNum, float radius) : base(game, colors[playerNum % colors.Length], radius)
         {
-            this.game = game;
             this.PlayerNum = playerNum;
-            this.BaseColor = colors[playerNum % colors.Length];
-            Phy = new OrientedPhysics(radius);
             Bullets = new BulletSystem(this, "Images/bullet.png", 300, 15);
         }
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
+            base.LoadContent(content, wasReloaded);
             halo = content.Load<Texture2D>("Images/player.png");
-            indicator = content.Load<Texture2D>("Images/indicator.png");
             Bullets.LoadContent(content, wasReloaded);
             if (!wasReloaded)
             {
@@ -63,6 +48,7 @@ namespace IntergalacticTransmissionService
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
+            base.Draw(spriteBatch, gameTime);
             Bullets.Draw(spriteBatch, gameTime);
 
             var pos = new Vector2();
@@ -72,17 +58,11 @@ namespace IntergalacticTransmissionService
             var scale = new Vector2(Phy.HitBox.Radius / (halo.Width * 0.5f), Phy.HitBox.Radius / (halo.Height * 0.5f));
 
             spriteBatch.Draw(halo, pos, null, null, haloOrigin, Phy.Rot, scale, BaseColor);
+        }
 
-            var camTopLeft = game.Camera.TopLeft;
-            var camBottomRight = game.Camera.BottomRight;
-
-            if (pos.X < camTopLeft.X || pos.X > camBottomRight.X || pos.Y < camTopLeft.Y || pos.Y > camBottomRight.Y)
-            {
-                pos.X = MathHelper.Clamp(pos.X, camTopLeft.X + 15, camBottomRight.X - 15);
-                pos.Y = MathHelper.Clamp(pos.Y, camTopLeft.Y + 15, camBottomRight.Y - 15);
-
-                spriteBatch.Draw(indicator, pos, BaseColor);
-            }
+        internal void ReleaseParcel()
+        {
+            game.MainScene.Parcel.Release(this);
         }
 
         public void WasHit()
@@ -97,12 +77,9 @@ namespace IntergalacticTransmissionService
 
         internal override void Update(GameTime gameTime)
         {
-            var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
             Phy.Dmp = 0.95f;
 
-            // Integrate
-            Phy.Update(gameTime);
+            base.Update(gameTime);
 
             // Ensure MaxSpd
             var spd = Phy.Spd.Length();

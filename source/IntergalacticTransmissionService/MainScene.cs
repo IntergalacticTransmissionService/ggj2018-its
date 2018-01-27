@@ -25,7 +25,7 @@ namespace IntergalacticTransmissionService
         {
             BackgroundImg = new TilingImage("Images/starfield.png", game);
             Background = new Sprite(BackgroundImg);
-            Parcel = new Parcel();
+            Parcel = new Parcel(game, Color.LightPink, 32f);
             Players = new List<Player>();
             CollisionHandler = new CollisionHandler(this);
         }
@@ -44,6 +44,7 @@ namespace IntergalacticTransmissionService
             Children.Add(Background);
 
             Parcel.LoadContent(game.Content);
+            Parcel.Phy.Pos.X = 500;
             Children.Add(Parcel);
         }
 
