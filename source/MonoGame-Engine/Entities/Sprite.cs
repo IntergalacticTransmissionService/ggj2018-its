@@ -23,7 +23,7 @@ namespace MonoGame_Engine.Entities
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
-            Gfx.LoadContent(content, wasReloaded);
+            Gfx?.LoadContent(content, wasReloaded);
             if (!wasReloaded)
             {
                 Phy = new Physics(Gfx.origin.X);
@@ -32,12 +32,12 @@ namespace MonoGame_Engine.Entities
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            Gfx.Draw(spriteBatch, Phy.Pos, Phy.Rot);
+            Gfx?.Draw(spriteBatch, Phy.Pos, Phy.Rot);
         }
 
         internal override void Update(GameTime gameTime)
         {
-            Phy.Update(gameTime);
+            Phy?.Update(gameTime);
         }
     }
 }
