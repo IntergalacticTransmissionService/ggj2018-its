@@ -53,12 +53,13 @@ namespace IntergalacticTransmissionService
 
             for (int i = 0; i < 10; ++i)
             {
+                var dist = 3000;
                 var testEnemy = new Enemy(game,
                     Color.White,
                     RandomFuncs.FromRange(16f, 64f),
-                    new Vector2(RandomFuncs.FromRange(-1000, 1000), RandomFuncs.FromRange(-1000, 1000)),
+                    new Vector2(RandomFuncs.FromRange(-dist, dist), RandomFuncs.FromRange(-dist, dist)),
                     (float)RandomFuncs.FromRange(0, MathHelper.TwoPi),
-                    new ChasingBehavior(this, 500, 800, RandomFuncs.FromRange(200, 500)));
+                    new ChasingBehavior(this, 500, 800, RandomFuncs.FromRange(100, 300)));
                 Enemies.Add(testEnemy);
             }
             foreach(var e in Enemies) { e.LoadContent(game.Content); }
@@ -97,8 +98,7 @@ namespace IntergalacticTransmissionService
                 var rnd = new Random();
                 var player = new Player(game, Players.Count, 32f);
                 player.LoadContent(game.Content);
-                player.Phy.Pos.X = (float)(rnd.NextDouble() - 0.5) * 100;
-                player.Phy.Pos.Y = (float)(rnd.NextDouble() - 0.5) * 100;
+                player.Spawn();
                 Children.Add(player);
 
                 var controller = new AccelController(game, Players.Count, player);

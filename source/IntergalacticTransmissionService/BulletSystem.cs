@@ -64,7 +64,7 @@ namespace IntergalacticTransmissionService
             if (!wasReloaded)
             {
                 origin = new Vector2(tex.Width * 0.5f, tex.Height * 0.5f);
-                maxAgeInSecs = 4;
+                maxAgeInSecs = 2;
             }
         }
 

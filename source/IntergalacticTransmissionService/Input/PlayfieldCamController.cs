@@ -15,7 +15,7 @@ namespace IntergalacticTransmissionService.Input
     {
         private readonly ITSGame game;
         private const float MinZoom = 0.5f;
-        private const float MaxZoom = 1.5f;
+        private const float MaxZoom = 1.2f;
 
         public PlayfieldCamController(ITSGame game, int playerIdx)
         {
@@ -32,13 +32,10 @@ namespace IntergalacticTransmissionService.Input
 
         internal override void Update(GameTime gameTime)
         {
-            Vector2 delta = (game.Scenes.Current as MainScene).Players[0].Phy.Pos - game.Camera.Phy.Pos;
-            game.Camera.Phy.Spd = delta * 5;
-
             var players = (game.Scenes.Current as MainScene).Players;
             if (players?.Count > 0)
             {
-                var parcelWeight = players.Count();
+                var parcelWeight = players.Count() * 3;
                 var centerX = (players.Average(e => e.Phy.Pos.X) + game.MainScene.Parcel.Phy.Pos.X * parcelWeight) / (float)(parcelWeight + 1);
                 var centerY = (players.Average(e => e.Phy.Pos.Y) + game.MainScene.Parcel.Phy.Pos.Y * parcelWeight) / (float)(parcelWeight + 1);
 
@@ -54,8 +51,11 @@ namespace IntergalacticTransmissionService.Input
                 var zoomY = (game.Screen.CanvasHeight * 0.5f)/ distY;
                 var zoom = MathHelper.Clamp(Math.Min(zoomX, zoomY), MinZoom, MaxZoom);
 
-                game.Camera.Phy.Pos.X = centerX;
-                game.Camera.Phy.Pos.Y = centerY;
+                Vector2 delta = new Vector2(centerX, centerY) - game.Camera.Phy.Pos;
+                game.Camera.Phy.Spd = delta * 30;
+
+                //game.Camera.Phy.Pos.X = centerX;
+                //game.Camera.Phy.Pos.Y = centerY;
                 game.Camera.Zoom = zoom;
             }
         }

@@ -78,9 +78,10 @@ namespace IntergalacticTransmissionService
                     var enemy = scene.Enemies[j];
                     if (enemy.IsAlive)
                     {
-                        if (left.Phy.CollidesWith(enemy.Phy))
+                        if (left.IsAlive && left.Phy.CollidesWith(enemy.Phy))
                         {
-                            // TODO: left.Die();
+                            left.Die();
+                            enemy.Die();
                         }
 
                         int k = 0;
