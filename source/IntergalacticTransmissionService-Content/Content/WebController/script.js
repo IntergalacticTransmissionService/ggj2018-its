@@ -9,6 +9,9 @@ var joyContainerSize = 1;
 var buttonsState = [0, 0, 0, 0];
 var dirX = 0, dirY = 0;
 
+// enable vibration support
+navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+
 function enterFullscreen() {
     var element = document.body;
     if (element.requestFullscreen) {
@@ -85,6 +88,10 @@ function init() {
     updateSize();
     window.addEventListener('resize', updateSize);
     document.getElementById('fullScreenToggle').addEventListener('click', toggleFullscreen, false);
+
+    if (navigator.vibrate) {
+        navigator.vibrate(300);
+    }
 }
 function touchMove(e) {
     updateButtonsState(e.touches);
@@ -145,6 +152,12 @@ function onClose(evt) {
 
 function onMessage(evt) {
     console.log(evt.data);
+    var parts = evt.data.split('|');
+    if (parts[0] === '%') {
+        if (navigator.vibrate) {
+            navigator.vibrate(parseInt(parts[1]));
+        }
+    }
 }
 
 function onError(evt) {
