@@ -28,11 +28,10 @@ namespace IntergalacticTransmissionService
         public readonly int[] Collectables;
 
         public static Color[] colors = new Color[] {
-            new Color(0xCC, 0x00, 0x00),    // Red
-            new Color(0x44, 0xFF, 0x00),    // Green
-            new Color(0x00, 0x44, 0xff),    // Blue    
-            new Color(0xFF, 0xCC, 0x00),    // Yellow
-            new Color(0xCC, 0x00, 0x88)     // Purple
+            new Color(0xF3, 0x00, 0x28),    // Red
+            new Color(0x00, 0x28, 0xF3),    // Blue
+            new Color(0x00, 0x88, 0x3F),    // Green    
+            new Color(0xBD, 0x0A, 0x7B)     // Purple
         };
 
         public Player(ITSGame game, int playerNum, float radius) : base(game, "Images/player.png", colors[playerNum % colors.Length], radius)

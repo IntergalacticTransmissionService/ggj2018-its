@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)CollisionHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enemy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HUD.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\AccelController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\PlayfieldCamController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainScene.cs" />

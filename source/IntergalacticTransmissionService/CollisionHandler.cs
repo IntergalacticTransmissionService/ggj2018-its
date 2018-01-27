@@ -36,7 +36,7 @@ namespace IntergalacticTransmissionService
                     // collisions with other players
                     if (j > i)
                     {
-                        if (left.Phy.CollidesWith(right.Phy))
+                        if (right.IsAlive && left.Phy.CollidesWith(right.Phy))
                         {
                             left.WasHit();
                             right.WasHit();
