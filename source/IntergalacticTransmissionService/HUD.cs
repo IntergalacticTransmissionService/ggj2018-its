@@ -8,6 +8,7 @@ using System.Text;
 
 namespace IntergalacticTransmissionService
 {
+
     class HUD : Entity
     {
         private ITSGame game;
@@ -15,6 +16,7 @@ namespace IntergalacticTransmissionService
 
         private Texture2D[] chars = new Texture2D[4];
         private Vector2[] pos = new Vector2[4];
+        private float distanceToMotherShip;
 
         public HUD(ITSGame game)
         {
@@ -24,7 +26,7 @@ namespace IntergalacticTransmissionService
         internal override void Draw(SpriteBatch _, GameTime gameTime)
         {
             spriteBatch.Begin();
-            for(int i=0; i<4; i++)
+            for (int i = 0; i < 4; i++)
             {
                 pos[i].X = i % 2 == 0 ? 10 : game.Screen.CanvasWidth - 10 - chars[i].Width;
                 pos[i].Y = i / 2 == 0 ? 10 : game.Screen.CanvasHeight - 10 - chars[i].Height;
@@ -40,12 +42,22 @@ namespace IntergalacticTransmissionService
                     if (!player.IsAlive)
                     {
                         var text = "Press Button to join";
-                        var textPosXOffset = i % 2 == 0 ? 0 : -chars[i].Width-game.Fonts.Get(MonoGame_Engine.Font.DebugFont).MeasureString(text).Y;
+                        var textPosXOffset = i % 2 == 0 ? 0 : -chars[i].Width - game.Fonts.Get(MonoGame_Engine.Font.DebugFont).MeasureString(text).Y;
                         var textPosYOffset = i / 2 == 0 ? chars[i].Height + 10 : -chars[i].Height - 10;
 
                         spriteBatch.DrawString(game.Fonts.Get(MonoGame_Engine.Font.DebugFont), text, new Vector2(pos[i].X + textPosXOffset, pos[i].Y + textPosYOffset), new Color(player.BaseColor, alpha));
                     }
                 }
+            }
+            if (distanceToMotherShip > 1000)
+            {
+                var position = (float)Math.Log(distanceToMotherShip);
+                position = MathHelper.Clamp(position, 0, 400);
+                var left = game.Screen.CanvasWidth / 2 - 200;
+                var rigth = game.Screen.CanvasWidth / 2 + 200;
+                var indicator = position + game.Screen.CanvasWidth / 2;
+
+                this.game.MainScene.leviathan.Gfx.Draw(spriteBatch, new Vector2(indicator, 10), MathHelper.PiOver2, 10f, Color.White);
             }
             spriteBatch.End();
         }
@@ -54,12 +66,12 @@ namespace IntergalacticTransmissionService
         {
             spriteBatch = new SpriteBatch(game.GraphicsDevice);
             for (int i = 0; i < 4; ++i)
-                chars[i] = content.Load<Texture2D>($"Images/character_{i+1:00}.png");
+                chars[i] = content.Load<Texture2D>($"Images/character_{i + 1:00}.png");
         }
 
         internal override void Update(GameTime gameTime)
         {
-
+            this.distanceToMotherShip = Math.Abs((game.MainScene.leviathan.Phy.Pos - game.Camera.Phy.Pos).Length());
         }
     }
 }
