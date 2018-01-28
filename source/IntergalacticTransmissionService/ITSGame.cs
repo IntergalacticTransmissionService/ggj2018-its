@@ -4,12 +4,14 @@ using Microsoft.Xna.Framework.Input;
 using System.Linq;
 using MonoGame_Engine;
 using MonoGame_Engine.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace IntergalacticTransmissionService
 {
     public class ITSGame : BaseGame
     {
         public MainScene MainScene;
+        private Song song;
 
         public ITSGame() : base()
         {
@@ -41,6 +43,14 @@ namespace IntergalacticTransmissionService
 #if !DEBUG
             Screen.ToggleFullscreen();
 #endif
+        }
+
+        protected override void LoadContent()
+        {
+            base.LoadContent();
+            song = Content.Load<Song>("Sounds/ggj2018_its");
+            MediaPlayer.Play(song);
+            MediaPlayer.IsRepeating = true;
         }
 
         protected override void Dispose(bool disposing)
