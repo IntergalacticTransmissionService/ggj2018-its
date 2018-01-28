@@ -27,6 +27,13 @@ namespace IntergalacticTransmissionService.Net
 
         public void SetAxes(float x, float y)
         {
+            x *= 1.5f;
+            y *= 1.5f;
+            float len = (float)Math.Sqrt(x*x + y*y);
+            if(len > 1) {
+                x /= len;
+                y /= len;
+            }
             Axes[0] = x;
             Axes[1] = -y;//quickfix
             // Console.WriteLine("Direction: " + x + "/" + y);

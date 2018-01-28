@@ -100,7 +100,7 @@ namespace IntergalacticTransmissionService
             }
         }
 
-        private TimeSpan timeUntilNextSpawnWave = TimeSpan.FromSeconds(10);
+        private TimeSpan timeUntilNextSpawnWave = TimeSpan.FromSeconds(6);
         private int waveNumber;
         private float astronautRotation;
 
@@ -109,7 +109,7 @@ namespace IntergalacticTransmissionService
             timeUntilNextSpawnWave -= gameTime.ElapsedGameTime;
             if (timeUntilNextSpawnWave < TimeSpan.Zero)
             {
-                timeUntilNextSpawnWave += TimeSpan.FromSeconds(10 + waveNumber);
+                timeUntilNextSpawnWave += TimeSpan.FromSeconds(6);
 
                 for (int i = 0; i < waveNumber * 2; ++i)
                 {
@@ -119,8 +119,11 @@ namespace IntergalacticTransmissionService
                         RandomFuncs.FromRange(16f, 64f),
                         this.Phy.Pos + new Vector2(RandomFuncs.FromRange(-dist, dist), RandomFuncs.FromRange(-dist, dist)),
                         (float)RandomFuncs.FromRange(0, MathHelper.TwoPi),
-                        new ChasingBehavior(game.MainScene, 500, 800, RandomFuncs.FromRange(100, 300)));
+                        new ChasingBehavior(game.MainScene, 500, 1500, RandomFuncs.FromRange(Player.DefaultMaxSpd * 0.2f, Player.DefaultMaxSpd * 0.7f)));
                     enemy.LoadContent(game.Content);
+                    enemy.Phy.Spd = new Vector2(
+                        RandomFuncs.FromRange(-Player.DefaultMaxSpd * 0.5f, Player.DefaultMaxSpd * 0.5f),
+                        RandomFuncs.FromRange(-Player.DefaultMaxSpd * 0.5f, Player.DefaultMaxSpd * 0.5f));
                     game.MainScene.Enemies.Add(enemy);
                 }
                 ++waveNumber;
