@@ -63,7 +63,7 @@ namespace MonoGame_Engine.Gfx
 
         public virtual void Draw(SpriteBatch spriteBatch, Vector2 pos, float rot, float size, Color color)
         {
-            var scale = new Vector2(size / this.Width, size / this.Height);
+            var scale = new Vector2(size / this.Width, size / this.Width);
 
             spriteBatch.Draw(this.tex[this.CurrentFrame], pos, null, null, this.origin, rot, scale, color);
 
