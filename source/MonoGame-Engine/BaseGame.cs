@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Engine.Input;
+using System.IO;
 using XnaInput = Microsoft.Xna.Framework.Input;
 
 namespace MonoGame_Engine
@@ -28,7 +29,7 @@ namespace MonoGame_Engine
 
             graphics = new GraphicsDeviceManager(this);
 
-            Screen = new Screen(graphics);
+            Screen = new Screen(graphics, 1920, 1080);
             Camera = new Camera(this);
             Scenes = new Scenes(this);
             Fonts = new Fonts(this);
@@ -57,10 +58,17 @@ namespace MonoGame_Engine
             Fonts.Clear();
         }
 
+        bool wasF3pressed = false;
+        bool isF3pressed = false;
         internal virtual int HandleInput(GameTime gameTime)
         {
             if (XnaInput.Keyboard.GetState().IsKeyDown(XnaInput.Keys.Escape))
                 Exit();
+
+            wasF3pressed = isF3pressed;
+            isF3pressed = XnaInput.Keyboard.GetState().IsKeyDown(XnaInput.Keys.F3);
+            if (wasF3pressed && !isF3pressed)
+                Screen.ScreenShot();
 
             if (XnaInput.Keyboard.GetState().IsKeyDown(XnaInput.Keys.F5))
                 Content.ReloadAll();
@@ -98,6 +106,5 @@ namespace MonoGame_Engine
             Screen.PostDraw();
             DebugOverlay.Draw(gameTime);
         }
-
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.IO;
 
 namespace MonoGame_Engine
 {
@@ -73,6 +75,26 @@ namespace MonoGame_Engine
             graphics.PreferredBackBufferWidth = graphics.IsFullScreen ? Width : graphics.GraphicsDevice.DisplayMode.Width;
             graphics.PreferredBackBufferHeight = graphics.IsFullScreen ? Height : graphics.GraphicsDevice.DisplayMode.Height;
             graphics.ToggleFullScreen();
+        }
+
+        public void ScreenShot()
+        {
+            try
+            {
+                int index = 0;
+                string name = "Screenshot" + index + ".png";
+                while (File.Exists(name))
+                {
+                    index++;
+                    name = "Screenshot" + index + ".jpg";
+                }
+
+                using (FileStream stream = new FileStream(name, FileMode.Create))
+                {
+                    canvas.SaveAsJpeg(stream, canvas.Width, canvas.Height);
+                }
+                Console.WriteLine($"created Screenshot: {name}");
+            } catch (Exception) { }
         }
     }
 }
