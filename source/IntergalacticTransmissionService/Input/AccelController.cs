@@ -66,7 +66,7 @@ namespace IntergalacticTransmissionService.Input
 
                     // shoot
                     if (cntrl.WasPressed(Buttons.B))
-                        Player.Bullets.Spawn(Player.BulletType);
+                        Player.Bullets.Fire();
                     Player.Shoot(cntrl.IsDown(Buttons.B));
 
                     // Where am i
