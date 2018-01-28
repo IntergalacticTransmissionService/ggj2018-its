@@ -48,7 +48,7 @@ namespace MonoGame_Engine.Entities
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             Gfx.Draw(spriteBatch, Phy.Pos, Phy.Rot, this.Radius, BaseColor);
-            Phy.RenderDebug(spriteBatch);
+            //Phy.RenderDebug(spriteBatch);
         }
 
         internal override void Update(GameTime gameTime)
