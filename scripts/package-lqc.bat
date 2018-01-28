@@ -12,4 +12,4 @@ msbuild /t:Rebuild /p:Configuration=Debug /t:restore %GAMEDIR%/
 
 REM Copy Files
 xcopy %GAMEDIR%\source\%GAME%-Desktop\bin\* %GAMEDIR%\dist\bin\ /s /i
-xcopy %GAMEDIR%\source\%GAME%-Content\Content\* %GAMEDIR%\dist\bin\DesktopGL\AnyCPU\Debug\Content\ /s /i
+xcopy %GAMEDIR%\source\%GAME%-Content\Content\* %GAMEDIR%\dist\bin\DesktopGL\AnyCPU\Debug\Content\ /S /I /Y
