@@ -4,9 +4,8 @@ SET EXECUTABLE=MonoGame-Desktop.exe
 
 if not exist %EXECPATH% (
 	ECHO "Game must be build...please be patient..."
-	.\scripts\build.bat
+	CALL .\scripts\build.bat
 )
 
-pushd %EXECPATH%
+cd /d %EXECPATH%
 %EXECUTABLE%
-popd
