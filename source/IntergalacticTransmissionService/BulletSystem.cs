@@ -82,27 +82,27 @@ namespace IntergalacticTransmissionService
             }
         }
 
-        public bool Spawn(BulletType type, bool playSound = true)
+        private bool Spawn(BulletType type, TimeSpan offset, bool playSound = true)
         {
             bool didSpawn = false;
             switch (type)
             {
                 case BulletType.Normal:
                 default:
-                    didSpawn |= SpawnSingle(0f);
+                    didSpawn |= SpawnSingle(0f, offset);
                     break;
                 case BulletType.Spread:
-                    didSpawn |= SpawnSingle(0f);
-                    didSpawn |= SpawnSingle(-MathHelper.PiOver4 / 2);
-                    didSpawn |= SpawnSingle(MathHelper.PiOver4 / 2);
+                    didSpawn |= SpawnSingle(0f, offset);
+                    didSpawn |= SpawnSingle(-MathHelper.PiOver4 / 2, offset);
+                    didSpawn |= SpawnSingle(MathHelper.PiOver4 / 2, offset);
                     break;
                 case BulletType.Back:
-                    didSpawn |= SpawnSingle(0f);
-                    didSpawn |= SpawnSingle(MathHelper.Pi);
+                    didSpawn |= SpawnSingle(0f, offset);
+                    didSpawn |= SpawnSingle(MathHelper.Pi, offset);
                     break;
                 case BulletType.UpDown:
-                    didSpawn |= SpawnSingle(MathHelper.PiOver2);
-                    didSpawn |= SpawnSingle(-MathHelper.PiOver2);
+                    didSpawn |= SpawnSingle(MathHelper.PiOver2, offset);
+                    didSpawn |= SpawnSingle(-MathHelper.PiOver2, offset);
                     break;
             }
             if (playSound && didSpawn)
@@ -110,13 +110,22 @@ namespace IntergalacticTransmissionService
             return didSpawn;
         }
 
-        private bool SpawnSingle(float rotation)
+        internal void Fire()
+        {
+            accumulator = 0;
+            if(RapidFire <= TimeSpan.Zero) 
+                Spawn(player.BulletType, TimeSpan.Zero);
+        }
+
+        private bool SpawnSingle(float rotation, TimeSpan offset)
         {
             if (active < maxParticles)
             {
                 pos[active] = player.Phy.Pos;
                 var rotationMatrix = Matrix.CreateRotationZ(player.Phy.Rot + rotation);
                 spd[active] = player.Phy.Spd + Vector2.Transform(new Vector2(1, 0), rotationMatrix) * 2000;
+                if(offset > TimeSpan.Zero)
+                    pos[active] += spd[active]*(float)offset.TotalSeconds;
                 col[active] = player.BaseColor;
                 maxCol[active] = col[active];
                 maxCol[active].A = 0;
@@ -142,25 +151,23 @@ namespace IntergalacticTransmissionService
 
             Pos += Spd * delta;
 
-            accumulator += delta;
-            var numParticlesToSpawn = accumulator * SpawnRate;
-
+            
             if (RapidFire.Ticks > 0 && Emitting)
             {
+                accumulator += delta;
                 RapidFire -= gameTime.ElapsedGameTime;
-                var numberOfParticlesFired = numParticlesToSpawn;
-                while (numParticlesToSpawn > 1)
+                var numberOfParticlesFired = 0;
+                var reduce = 1 / SpawnRate;
+                while (accumulator > 0)
                 {
-                    if (!Spawn(player.BulletType, false))
+                    if (!Spawn(player.BulletType, TimeSpan.FromSeconds(accumulator), false))
                         break;
-                    accumulator -= 1 / SpawnRate;
-                    --numParticlesToSpawn;
+                    accumulator -= reduce;
+                    numberOfParticlesFired++;
                 }
-                numberOfParticlesFired -= numParticlesToSpawn;
                 if (numberOfParticlesFired > 0)
                     snd.Play();
             }
-
             //DebugOverlay.Instance.Text += $"RapidFire ({this.player.PlayerNum}): {RapidFire}\n";
 
             // Update

@@ -32,7 +32,7 @@ namespace IntergalacticTransmissionService.Input
 
         internal override void Update(GameTime gameTime)
         {
-            var players = (game.Scenes.Current as MainScene).Players;
+            var players = (game.Scenes.Current as MainScene).Players.FindAll(p=>p.IsAlive);
             if (players?.Count > 0)
             {
                 var parcelWeight = players.Count() * 3;

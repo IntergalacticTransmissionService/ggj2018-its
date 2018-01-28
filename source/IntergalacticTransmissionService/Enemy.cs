@@ -60,13 +60,18 @@ namespace IntergalacticTransmissionService
             {
                 base.Update(gameTime);
                 Behavior?.Update(this, gameTime);
+
+                var distToBoss = Vector2.Distance(game.MainScene.Leviathan.Phy.Pos, Phy.Pos);
+                if (distToBoss > 5000)
+                    Die(true);
             }
         }
 
-        public void Die()
+        public void Die(bool silent = false)
         {
             this.IsAlive = false;
-            sndExplode.Play();
+            if (!silent)
+                sndExplode.Play();
         }
 
         public void Reset(Vector2? pos = null, float? rot = null)
