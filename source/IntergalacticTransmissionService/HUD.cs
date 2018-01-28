@@ -26,15 +26,20 @@ namespace IntergalacticTransmissionService
 
         public float ScreenBorder = 30;
 
+        private Sprite Title;
+
         public HUD(ITSGame game)
         {
             this.game = game;
             lanIp = WebControllerManager.getLanIpWithPort();
+
+            Title = new Sprite("Images/title.png", 500, Color.White, false);
         }
+
 
         internal override void Draw(SpriteBatch _, GameTime gameTime)
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied);
             var lanIpSize = game.Fonts.Get(MonoGame_Engine.Font.DebugFont).MeasureString(lanIp);
             spriteBatch.DrawString(game.Fonts.Get(MonoGame_Engine.Font.DebugFont), lanIp, new Vector2((game.Screen.CanvasWidth-lanIpSize.X) / 2, game.Screen.CanvasHeight-20), Color.White);
 
@@ -66,6 +71,7 @@ namespace IntergalacticTransmissionService
                     }
                 }
             }
+
             if (distanceToMotherShip > 1000)
             {
                 var position = (float)Math.Log(distanceToMotherShip,1.1);
@@ -77,6 +83,12 @@ namespace IntergalacticTransmissionService
                 spriteBatch.Draw(distanceScale, new Vector2(left, 0));
                 this.game.MainScene.Leviathan.Gfx.Draw(spriteBatch, new Vector2(indicator, 10), MathHelper.PiOver2, 10f, Color.White);
             }
+
+            if (game.MainScene.Players.Count == 0)
+            {
+                Title.Draw(spriteBatch, gameTime);
+            }
+
             spriteBatch.End();
         }
 
@@ -116,11 +128,16 @@ namespace IntergalacticTransmissionService
             var tb = new string[] { "tl", "t", "tr", "l", "m", "r", "bl", "b", "br" };
             for (int i = 0; i < 9; ++i)
                 textbox[i] = content.Load<Texture2D>($"Images/textbox_{tb[i]}.png");
+
+            // load title
+            Title.LoadContent(content);
         }
 
         internal override void Update(GameTime gameTime)
         {
             this.distanceToMotherShip = Math.Abs((game.MainScene.Leviathan.Phy.Pos - game.Camera.Phy.Pos).Length());
+            Title.Update(gameTime);
+            Title.Phy.Pos = new Vector2(game.Screen.CanvasWidth * 0.2f, game.Screen.CanvasHeight * 0.4f);
         }
 
         internal void ShowMessageForPlayer(Player player, string msg, TimeSpan duration)
