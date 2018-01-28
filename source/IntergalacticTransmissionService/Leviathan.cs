@@ -59,7 +59,7 @@ namespace IntergalacticTransmissionService
             {
                 base.Update(gameTime);
                 if (Behavior != null)
-                    Behavior.LeviathanSpeedFactor = IsFleeing ? 0.65f : 0.05f;
+                    Behavior.LeviathanSpeedFactor = IsFleeing ? 0.5f : 0.05f;
                 Behavior?.Update(this, gameTime);
                 SpawnEnemies(gameTime);
             }
