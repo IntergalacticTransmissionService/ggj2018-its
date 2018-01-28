@@ -63,14 +63,15 @@ function updateButtonsState(touches) {
     for (var i = 0; i < 4; i++) {
         if (buttonsState[i] != newState[i]) {
             buttonsState = newState;
+            if(!websocket)
+                reconnect();
             if (websocket)
                 websocket.send(`!|${buttonsState.join('')}`);
             return;
         }
     }
 }
-
-function init() {
+function reconnect() {
     try {
         websocket = new WebSocket("ws://" + document.location.hostname + ":8082/");
         websocket.onopen = function (evt) { onOpen(evt) };
@@ -81,7 +82,9 @@ function init() {
         console.error('Websocket creation failed', e);
         websocket = null;
     }
-
+}
+function init() {
+    reconnect();
     document.body.addEventListener('touchmove', touchMove);
     document.body.addEventListener('touchstart', touchMove);
     document.body.addEventListener('touchend', touchMove);
@@ -148,6 +151,7 @@ function onOpen(evt) {
 
 function onClose(evt) {
     console.log("DISCONNECTED");
+    websocket = null;
 }
 
 function onMessage(evt) {
