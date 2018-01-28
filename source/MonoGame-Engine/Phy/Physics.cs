@@ -24,7 +24,7 @@ namespace MonoGame_Engine.Phy
                 var matrix = Matrix.CreateRotationZ(this.Rot);
                 return UntraslatedHitBox.Select(box =>
                 {
-                    return new Circle(Vector2.Transform(box.Center, matrix), box.Radius)+ this.Pos;
+                    return new Circle(Vector2.Transform(box.Center, matrix), box.Radius) + this.Pos;
                 }).ToArray();
             }
         }
@@ -79,8 +79,9 @@ namespace MonoGame_Engine.Phy
         }
 
 
-        public void RenderDebug(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Texture2D point)
+        public void RenderDebug(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
+            var point = BaseGame.debug;
             foreach (var box in HitBox)
             {
                 spriteBatch.Draw(point, new Rectangle((int)(box.Center.X - box.Radius), (int)(box.Center.Y - box.Radius), (int)box.Radius * 2, (int)box.Radius * 2), Color.AliceBlue);
@@ -94,7 +95,7 @@ namespace MonoGame_Engine.Phy
             //if (HitBox == null || other.HitBox == null)
             //    return false;
 
-            return (HitBox.Any(x => other.HitBox.Any(y => (x ).Intersects((y )))));
+            return (HitBox.Any(x => other.HitBox.Any(y => (x).Intersects((y)))));
         }
 
         public bool CollidesWith(Vector2 pos)
@@ -102,7 +103,7 @@ namespace MonoGame_Engine.Phy
             if (pos == null)
                 return false;
 
-            return (HitBox.Any(x => (x ).Contains(pos)));
+            return (HitBox.Any(x => (x).Contains(pos)));
         }
 
     }

@@ -24,9 +24,7 @@ namespace IntergalacticTransmissionService
         public bool IsAlive { get; internal set; }
         public bool IsFleeing { get; set; }
 
-#if DEBUG
-        Texture2D debug;
-#endif
+
 
         private SoundEffect sndExplode;
 
@@ -62,9 +60,7 @@ namespace IntergalacticTransmissionService
             Phy.Pos = StartPos;
             Phy.Rot = StartRot;
 
-#if DEBUG
-            debug = content.Load<Texture2D>("Images/particle.png"); ;
-#endif
+
         }
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -72,9 +68,6 @@ namespace IntergalacticTransmissionService
             if (IsAlive)
             {
                 base.Draw(spriteBatch, gameTime);
-#if DEBUG
-                Phy.RenderDebug(spriteBatch, debug);
-#endif
             }
         }
 
