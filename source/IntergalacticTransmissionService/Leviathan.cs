@@ -75,7 +75,7 @@ namespace IntergalacticTransmissionService
             }
             else
             {
-                astronaut.Draw(spriteBatch, this.Phy.Pos + astronautOffset, 0, MathHelper.Clamp(astronatZoom * astronaut.Width, 0, astronaut.Width), Color.White);
+                astronaut.Draw(spriteBatch, this.Phy.Pos + astronautOffset, astronautRotation, MathHelper.Clamp(astronatZoom * astronaut.Width, 0, astronaut.Width), Color.White);
             }
         }
 
@@ -93,12 +93,16 @@ namespace IntergalacticTransmissionService
             {
                 astronaut.Update(gameTime);
                 astronatZoom += zoomSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                astronautOffset = new Vector2(0, MathHelper.Lerp(0, 3, (float)gameTime.ElapsedGameTime.TotalSeconds));
+                var up = ((float)gameTime.TotalGameTime.TotalSeconds % 4) / 4;
+                astronautRotation = MathHelper.TwoPi * up;
+
+
             }
         }
 
         private TimeSpan timeUntilNextSpawnWave = TimeSpan.FromSeconds(10);
         private int waveNumber;
+        private float astronautRotation;
 
         private void SpawnEnemies(GameTime gameTime)
         {
