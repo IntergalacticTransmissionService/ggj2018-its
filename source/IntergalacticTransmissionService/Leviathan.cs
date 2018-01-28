@@ -41,7 +41,7 @@ namespace IntergalacticTransmissionService
             this.IsAlive = true;
             this.IsFleeing = false;
             this.HighlightIndicator = true;
-            health = 1;
+            health = 500;
             astronaut = new Image("Images/happy-ending.png");
         }
 
@@ -93,6 +93,7 @@ namespace IntergalacticTransmissionService
             {
                 astronaut.Update(gameTime);
                 astronatZoom += zoomSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                astronautOffset = new Vector2(0, MathHelper.Lerp(0, 3, (float)gameTime.ElapsedGameTime.TotalSeconds));
             }
         }
 
