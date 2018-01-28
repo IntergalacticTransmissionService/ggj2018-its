@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using IntergalacticTransmissionService.Behaviors;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -15,18 +17,23 @@ namespace IntergalacticTransmissionService
         public Vector2 StartPos;
         public float StartRot;
 
-        public Behavior Behavior { get; set; }
+        public LeviathanBehavior Behavior { get; set; }
         public bool IsAlive { get; internal set; }
+        public bool IsFleeing { get; set; }
 
         private SoundEffect sndExplode;
 
-        public Leviathan(ITSGame game, Color baseColor, float radius, Vector2 startPos, float startRot = 0, Behavior behavior = null) : base(game, new MonoGame_Engine.Gfx.Image(TimeSpan.FromSeconds(0.4), "Images/boss-1.png", "Images/boss-2.png"), "Images/boss-1.png", Color.SlateGray, baseColor, radius, false)
+        private int health;
+
+        public Leviathan(ITSGame game, Color baseColor, float radius, Vector2 startPos, float startRot = 0, LeviathanBehavior behavior = null) : base(game, new MonoGame_Engine.Gfx.Image(TimeSpan.FromSeconds(0.4), "Images/boss-1.png", "Images/boss-2.png"), "Images/boss-1.png", Color.SlateGray, baseColor, radius, false)
         {
             this.StartPos = startPos;
             this.StartRot = startRot;
             this.Behavior = behavior;
             this.IsAlive = true;
+            this.IsFleeing = false;
             this.HighlightIndicator = true;
+            health = 500;
         }
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
@@ -51,8 +58,9 @@ namespace IntergalacticTransmissionService
             if (IsAlive)
             {
                 base.Update(gameTime);
+                if (Behavior != null)
+                    Behavior.LeviathanSpeedFactor = IsFleeing ? 0.65f : 0.05f;
                 Behavior?.Update(this, gameTime);
-
                 SpawnEnemies(gameTime);
             }
         }
@@ -89,6 +97,11 @@ namespace IntergalacticTransmissionService
             sndExplode.Play();
         }
 
+        public void Start()
+        {
+            IsFleeing = true;
+        }
+
         public void Reset(Vector2? pos = null, float? rot = null)
         {
             this.IsAlive = true;
@@ -97,9 +110,12 @@ namespace IntergalacticTransmissionService
             this.Behavior.Reset();
         }
 
-        internal void WasHit()
+        internal void WasHit(bool hitByPackage)
         {
-            //Die(); The leviathan downt die :)
+            health -= hitByPackage ? 100 : 1;
+            sndExplode.Play();
+            if (health <= 0)
+                Die();
         }
     }
 }

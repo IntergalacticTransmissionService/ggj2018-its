@@ -18,6 +18,11 @@ namespace IntergalacticTransmissionService
         private SoundEffect sndGrab;
         private SoundEffect sndRelease;
 
+        /// <summary>
+        /// The Parcel is armd as soon as a player pick it up. Untill it hit the Boss.
+        /// </summary>
+        public bool IsArmed { get; set; }
+
         public Parcel(ITSGame game, Color color, float radius) : base(game, "Images/parcel.png", "Images/parcel.png", color, color, radius)
         {
         }
@@ -54,7 +59,9 @@ namespace IntergalacticTransmissionService
                 Cooldown = TimeSpan.Zero;
                 sndGrab.Play();
                 player.SetEventText("You grabbed the parcel. Deliver it!", TimeSpan.FromSeconds(5));
-            } else if (player != LastHeldBy)
+                this.IsArmed = true;
+            }
+            else if (player != LastHeldBy)
             {
                 Phy.Spd *= 0.5f;
             }
