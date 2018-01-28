@@ -20,7 +20,7 @@ namespace IntergalacticTransmissionService
 
         private SoundEffect sndExplode;
 
-        public Leviathan(ITSGame game, Color baseColor, float radius, Vector2 startPos, float startRot = 0, Behavior behavior = null) : base(game, "Images/boss.png", "Images/boss.png", Color.SlateGray, baseColor, radius,false)
+        public Leviathan(ITSGame game, Color baseColor, float radius, Vector2 startPos, float startRot = 0, Behavior behavior = null) : base(game, new MonoGame_Engine.Gfx.Image(TimeSpan.FromSeconds(0.4), "Images/boss-1.png", "Images/boss-2.png"), "Images/boss-1.png", Color.SlateGray, baseColor, radius, false)
         {
             this.StartPos = startPos;
             this.StartRot = startRot;
@@ -69,7 +69,7 @@ namespace IntergalacticTransmissionService
 
                 for (int i = 0; i < waveNumber * 2; ++i)
                 {
-                    var dist = 700;
+                    var dist = 20;
                     var enemy = new Enemy(game,
                         Color.White,
                         RandomFuncs.FromRange(16f, 64f),

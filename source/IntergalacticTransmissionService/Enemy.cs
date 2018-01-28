@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame_Engine.Gfx;
 
 namespace IntergalacticTransmissionService
 {
@@ -21,12 +22,20 @@ namespace IntergalacticTransmissionService
 
         public override float IndicatorSmallScale => 0.25f;
 
-        public Enemy(ITSGame game, Color baseColor, float radius, Vector2 startPos, float startRot = 0, Behavior behavior = null) : base(game, "Images/enemy.png", null, new Color(0.8f, 0.8f, 0.8f, 0.4f), baseColor, radius)
+        public Enemy(ITSGame game, Color baseColor, float radius, Vector2 startPos, float startRot = 0, Behavior behavior = null) : base(game, GenerateImage(), null, new Color(0.8f, 0.8f, 0.8f, 0.4f), baseColor, radius)
         {
             this.StartPos = startPos;
             this.StartRot = startRot;
             this.Behavior = behavior;
             this.IsAlive = true;
+        }
+
+        private static Image GenerateImage()
+        {
+            if (MonoGame_Engine.Math.RandomFuncs.FromRangeInt(0, 1) == 0)
+                return new Image(TimeSpan.FromSeconds(0.25f), "Images/enemy2-1.png", "Images/enemy2-2.png");
+            else
+                return new Image(TimeSpan.FromSeconds(0.25f), "Images/enemy1-1.png", "Images/enemy1-2.png");
         }
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
@@ -51,13 +60,18 @@ namespace IntergalacticTransmissionService
             {
                 base.Update(gameTime);
                 Behavior?.Update(this, gameTime);
+
+                var distToBoss = Vector2.Distance(game.MainScene.Leviathan.Phy.Pos, Phy.Pos);
+                if (distToBoss > 5000)
+                    Die(true);
             }
         }
 
-        public void Die()
+        public void Die(bool silent = false)
         {
             this.IsAlive = false;
-            sndExplode.Play();
+            if (!silent)
+                sndExplode.Play();
         }
 
         public void Reset(Vector2? pos = null, float? rot = null)

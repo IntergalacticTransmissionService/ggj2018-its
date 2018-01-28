@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Engine.Entities;
+using MonoGame_Engine.Gfx;
 using MonoGame_Engine.Phy;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace IntergalacticTransmissionService
     {
         protected readonly ITSGame game;
 
+
         private Texture2D indicator;
         private Vector2 origin;
         private float Scale = 0.2f;
@@ -23,8 +25,17 @@ namespace IntergalacticTransmissionService
 
         public bool HighlightIndicator;
 
+
         public virtual float IndicatorLargeScale { get { return 1.2f; } }
         public virtual float IndicatorSmallScale { get { return 0.4f; } }
+
+
+        public GameObject(ITSGame game, MonoGame_Engine.Gfx.Image assetPath, string indicatorAssetPath, Color indicatorColor, Color baseColor, float radius, bool orientedPhysics = true) : base(assetPath, radius, baseColor, orientedPhysics)
+        {
+            this.game = game;
+            this.IndicatorColor = indicatorColor;
+            this.IndicatorAsset = indicatorAssetPath;
+        }
 
         public GameObject(ITSGame game, string assetPath, string indicatorAssetPath, Color indicatorColor, Color baseColor, float radius, bool orientedPhysics = true) : base(assetPath, radius, baseColor, orientedPhysics)
         {

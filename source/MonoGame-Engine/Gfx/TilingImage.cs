@@ -25,7 +25,7 @@ namespace MonoGame_Engine.Gfx
             var rect = MathExtensions.FromVectors(game.Camera.TopLeft, game.Camera.TopRight, game.Camera.BottomLeft, game.Camera.BottomRight);
             var topLeft = new Vector2(rect.X, rect.Y);
 
-            spriteBatch.Draw(tex, pos+topLeft, rect, Color.White, rot, origin, Vector2.One, SpriteEffects.None, 0f);
+            spriteBatch.Draw(tex[CurrentFrame], pos + topLeft, rect, Color.White, rot, origin, Vector2.One, SpriteEffects.None, 0f);
 
             spriteBatch.GraphicsDevice.SamplerStates[0] = oldSamplerState;
         }
