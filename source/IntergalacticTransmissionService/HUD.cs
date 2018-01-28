@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using IntergalacticTransmissionService.Net;
+using MonoGame_Engine.Gfx;
 
 namespace IntergalacticTransmissionService
 {
@@ -18,6 +19,7 @@ namespace IntergalacticTransmissionService
 
         private Texture2D[] chars = new Texture2D[4];
         private Texture2D distanceScale;
+        private readonly Image distanceMarker;
         private Vector2[] pos = new Vector2[4];
         private float distanceToMotherShip;
 
@@ -34,6 +36,8 @@ namespace IntergalacticTransmissionService
             lanIp = WebControllerManager.getLanIpWithPort();
 
             Title = new Sprite("Images/title.png", 500, Color.White, false);
+            distanceMarker = new Image("Images/distanceIndicator-marker.png");
+
         }
 
 
@@ -41,7 +45,7 @@ namespace IntergalacticTransmissionService
         {
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied);
             var lanIpSize = game.Fonts.Get(MonoGame_Engine.Font.DebugFont).MeasureString(lanIp);
-            spriteBatch.DrawString(game.Fonts.Get(MonoGame_Engine.Font.DebugFont), lanIp, new Vector2((game.Screen.CanvasWidth-lanIpSize.X) / 2, game.Screen.CanvasHeight-20), Color.White);
+            spriteBatch.DrawString(game.Fonts.Get(MonoGame_Engine.Font.DebugFont), lanIp, new Vector2((game.Screen.CanvasWidth - lanIpSize.X) / 2, game.Screen.CanvasHeight - 20), Color.White);
 
             for (int i = 0; i < 4; i++)
             {
@@ -60,28 +64,37 @@ namespace IntergalacticTransmissionService
                     if (!player.IsAlive)
                     {
                         var text = "You died!\r\nPress Button to join";
-                        var textPosXOffset = i % 2 == 0 ? pos[i].X + chars[i].Width: pos[i].X;
+                        var textPosXOffset = i % 2 == 0 ? pos[i].X + chars[i].Width : pos[i].X;
                         var textPosYOffset = i / 2 == 0 ? pos[i].Y : pos[i].Y + chars[i].Height - chars[2].Height;
                         DrawTextBox(i, spriteBatch, text, new Vector2(textPosXOffset, textPosYOffset), new Color(player.BaseColor, alpha));
-                    } else if(player.EventTextTime > TimeSpan.Zero) {
+                    }
+                    else if (player.EventTextTime > TimeSpan.Zero)
+                    {
                         player.EventTextTime -= gameTime.ElapsedGameTime;
-                        var textPosXOffset = i % 2 == 0 ? pos[i].X + chars[i].Width: pos[i].X;
+                        var textPosXOffset = i % 2 == 0 ? pos[i].X + chars[i].Width : pos[i].X;
                         var textPosYOffset = i / 2 == 0 ? pos[i].Y : pos[i].Y + chars[i].Height - chars[2].Height;
                         DrawTextBox(i, spriteBatch, player.EventText, new Vector2(textPosXOffset, textPosYOffset), player.BaseColor);
                     }
                 }
             }
 
-            if (distanceToMotherShip > 1000)
+            const float minDistance = 2000;
+            const float blendInMagic = 0.1f;
+            float offset = MathHelper.Clamp((this.distanceToMotherShip - (minDistance)) , -100 / blendInMagic, 0 ) * blendInMagic;
+            //if (distanceToMotherShip > minDistance)
             {
-                var position = (float)Math.Log(distanceToMotherShip,1.1);
-                position = MathHelper.Clamp(position, 0, 400);
-                var left = game.Screen.CanvasWidth / 2 - 200;
-                var rigth = game.Screen.CanvasWidth / 2 + 200;
+                const float preMultiplier = 0.0005f;
+                const float postMultiplier = 200f;
+                const float log = 5;
+                const float max = 400;
+                var position = (float)Math.Log(distanceToMotherShip * preMultiplier, log) * postMultiplier;
+                position = MathHelper.Clamp(position, 0, max);
+                var left = game.Screen.CanvasWidth / 2 - max / 2;
+                var rigth = game.Screen.CanvasWidth / 2 + max / 2;
                 var indicator = position + left;
 
-                spriteBatch.Draw(distanceScale, new Vector2(left, 0));
-                this.game.MainScene.Leviathan.Gfx.Draw(spriteBatch, new Vector2(indicator, 10), MathHelper.PiOver2, 10f, Color.White);
+                spriteBatch.Draw(distanceScale, new Vector2(left, offset));
+                distanceMarker.Draw(spriteBatch, new Vector2(indicator, offset + distanceMarker.Height / 2), 0f);
             }
 
             if (game.MainScene.Players.Count == 0)
@@ -120,9 +133,11 @@ namespace IntergalacticTransmissionService
 
             // load chars
             for (int i = 0; i < 4; ++i)
-                chars[i] = content.Load<Texture2D>($"Images/character_{i+1:00}.png");
-            distanceScale = content.Load<Texture2D>("Images/DistanceIndicator.png");
+                chars[i] = content.Load<Texture2D>($"Images/character_{i + 1:00}.png");
 
+            // load distance indicator
+            distanceScale = content.Load<Texture2D>("Images/DistanceIndicator.png");
+            distanceMarker.LoadContent(content, wasReloaded);
 
             // load textbox
             var tb = new string[] { "tl", "t", "tr", "l", "m", "r", "bl", "b", "br" };
