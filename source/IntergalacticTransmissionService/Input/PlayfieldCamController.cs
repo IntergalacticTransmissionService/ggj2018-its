@@ -33,11 +33,13 @@ namespace IntergalacticTransmissionService.Input
         internal override void Update(GameTime gameTime)
         {
             var players = (game.Scenes.Current as MainScene).Players.FindAll(p=>p.IsAlive);
+            
+            float centerX, centerY, zoom;
             if (players?.Count > 0)
             {
                 var parcelWeight = players.Count() * 3;
-                var centerX = (players.Average(e => e.Phy.Pos.X) + game.MainScene.Parcel.Phy.Pos.X * parcelWeight) / (float)(parcelWeight + 1);
-                var centerY = (players.Average(e => e.Phy.Pos.Y) + game.MainScene.Parcel.Phy.Pos.Y * parcelWeight) / (float)(parcelWeight + 1);
+                centerX = (players.Average(e => e.Phy.Pos.X) + game.MainScene.Parcel.Phy.Pos.X * parcelWeight) / (float)(parcelWeight + 1);
+                centerY = (players.Average(e => e.Phy.Pos.Y) + game.MainScene.Parcel.Phy.Pos.Y * parcelWeight) / (float)(parcelWeight + 1);
 
                 var left = Math.Min(game.MainScene.Parcel.Phy.Pos.X, players.Min(e => e.Phy.Pos.X))-100;
                 var right = Math.Max(game.MainScene.Parcel.Phy.Pos.X, players.Max(e => e.Phy.Pos.X))+100;
@@ -49,15 +51,19 @@ namespace IntergalacticTransmissionService.Input
 
                 var zoomX = (game.Screen.CanvasWidth * 0.5f) / distX;
                 var zoomY = (game.Screen.CanvasHeight * 0.5f)/ distY;
-                var zoom = MathHelper.Clamp(Math.Min(zoomX, zoomY), MinZoom, MaxZoom);
-
-                Vector2 delta = new Vector2(centerX, centerY) - game.Camera.Phy.Pos;
-                game.Camera.Phy.Spd = delta * 30;
-
-                //game.Camera.Phy.Pos.X = centerX;
-                //game.Camera.Phy.Pos.Y = centerY;
-                game.Camera.Zoom = zoom;
+                zoom = MathHelper.Clamp(Math.Min(zoomX, zoomY), MinZoom, MaxZoom);
+            } else {
+                centerX = game.MainScene.Parcel.Phy.Pos.X;
+                centerY = game.MainScene.Parcel.Phy.Pos.Y;
+                zoom = 1;
             }
+
+            Vector2 delta = new Vector2(centerX, centerY) - game.Camera.Phy.Pos;
+            game.Camera.Phy.Spd = delta * 30;
+
+            //game.Camera.Phy.Pos.X = centerX;
+            //game.Camera.Phy.Pos.Y = centerY;
+            game.Camera.Zoom = zoom;
         }
     }
 }
