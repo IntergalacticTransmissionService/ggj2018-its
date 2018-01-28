@@ -98,17 +98,21 @@ namespace IntergalacticTransmissionService
                     }
                 }
 
+                int k2 = 0;
                 foreach (var bullet in left.Bullets)
                 {
 
                     if (leviathan.Phy.CollidesWith(bullet))
+                    {
+                        left.Bullets.Remove(k2);
                         leviathan.WasHit(false);
+                    }
                 }
 
                 if (left.IsAlive && left.Phy.CollidesWith(leviathan.Phy))
                 {
                     left.Die();
-                    if(scene.Parcel.HoldBy == left)
+                    if (scene.Parcel.HoldBy == left)
                         scene.Parcel.IsArmed = false;
                 }
 

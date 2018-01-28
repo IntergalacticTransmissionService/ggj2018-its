@@ -81,12 +81,13 @@ namespace MonoGame_Engine.Phy
 
         public void RenderDebug(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
-            var point = BaseGame.debug;
-            foreach (var box in HitBox)
-            {
-                spriteBatch.Draw(point, new Rectangle((int)(box.Center.X - box.Radius), (int)(box.Center.Y - box.Radius), (int)box.Radius * 2, (int)box.Radius * 2), Color.AliceBlue);
+            
+            //var point = BaseGame.debug;
+            //foreach (var box in HitBox)
+            //{
+            //    spriteBatch.Draw(point, new Rectangle((int)(box.Center.X - box.Radius), (int)(box.Center.Y - box.Radius), (int)box.Radius * 2, (int)box.Radius * 2), Color.AliceBlue);
 
-            }
+            //}
         }
 
 
