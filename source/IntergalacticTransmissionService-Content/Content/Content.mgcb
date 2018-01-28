@@ -470,3 +470,9 @@
 /processorParam:TextureFormat=Color
 /build:Images/title.png
 
+#begin Sounds/ggj2018_its.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/ggj2018_its.mp3
+
