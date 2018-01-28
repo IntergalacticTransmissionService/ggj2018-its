@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Linq;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Engine.Math;
 
 namespace MonoGame_Engine.Phy
@@ -14,9 +17,30 @@ namespace MonoGame_Engine.Phy
         public Vector2 Accel;
         public float Dmp = 1.0f;
 
-        public readonly Circle HitBox;
+        private Circle[] HitBox
+        {
+            get
+            {
+                var matrix = Matrix.CreateRotationZ(this.Rot);
+                return UntraslatedHitBox.Select(box =>
+                {
+                    return new Circle(Vector2.Transform(box.Center, matrix), box.Radius)+ this.Pos;
+                }).ToArray();
+            }
+        }
+        private readonly Circle[] UntraslatedHitBox;
+        public float? Radius { get; }
 
-        public Physics(float? radius)
+        public Physics(float? radius) : this(GetData(radius)) { }
+
+        private static (float radius, Vector2 relativePositionToCenter)[] GetData(float? radius)
+        {
+            if (radius.HasValue)
+                return new[] { (radius.Value, Vector2.Zero) };
+            return new(float radius, Vector2 relativePositionToCenter)[0];
+        }
+
+        public Physics(params (float radius, Vector2 relativePositionToCenter)[] data)
         {
             Pos = new Vector2();
             Rot = 0;
@@ -24,7 +48,16 @@ namespace MonoGame_Engine.Phy
             Spd = new Vector2();
             RotSpd = 0;
 
-            HitBox = radius.HasValue ? new Circle(Vector2.Zero, radius.Value) : null;
+            UntraslatedHitBox = data.Select(x => new Circle(x.relativePositionToCenter, x.radius)).ToArray();
+            Radius = GetRadiusFromData(data);
+        }
+
+        private float? GetRadiusFromData((float radius, Vector2 relativePositionToCenter)[] data)
+        {
+            if (data.Length == 0)
+                return null;
+
+            return data.Select(x => x.relativePositionToCenter.Length() + x.radius).Max();
         }
 
         public virtual void Update(GameTime gameTime)
@@ -43,29 +76,33 @@ namespace MonoGame_Engine.Phy
             Spd.Y *= Dmp;
 
             Accel = Vector2.Zero;
+        }
 
-            // update hitbox
-            if (HitBox != null)
+
+        public void RenderDebug(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Texture2D point)
+        {
+            foreach (var box in HitBox)
             {
-                HitBox.Center.X = Pos.X;
-                HitBox.Center.Y = Pos.Y;
+                spriteBatch.Draw(point, new Rectangle((int)(box.Center.X - box.Radius), (int)(box.Center.Y - box.Radius), (int)box.Radius * 2, (int)box.Radius * 2), Color.AliceBlue);
+
             }
         }
 
+
         public bool CollidesWith(Physics other)
         {
-            if (HitBox == null || other.HitBox == null)
-                return false;
+            //if (HitBox == null || other.HitBox == null)
+            //    return false;
 
-            return HitBox.Intersects(other.HitBox);
+            return (HitBox.Any(x => other.HitBox.Any(y => (x ).Intersects((y )))));
         }
 
         public bool CollidesWith(Vector2 pos)
         {
-            if (HitBox == null || pos == null)
+            if (pos == null)
                 return false;
 
-            return HitBox.Contains(pos);
+            return (HitBox.Any(x => (x ).Contains(pos)));
         }
 
     }

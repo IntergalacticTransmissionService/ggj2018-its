@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Engine.Gfx;
 using MonoGame_Engine.Math;
+using MonoGame_Engine.Phy;
 
 namespace IntergalacticTransmissionService
 {
@@ -21,6 +23,10 @@ namespace IntergalacticTransmissionService
         public LeviathanBehavior Behavior { get; set; }
         public bool IsAlive { get; internal set; }
         public bool IsFleeing { get; set; }
+
+#if DEBUG
+        Texture2D debug;
+#endif
 
         private SoundEffect sndExplode;
 
@@ -37,6 +43,17 @@ namespace IntergalacticTransmissionService
             health = 500;
         }
 
+        protected override Physics InitilisePhysics()
+        {
+            var xValues = new float[] { 120, 60, 0, -60, -120 ,-180};
+            var yValues = new float[] { 200, 140, 80, 20, 0, -20, -80, -140,-200,-260,-320 };
+
+
+            const float r = 30f;
+
+            return new Physics(xValues.SelectMany(x => yValues.Select(y => (r, new Vector2(x, y)))).ToArray());
+        }
+
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
         {
             base.LoadContent(content, wasReloaded);
@@ -44,6 +61,10 @@ namespace IntergalacticTransmissionService
             sndExplode = content.Load<SoundEffect>("Sounds/explosion");
             Phy.Pos = StartPos;
             Phy.Rot = StartRot;
+
+#if DEBUG
+            debug = content.Load<Texture2D>("Images/particle.png"); ;
+#endif
         }
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -51,6 +72,9 @@ namespace IntergalacticTransmissionService
             if (IsAlive)
             {
                 base.Draw(spriteBatch, gameTime);
+#if DEBUG
+                Phy.RenderDebug(spriteBatch, debug);
+#endif
             }
         }
 

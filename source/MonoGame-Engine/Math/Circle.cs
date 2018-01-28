@@ -29,5 +29,8 @@ namespace MonoGame_Engine.Math
             var dist = Vector2.Distance(Center, pos);
             return dist < Radius;
         }
+
+        public static Circle operator +(Circle c, Vector2 v) => new Circle(c.Center + v, c.Radius);
+        public static Circle operator +(Vector2 v,Circle c) => new Circle(c.Center + v, c.Radius);
     }
 }

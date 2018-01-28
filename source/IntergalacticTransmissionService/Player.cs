@@ -90,7 +90,7 @@ namespace IntergalacticTransmissionService
                         BaseColor = new Color(BaseColor, 1.0f);
                 }
                 base.Draw(spriteBatch, gameTime);
-                flame.Draw(spriteBatch, Phy.Pos, Phy.Rot, Phy.HitBox.Radius, Color.White);
+                flame.Draw(spriteBatch, Phy.Pos, Phy.Rot, this.Radius, Color.White);
             }
             Bullets.Draw(spriteBatch, gameTime);
 

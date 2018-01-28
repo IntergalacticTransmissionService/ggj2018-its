@@ -43,7 +43,7 @@ namespace IntergalacticTransmissionService
                             right.WasHit();
 
                             float dist = Vector2.Distance(left.Phy.Pos, right.Phy.Pos);
-                            float correction = 0.5f * ((left.Phy.HitBox.Radius + right.Phy.HitBox.Radius) - dist);
+                            float correction = 0.5f * ((left.Radius + right.Radius) - dist);
                             Vector2 vec = Vector2.Normalize(Vector2.Subtract(right.Phy.Pos, left.Phy.Pos));
                             left.Phy.Pos -= 2 * correction * vec;
                             right.Phy.Pos += 2 * correction * vec;
