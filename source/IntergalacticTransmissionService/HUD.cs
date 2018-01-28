@@ -131,13 +131,17 @@ namespace IntergalacticTransmissionService
 
             // load title
             Title.LoadContent(content);
+            Title.Phy.Pos = new Vector2(game.Screen.CanvasWidth * 0.2f, game.Screen.CanvasHeight * 0.4f);
         }
 
         internal override void Update(GameTime gameTime)
         {
             this.distanceToMotherShip = Math.Abs((game.MainScene.Leviathan.Phy.Pos - game.Camera.Phy.Pos).Length());
+
+
+
+            Title.Phy.Rot = -0.1f * (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds * 0.3f);
             Title.Update(gameTime);
-            Title.Phy.Pos = new Vector2(game.Screen.CanvasWidth * 0.2f, game.Screen.CanvasHeight * 0.4f);
         }
 
         internal void ShowMessageForPlayer(Player player, string msg, TimeSpan duration)
