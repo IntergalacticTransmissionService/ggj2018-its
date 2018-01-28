@@ -138,7 +138,9 @@ namespace MonoGame_Engine
             get
             {
 #if DEBUG
-                return "../../../../../IntergalacticTransmissionService-Content/Content";
+                if (File.Exists("../../../../../IntergalacticTransmissionService-Content/Content"))
+                    return "../../../../../IntergalacticTransmissionService-Content/Content";
+                return RootDirectory;
 #else
                 return RootDirectory;
 #endif
