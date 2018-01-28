@@ -47,6 +47,11 @@
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\textbox_t.png" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\textbox_tl.png" />
     <Content Include="$(MSBuildThisFileDirectory)Content\Images\textbox_tr.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Sounds\explosion.wav" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Sounds\grab.wav" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Sounds\powerup.wav" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Sounds\push.wav" />
+    <Content Include="$(MSBuildThisFileDirectory)Content\Sounds\shot.wav" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Content\WebController\index.html">
