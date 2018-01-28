@@ -24,7 +24,10 @@ namespace IntergalacticTransmissionService
         public bool IsAlive { get; internal set; }
         public bool IsFleeing { get; set; }
 
-
+        private readonly Image astronaut;
+        private readonly float zoomSpeed = 0.1f;
+        float astronatZoom = 0f;
+        Vector2 astronautOffset;
 
         private SoundEffect sndExplode;
 
@@ -38,13 +41,14 @@ namespace IntergalacticTransmissionService
             this.IsAlive = true;
             this.IsFleeing = false;
             this.HighlightIndicator = true;
-            health = 500;
+            health = 1;
+            astronaut = new Image("Images/happy-ending.png");
         }
 
         protected override Physics InitilisePhysics()
         {
-            var xValues = new float[] { 120, 60, 0, -60, -120 ,-180};
-            var yValues = new float[] { 200, 140, 80, 20, 0, -20, -80, -140,-200,-260,-320 };
+            var xValues = new float[] { 120, 60, 0, -60, -120, -180 };
+            var yValues = new float[] { 200, 140, 80, 20, 0, -20, -80, -140, -200, -260, -320 };
 
 
             const float r = 30f;
@@ -59,7 +63,7 @@ namespace IntergalacticTransmissionService
             sndExplode = content.Load<SoundEffect>("Sounds/explosion");
             Phy.Pos = StartPos;
             Phy.Rot = StartRot;
-
+            astronaut.LoadContent(content, wasReloaded);
 
         }
 
@@ -68,6 +72,10 @@ namespace IntergalacticTransmissionService
             if (IsAlive)
             {
                 base.Draw(spriteBatch, gameTime);
+            }
+            else
+            {
+                astronaut.Draw(spriteBatch, this.Phy.Pos + astronautOffset, 0, MathHelper.Clamp(astronatZoom * astronaut.Width, 0, astronaut.Width), Color.White);
             }
         }
 
@@ -80,6 +88,11 @@ namespace IntergalacticTransmissionService
                     Behavior.LeviathanSpeedFactor = IsFleeing ? 0.5f : 0.05f;
                 Behavior?.Update(this, gameTime);
                 SpawnEnemies(gameTime);
+            }
+            else
+            {
+                astronaut.Update(gameTime);
+                astronatZoom += zoomSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
         }
 

@@ -109,7 +109,7 @@ namespace IntergalacticTransmissionService
                     }
                 }
 
-                if (left.IsAlive && left.Phy.CollidesWith(leviathan.Phy))
+                if (left.IsAlive && leviathan.IsAlive && left.Phy.CollidesWith(leviathan.Phy))
                 {
                     left.Die();
                     if (scene.Parcel.HoldBy == left)
