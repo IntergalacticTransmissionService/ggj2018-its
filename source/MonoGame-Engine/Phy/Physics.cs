@@ -70,7 +70,7 @@ namespace MonoGame_Engine.Phy
             Spd.Y += Accel.Y * delta;
             Pos.X = Pos.X + Spd.X * delta;
             Pos.Y = Pos.Y + Spd.Y * delta;
-            Rot = Rot + RotSpd * delta;
+            Rot = MathHelper.Clamp(Rot + RotSpd * delta, -MathHelper.Pi, MathHelper.Pi);
 
             Spd.X *= Dmp;
             Spd.Y *= Dmp;
