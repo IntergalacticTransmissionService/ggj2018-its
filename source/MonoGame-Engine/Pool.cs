@@ -53,12 +53,13 @@ namespace MonoGame_Engine
 
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            foreach (var toDraw in this.list.Take(this.Count)) {
+            foreach (var toDraw in this.list.Take(this.Count))
+            {
                 var scale = 1.0f;
-                if(toDraw.timeToLive < TimeSpan.FromSeconds(5.0))
+                if (toDraw.timeToLive < TimeSpan.FromSeconds(5.0))
                     scale = (float)(toDraw.timeToLive.TotalSeconds / 5.0);
                 scale *= 1.4f;
-                this.Graphics[(int)toDraw.Graphics].Draw(spriteBatch, toDraw.Phy.Pos, toDraw.Phy.Rot, toDraw.Phy.HitBox.Radius * scale, Color.White);
+                this.Graphics[(int)toDraw.Graphics].Draw(spriteBatch, toDraw.Phy.Pos, toDraw.Phy.Rot, (toDraw.Phy?.Radius ?? 1f )* scale, Color.White);
             }
         }
 

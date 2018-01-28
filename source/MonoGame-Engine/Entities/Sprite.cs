@@ -39,13 +39,16 @@ namespace MonoGame_Engine.Entities
                 Radius = Gfx.Width * 0.5f;
             if (!wasReloaded)
             {
-                Phy = this.orientedPhysics ? new OrientedPhysics(Radius) : new Physics(Radius);
+                Phy = InitilisePhysics();
             }
         }
 
+        protected virtual Physics InitilisePhysics() => this.orientedPhysics ? new OrientedPhysics(this.Radius) : new Physics(this.Radius);
+
         internal override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            Gfx.Draw(spriteBatch, Phy.Pos, Phy.Rot, Phy.HitBox.Radius, BaseColor);
+            Gfx.Draw(spriteBatch, Phy.Pos, Phy.Rot, this.Radius, BaseColor);
+            Phy.RenderDebug(spriteBatch);
         }
 
         internal override void Update(GameTime gameTime)

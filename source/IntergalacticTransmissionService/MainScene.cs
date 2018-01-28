@@ -25,6 +25,8 @@ namespace IntergalacticTransmissionService
         internal readonly Level Level;
         internal readonly HUD Hud;
 
+
+
         internal new ITSGame game { get { return base.game as ITSGame; } }
 
         public MainScene(ITSGame game) : base(game)
@@ -50,6 +52,7 @@ namespace IntergalacticTransmissionService
 
         internal override void LoadContent()
         {
+
             base.LoadContent();
             Background.LoadContent(game.Content);
             Background.Gfx.origin = Vector2.Zero;

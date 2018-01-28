@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Engine.Input;
 using XnaInput = Microsoft.Xna.Framework.Input;
 
@@ -6,6 +7,10 @@ namespace MonoGame_Engine
 {
     public class BaseGame : Game
     {
+#if DEBUG
+        public static Texture2D debug;
+#endif
+
         protected readonly GraphicsDeviceManager graphics;
 
         public readonly Screen Screen;
@@ -39,6 +44,9 @@ namespace MonoGame_Engine
 
         protected override void LoadContent()
         {
+#if DEBUG
+            debug = this.Content.Load<Texture2D>("Images/particle.png"); ;
+#endif
             Fonts.LoadFonts();
             DebugOverlay.LoadContent();
         }
