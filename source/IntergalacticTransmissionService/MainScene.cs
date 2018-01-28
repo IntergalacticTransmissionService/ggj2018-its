@@ -103,6 +103,9 @@ namespace IntergalacticTransmissionService
         {
             while (Players.Count < game.Inputs.NumPlayers)
             {
+                if (Players.Count == 0)
+                    Leviathan.Start();
+
                 var rnd = new Random();
                 var player = new Player(game, Players.Count, 32f);
                 player.LoadContent(game.Content);
