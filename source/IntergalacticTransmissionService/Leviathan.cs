@@ -23,6 +23,8 @@ namespace IntergalacticTransmissionService
 
         private SoundEffect sndExplode;
 
+        private int health;
+
         public Leviathan(ITSGame game, Color baseColor, float radius, Vector2 startPos, float startRot = 0, LeviathanBehavior behavior = null) : base(game, new MonoGame_Engine.Gfx.Image(TimeSpan.FromSeconds(0.4), "Images/boss-1.png", "Images/boss-2.png"), "Images/boss-1.png", Color.SlateGray, baseColor, radius, false)
         {
             this.StartPos = startPos;
@@ -31,6 +33,7 @@ namespace IntergalacticTransmissionService
             this.IsAlive = true;
             this.IsFleeing = false;
             this.HighlightIndicator = true;
+            health = 500;
         }
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)
@@ -107,9 +110,12 @@ namespace IntergalacticTransmissionService
             this.Behavior.Reset();
         }
 
-        internal void WasHit()
+        internal void WasHit(bool hitByPackage)
         {
-            //Die(); The leviathan downt die :)
+            health -= hitByPackage ? 100 : 1;
+            sndExplode.Play();
+            if (health <= 0)
+                Die();
         }
     }
 }
