@@ -33,9 +33,9 @@ namespace IntergalacticTransmissionService
         private static Image GenerateImage()
         {
             if (MonoGame_Engine.Math.RandomFuncs.FromRangeInt(0, 1) == 0)
-                return new Image(TimeSpan.FromSeconds(0.25f), "Images/enemy2-1.png", "Images/enemy2-2.png");
+                return new Image(TimeSpan.FromSeconds(0.25f), AnimationType.Loop, "Images/enemy2-1.png", "Images/enemy2-2.png");
             else
-                return new Image(TimeSpan.FromSeconds(0.25f), "Images/enemy1-1.png", "Images/enemy1-2.png");
+                return new Image(TimeSpan.FromSeconds(0.25f), AnimationType.Loop, "Images/enemy1-1.png", "Images/enemy1-2.png");
         }
 
         internal override void LoadContent(ContentManager content, bool wasReloaded = false)

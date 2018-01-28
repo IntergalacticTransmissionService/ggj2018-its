@@ -6,11 +6,21 @@ using System;
 
 namespace MonoGame_Engine.Gfx
 {
+    public enum AnimationType
+    {
+        None,
+        Loop,
+        OneTime
+    }
+
     public class Image : Reloadable
     {
         private readonly string[] assetPathes;
         protected readonly Texture2D[] tex;
         private readonly TimeSpan frameSpeed;
+
+        public AnimationType animationType { get; }
+
         public Vector2 origin;
         public int Width { get { return this.tex[0]?.Width ?? 0; } }
         public int Height { get { return this.tex[0]?.Height ?? 0; } }
@@ -20,16 +30,17 @@ namespace MonoGame_Engine.Gfx
         private int currentFrame;
         private TimeSpan frameUpdateTime;
 
-        public Image(string assetPath) : this(TimeSpan.MaxValue, new string[] { assetPath })
+        public Image(string assetPath) : this(TimeSpan.MaxValue, AnimationType.None, new string[] { assetPath })
         {
 
         }
 
-        public Image(TimeSpan frameSpeed, params string[] assetPath)
+        public Image(TimeSpan frameSpeed, AnimationType animationType, params string[] assetPath)
         {
             this.assetPathes = assetPath;
             this.tex = new Texture2D[assetPath.Length];
             this.frameSpeed = frameSpeed;
+            this.animationType = animationType;
         }
 
 
@@ -47,18 +58,29 @@ namespace MonoGame_Engine.Gfx
 
         public virtual void Draw(SpriteBatch spriteBatch, Vector2 pos, float rot)
         {
-            spriteBatch.Draw(this.tex[0], pos, null, null, this.origin, rot);
+            spriteBatch.Draw(this.tex[currentFrame], pos, null, null, this.origin, rot);
         }
 
         internal virtual void Update(GameTime gameTime)
         {
+            if (animationType == AnimationType.None)
+                return;
+
+            if (animationType == AnimationType.OneTime && currentFrame == tex.Length - 1)
+                return;
+
             this.frameUpdateTime += gameTime.ElapsedGameTime;
             while (frameUpdateTime > this.frameSpeed)
             {
                 this.currentFrame++;
                 frameUpdateTime -= frameSpeed;
             }
-            currentFrame %= tex.Length;
+
+            if (animationType == AnimationType.Loop)
+                currentFrame %= tex.Length;
+            else
+                currentFrame = System.Math.Min(currentFrame, tex.Length - 1);
+
         }
 
         public virtual void Draw(SpriteBatch spriteBatch, Vector2 pos, float rot, float size, Color color)

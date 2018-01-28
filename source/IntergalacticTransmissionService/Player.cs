@@ -57,7 +57,7 @@ namespace IntergalacticTransmissionService
             Bullets = new BulletSystem(this, "Images/bullet.png", 300, 15);
             IsAlive = true;
             BulletType = BulletType.Normal;
-            this.flame = new MonoGame_Engine.Gfx.Image(TimeSpan.FromSeconds(0.2), "Images/PlayerFlame-1.png", "Images/PlayerFlame-2.png");
+            this.flame = new MonoGame_Engine.Gfx.Image(TimeSpan.FromSeconds(0.2), AnimationType.Loop, "Images/PlayerFlame-1.png", "Images/PlayerFlame-2.png");
 
         }
 

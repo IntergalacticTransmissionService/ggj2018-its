@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame_Engine.Gfx;
 using MonoGame_Engine.Math;
 
 namespace IntergalacticTransmissionService
@@ -25,7 +26,7 @@ namespace IntergalacticTransmissionService
 
         private int health;
 
-        public Leviathan(ITSGame game, Color baseColor, float radius, Vector2 startPos, float startRot = 0, LeviathanBehavior behavior = null) : base(game, new MonoGame_Engine.Gfx.Image(TimeSpan.FromSeconds(0.4), "Images/boss-1.png", "Images/boss-2.png"), "Images/boss-1.png", Color.SlateGray, baseColor, radius, false)
+        public Leviathan(ITSGame game, Color baseColor, float radius, Vector2 startPos, float startRot = 0, LeviathanBehavior behavior = null) : base(game, new MonoGame_Engine.Gfx.Image(TimeSpan.FromSeconds(0.4), AnimationType.Loop, "Images/boss-1.png", "Images/boss-2.png"), "Images/boss-1.png", Color.SlateGray, baseColor, radius, false)
         {
             this.StartPos = startPos;
             this.StartRot = startRot;
